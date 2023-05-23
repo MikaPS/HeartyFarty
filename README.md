@@ -1,5 +1,6 @@
 # HeartyFarty
 CMPM120 Final Project
 
-Credits:
-Mika Peer Shalem
+Credits: <br>
+Mika Peer Shalem <br>
+Lynelle Goh <br>
