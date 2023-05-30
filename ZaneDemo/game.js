@@ -65,6 +65,23 @@ class intro extends Phaser.Scene {
         this.ball1.setVelocity(100, 0);
         this.ball2.setVelocity(100, 0);
       }
+      else if (event.code === 'KeyW') {
+        // stop moving left
+        this.ball1.setVelocity(0, -100);
+      }
+      else if (event.code === 'KeyS') {
+        // stop moving right
+        this.ball1.setVelocity(0, 100);
+      }
+    
+      else if (event.code === 'KeyA') {
+        // stop moving up
+        this.ball1.setVelocity(-100, 0);
+      }
+      else if (event.code === 'KeyD') {
+        // stop moving down
+        this.ball1.setVelocity(100, 0);
+      }
     });
     this.input.keyboard.on('keyup', (event) => {
       if (event.code === 'ArrowUp') {
@@ -82,6 +99,22 @@ class intro extends Phaser.Scene {
         // move ball right
         this.ball1.setVelocity(0, 0);
         this.ball2.setVelocity(0, 0);
+      }
+      else if (event.code === 'KeyA') {
+        // stop moving left
+        this.ball1.setVelocity(0, 0);
+      }
+      else if (event.code === 'KeyD') {
+        // stop moving right
+        this.ball1.setVelocity(0, 0);
+      }
+      else if (event.code === 'KeyW') {
+        // stop moving up
+        this.ball1.setVelocity(0, 0);
+      }
+      else if (event.code === 'KeyS') {
+        // stop moving down
+        this.ball1.setVelocity(0, 0);
       }
     });
   }
