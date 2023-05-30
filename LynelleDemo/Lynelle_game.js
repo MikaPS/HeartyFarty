@@ -21,7 +21,7 @@ class Main_Title extends Phaser.Scene {
         this.add.rectangle(this.cameras.main.centerX,720,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            // this.scene.start("start_screen");
+            this.scene.start("start_screen");
             });
         this.add.rectangle(this.cameras.main.centerX,920,300,90,0x000000)
             .setInteractive({useHandCursor: true})
@@ -53,7 +53,74 @@ class Main_Title extends Phaser.Scene {
 
     update(){}
 }
+class Start_Screen extends Phaser.Scene {
+    constructor() {
+        super('start_screen');
+    }
+    preload() {}
+    create() {
+        // Music
+        this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(0)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                if (this.music.alpha == 1){
+                    this.scene.start("options_screen");
+                }
+            });
+        this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(0)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                if (this.musicTxt.alpha == 1){
+                    this.scene.start("options_screen");
+                }
+            });
+        // Main menu
+        this.main = this.add.rectangle(1400,80,80,60,0x000000).setAlpha(0)
+        .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                if (this.main.alpha == 1){
+                    this.scene.start("main_title");
+                }
+            });
+        this.mainTxt = this.add.text(1370, 60, "㊂").setFontSize(50).setAlpha(0)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            if (this.mainTxt.alpha == 1){
+                this.scene.start("main_title");
+            }
+        });
 
+        this.dots = this.add.text(1405, 45, "...").setFontSize(60).setDepth(1);
+        this.options = this.add.rectangle(1460,80,190,60,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.tweens.add({
+                    targets: [this.options, this.dots],
+                    alpha: 0,
+                    duration: 2000,
+                    delay: 100,
+                    ease: 'Power2',
+                    onComplete: () => {
+                    }
+                });
+
+                this.tweens.add({
+                    targets: [this.music, this.main, this.musicTxt, this.mainTxt],
+                    alpha: 1,
+                    duration: 100,
+                    delay: 300,
+                    ease: 'Power2',
+                    onComplete: () => {
+                    }
+                });
+            });
+        
+        
+        
+
+    }
+    update() {}
+}
 class Options_Screen extends Phaser.Scene {
     constructor() {
         super('options_screen');
@@ -164,8 +231,8 @@ class Credits_Screen extends Phaser.Scene {
 }
 
 var config = {
-    scene: [Main_Title, Credits_Screen, Options_Screen],
-    // scene: [Credits_Screen],
+    scene: [Main_Title, Credits_Screen, Options_Screen, Start_Screen],
+    // scene: [Start_Screen],
     backgroundColor: 0x43D58C,
     scale: {
         mode: Phaser.Scale.FIT,
