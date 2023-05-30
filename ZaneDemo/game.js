@@ -1,4 +1,3 @@
-
 class intro extends Phaser.Scene {
   constructor() {
     super('intro');
@@ -8,83 +7,89 @@ class intro extends Phaser.Scene {
     this.down = false;
     this.x = 0;
     this.y = 0;
-    this.text = null;
-    this.ball = null;
-    this.shot = 0;
     this.track = 0;
   }
 
   preload() {
     this.load.image('ball', 'assets/BALL.png');
     this.load.image('basket', 'assets/Basket.png');
-    this.load.image('button', 'assets/Next.png');
     this.load.image('wall', 'assets/Wall.png');
+    this.load.image('button', 'assets/Next.png');
   }
 
   create() {
-    // Create sprite and set its initial position
-    this.sprite1 = this.add.sprite(200, 300, 'ball');
-    this.sprite1.setOrigin(0.5);
-    this.sprite1.setScale(.25);
-    this.sprite2 = this.add.sprite(500, 300, 'ball');
-    this.sprite2.setOrigin(0.5);
-    this.sprite2.setScale(.25);
-    // this.wall = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'wall');
-    // this.wall.setOrigin(0.5, 0);
-    // this.wall.setScale(0.01, 10000); // Adjust scale to desired width and height
-    this.wall = this.physics.add.sprite(400, this.cameras.main.centerY, 'wall');
-    // Create a graphics object for drawing the line
-    this.graphics = this.add.graphics();
-    this.graphics.fillStyle(0x800080, 1); // Set fill style to purple
-    this.graphics.fillRect(400, 0, 1, this.cameras.main.height);
-    // Create a wall sprite
-    this.physics.world.enable([this.sprite1, this.sprite2]);
-    this.sprite1.body.setAllowGravity(false);
-    this.sprite2.body.setAllowGravity(false);
-    this.wall.body.setAllowGravity(false);
+   // Set depth to 0
+  this.ball1 = this.physics.add.image(30, 600, 'ball');
+  this.ball2 = this.physics.add.image(450, 30, 'ball');
+  this.wall = this.physics.add.image(400, 300, 'wall');
+  this.wall.body.setImmovable(true);
+  this.wall.setScale(.1,10);
 
-  // Set collisions between sprites and the wall
-    this.physics.add.collider(this.sprite1, this.wall);
-    this.physics.add.collider(this.sprite2, this.wall);
-    this.wall.body.immovable = true;
-    this.wall.body.enable = false;
-    // Enable arrow key input
-    this.cursors = this.input.keyboard.createCursorKeys();
+  this.wall.setScale(.5);
+
+  this.physics.add.collider(this.ball1, this.wall, () => {
+  });
+  this.physics.add.collider(this.ball2, this.wall, () => {
+    //this.scene.start('level2B'); // Replace this with your desired action
+  });
+  this.add.text(150, 10, `Maybe you can knock the walls out of the way with your first attempt`, { font: '16px Arial', fill: '#ffffff' });
+  this.ball1.setScale(0.5);
+  this.ball2.setScale(0.5);
+  this.wall.setScale(.1,10);
+  this.ball1.setBounce(0);
+  this.ball2.setBounce(0);
+  this.wall.setBounce(0);
+  this.ball1.setCollideWorldBounds(true);
+  this.ball2.setCollideWorldBounds(true);
+  this.wall.setCollideWorldBounds(true);
+  // Add collision detection between ball and basket
+
+    let graphics = this.add.graphics();
+    graphics.lineStyle(4, 0xffffff, 1);
+    // detect up and down arrow key presses
+    const cursors = this.input.keyboard.createCursorKeys();
+    this.input.keyboard.on('keydown', (event) => {
+      if (event.code === 'ArrowUp') {
+        this.ball1.setVelocity(0, -100);
+        this.ball2.setVelocity(0, -100);
+      } else if (event.code === 'ArrowDown') {
+        // move ball down
+        this.ball1.setVelocity(0, 100);
+        this.ball2.setVelocity(0, 100);
+      } else if (event.code === 'ArrowLeft') {
+        // move ball left
+        this.ball1.setVelocity(-100, 0);
+        this.ball2.setVelocity(-100, 0);
+      } else if (event.code === 'ArrowRight') {
+        // move ball right
+        this.ball1.setVelocity(100, 0);
+        this.ball2.setVelocity(100, 0);
+      }
+    });
+    this.input.keyboard.on('keyup', (event) => {
+      if (event.code === 'ArrowUp') {
+        this.ball1.setVelocity(0, 0);
+        this.ball2.setVelocity(0, 0);
+      } else if (event.code === 'ArrowDown') {
+        // move ball down
+        this.ball1.setVelocity(0, 0);
+        this.ball2.setVelocity(0, 0);
+      } else if (event.code === 'ArrowLeft') {
+        // move ball left
+        this.ball1.setVelocity(0, 0);
+        this.ball2.setVelocity(0, 0);
+      } else if (event.code === 'ArrowRight') {
+        // move ball right
+        this.ball1.setVelocity(0, 0);
+        this.ball2.setVelocity(0, 0);
+      }
+    });
   }
+
   update() {
-    // Move the sprite2 based on arrow key input
-    if (this.cursors.left.isDown) {
-      this.sprite2.x -= 1; // Move left
-    }
-    if (this.cursors.right.isDown) {
-      this.sprite2.x += 1; // Move right
-    }
-  
-    if (this.cursors.up.isDown) {
-      this.sprite2.y -= 1; // Move up
-    }
-    if (this.cursors.down.isDown) {
-      this.sprite2.y += 1; // Move down
-    }
-  
-    // Get keyboard input
-    var keyboard = this.input.keyboard;
-  
-    // Move the sprite1 based on keyboard input
-    if (keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown) {
-      this.sprite1.x -= 1; // Move left
-    }
-    if (keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).isDown) {
-      this.sprite1.x += 1; // Move right
-    }
-    if (keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).isDown) {
-      this.sprite1.y -= 1; // Move up
-    }
-    if (keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).isDown) {
-      this.sprite1.y += 1; // Move down
-    }
   }
 }
+
   var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -92,7 +97,7 @@ class intro extends Phaser.Scene {
     physics: {
       default: 'arcade',
       arcade: {
-        gravity: { y: 200 }
+        gravity: { y: 0 }
       }
     },
     scene: [intro]
