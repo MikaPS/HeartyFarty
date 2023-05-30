@@ -34,6 +34,7 @@ class Main_Title extends Phaser.Scene {
             this.scene.start("options_screen");
             });
 
+        // we should do a fade in for the title
         let title_text =this.add.text(this.cameras.main.centerX,380, "Title")
             .setFontSize(160)
             .setOrigin(0.5); // using the above coordinates and this function will center
@@ -84,6 +85,7 @@ class Main_Title extends Phaser.Scene {
 
     update(){}
 }
+
 class Start_Screen extends Phaser.Scene {
     constructor() {
         super('start_screen');
@@ -152,6 +154,7 @@ class Start_Screen extends Phaser.Scene {
     }
     update() {}
 }
+
 class Options_Screen extends Phaser.Scene {
     constructor() {
         super('options_screen');
@@ -244,16 +247,31 @@ class Credits_Screen extends Phaser.Scene {
 
     create(data){
         // Go back to main screen
-        this.add.rectangle(1410,80,300,90,0x000000)
+        let credits_back_rect = this.add.rectangle(1410,80,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
             this.scene.start("main_title");
             });
-        this.add.text(1340, 55, "Back").setFontSize(60);
-        this.add.text(this.cameras.main.centerX,this.cameras.main.centerY, "Programming:\nZane Chaplin, Mika Peer Shalem, Lynelle Goh\n\nMusic:\nZane Chaplin\n\nArt:\nSegolen Plihon")
+        credits_back_rect.alpha = 0;
+        
+        let back_text = this.add.text(1340, 55, "Back").setFontSize(60);
+        back_text.alpha = 0;
+
+        // text for the credits
+        let credit_text = this.add.text(this.cameras.main.centerX,this.cameras.main.centerY, "Programming:\nZane Chaplin, Mika Peer Shalem, Lynelle Goh\n\nMusic:\nZane Chaplin\n\nArt:\nSegolen Plihon")
             .setFontSize(58)
             .setOrigin(0.5); // using the above coordinates and this function will center
     
+        credit_text.alpha = 0;
+
+        // tween for the credits text and the back button
+        this.tweens.add({
+            targets: [credit_text, credits_back_rect, back_text],
+            alpha: 1, 
+            duration: 1500, 
+            ease: 'Quart', 
+        });
+          
     }
 
     update(){
