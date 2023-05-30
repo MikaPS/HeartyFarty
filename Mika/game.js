@@ -9,6 +9,7 @@ class Introduction extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.fadeIn(1000);
     // player holding an orb
     this.player = this.add.rectangle(400,400,150,300,0x000000);
     this.orb = this.add.rectangle(500,400,100,100,0xff0000);
@@ -23,12 +24,14 @@ class Introduction extends Phaser.Scene {
       targets: [this.player],
       x: 1000,
       duration: 2500,
+      delay: 1000,
       ease: 'Power2',
     });
     this.tweens.add({
       targets: [this.orb],
       x: 1100,
       duration: 2500,
+      delay: 1000,
       ease: 'Power2',
   });
   this.tweens.add({
@@ -36,7 +39,7 @@ class Introduction extends Phaser.Scene {
     x: 1100,
     width: 50,
     duration: 2000,
-    delay: 1500,
+    delay: 2500,
     ease: 'Power2',
       
   });
@@ -46,7 +49,7 @@ class Introduction extends Phaser.Scene {
     y: 500,
     alpha: 1,
     duration: 2000,
-    delay: 1700,
+    delay: 2700,
     ease: 'Power2',
   });
 
@@ -54,15 +57,19 @@ class Introduction extends Phaser.Scene {
     targets: [this.orb2],
     alpha: 0,
     duration: 2000,
-    delay: 2400,
+    delay: 3400,
     ease: 'Power2',
   });
   this.tweens.add({
     targets: [this.line, this.playerPast, this.orb2Past, this.holePast],
     alpha: 1,
     duration: 2000,
-    delay: 2900,
+    delay: 3900,
     ease: 'Power2',
+    onComplete: () => {
+      this.cameras.main.fadeOut(2000);
+      this.scene.start("ending");
+    }
   });
 
 }
@@ -82,6 +89,7 @@ class Ending extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.fadeIn(1000);
     // player holding an orb
     this.player = this.add.rectangle(1000,400,150,300,0x000000);
     this.orb = this.add.rectangle(1070,400,50,100,0xff0000).setAlpha(1);
@@ -95,19 +103,21 @@ class Ending extends Phaser.Scene {
       targets: [this.orb],
       x: 820,
       duration: 2500,
+      delay: 1000,
       ease: 'Power2',
     });
     this.tweens.add({
       targets: [this.orbPast],
       x: 780,
       duration: 2500,
+      delay: 1000,
       ease: 'Power2',
   });
   this.tweens.add({
     targets: [this.player, this.playerPast],
     x: 720,
     duration: 2000,
-    delay: 1500,
+    delay: 2500,
     ease: 'Power2', 
   }); 
 
@@ -115,8 +125,11 @@ class Ending extends Phaser.Scene {
     targets: [this.line],
     alpha: 0,
     duration: 2000,
-    delay: 2400,
+    delay: 3400,
     ease: 'Power2',
+    onComplete: () => {
+      this.cameras.main.fadeOut(2000);
+    }
   });
 }
  
