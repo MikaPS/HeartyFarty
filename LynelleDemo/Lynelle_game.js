@@ -71,6 +71,20 @@ class Options_Screen extends Phaser.Scene {
             });
         this.add.text(1340, 55, "Back").setFontSize(60);
         // Music on and off text
+        this.onMusic = this.add.rectangle(1210,450,200,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.offMusic.setAlpha(0.25);
+                this.onMusic.setAlpha(1);
+            });
+
+        this.offMusic = this.add.rectangle(1490,450,200,90,0x000000).setAlpha(0.25)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.onMusic.setAlpha(0.25);
+                this.offMusic.setAlpha(1);
+            });
+
         this.add.text(300,450, "Music:")
             .setFontSize(100)
             .setOrigin(0.5);
@@ -88,6 +102,19 @@ class Options_Screen extends Phaser.Scene {
             .setOrigin(0.5);
 
         // Captions
+        this.onCap = this.add.rectangle(1210,850,200,90,0x000000)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            this.offCap.setAlpha(0.25);
+            this.onCap.setAlpha(1);
+        });
+
+        this.offCap = this.add.rectangle(1490,850,200,90,0x000000).setAlpha(0.25)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            this.onCap.setAlpha(0.25);
+            this.offCap.setAlpha(1);
+        });
         this.add.text(600,850, "Closed Captions:")
             .setFontSize(100)
             .setOrigin(0.5);
@@ -137,7 +164,8 @@ class Credits_Screen extends Phaser.Scene {
 }
 
 var config = {
-    scene: [Credits_Screen, Main_Title, Options_Screen],
+    scene: [Main_Title, Credits_Screen, Options_Screen],
+    // scene: [Credits_Screen],
     backgroundColor: 0x43D58C,
     scale: {
         mode: Phaser.Scale.FIT,
