@@ -26,12 +26,12 @@ class Main_Title extends Phaser.Scene {
         this.add.rectangle(this.cameras.main.centerX,920,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            this.scene.start("options_screen");
+            this.scene.start("credits_screen");
             });
         this.add.rectangle(this.cameras.main.centerX,820,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            this.scene.start("credits_screen");
+            this.scene.start("options_screen");options_screen
             });
 
         this.add.text(this.cameras.main.centerX,380, "Title")
