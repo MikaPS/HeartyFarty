@@ -18,37 +18,68 @@ class Main_Title extends Phaser.Scene {
     }
 
     create() {
-        this.add.rectangle(this.cameras.main.centerX,720,300,90,0x000000)
+        let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
             this.scene.start("start_screen");
             });
-        this.add.rectangle(this.cameras.main.centerX,920,300,90,0x000000)
+        let credits_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
             this.scene.start("credits_screen");
             });
-        this.add.rectangle(this.cameras.main.centerX,820,300,90,0x000000)
+        let options_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            this.scene.start("options_screen");options_screen
+            this.scene.start("options_screen");
             });
 
-        this.add.text(this.cameras.main.centerX,380, "Title")
+        let title_text =this.add.text(this.cameras.main.centerX,380, "Title")
             .setFontSize(160)
             .setOrigin(0.5); // using the above coordinates and this function will center
     
-        this.add.text(this.cameras.main.centerX,720, "Play")
+        let play_text =this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Play")
             .setFontSize(60)
             .setOrigin(0.5);
 
-        this.add.text(this.cameras.main.centerX,820, "Options")
+        let options_text = this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Options")
             .setFontSize(60)
             .setOrigin(0.5); 
 
-        this.add.text(this.cameras.main.centerX,920, "Credits")
+        let credits_text =this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Credits")
             .setFontSize(60)
             .setOrigin(0.5); 
+
+        // start of the tweens code
+        this.tweens.add({
+            // tween for play button
+            targets: [start_rect, play_text],
+            x: this.cameras.main.centerX,
+            y: 720,
+            duration: 2000,
+            delay: 500,
+            ease: 'Expo',
+          });
+
+        this.tweens.add({
+            // tween for options button
+            targets: [options_rect, options_text],
+            x: this.cameras.main.centerX,
+            y: 820,
+            duration: 2000,
+            delay: 1000,
+            ease: 'Expo',
+        });
+
+        this.tweens.add({
+            // tween for options button
+            targets: [credits_rect, credits_text],
+            x: this.cameras.main.centerX,
+            y: 920,
+            duration: 2000,
+            delay: 1500,
+            ease: 'Expo',
+        });
     }
 
     update(){}
