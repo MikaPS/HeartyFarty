@@ -18,6 +18,22 @@ class Main_Title extends Phaser.Scene {
     }
 
     create() {
+        this.add.rectangle(this.cameras.main.centerX,720,300,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+            // this.scene.start("start_screen");
+            });
+        this.add.rectangle(this.cameras.main.centerX,920,300,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+            this.scene.start("options_screen");
+            });
+        this.add.rectangle(this.cameras.main.centerX,820,300,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+            this.scene.start("credits_screen");
+            });
+
         this.add.text(this.cameras.main.centerX,380, "Title")
             .setFontSize(160)
             .setOrigin(0.5); // using the above coordinates and this function will center
@@ -47,6 +63,13 @@ class Options_Screen extends Phaser.Scene {
 
     // i want the on and off buttons to be light or dark
     create(){
+        // Go back to main screen
+        this.add.rectangle(1410,80,300,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+            this.scene.start("main_title");
+            });
+        this.add.text(1340, 55, "Back").setFontSize(60);
         // Music on and off text
         this.add.text(300,450, "Music:")
             .setFontSize(100)
@@ -95,6 +118,13 @@ class Credits_Screen extends Phaser.Scene {
     preload(){}
 
     create(data){
+        // Go back to main screen
+        this.add.rectangle(1410,80,300,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+            this.scene.start("main_title");
+            });
+        this.add.text(1340, 55, "Back").setFontSize(60);
         this.add.text(this.cameras.main.centerX,this.cameras.main.centerY, "Programming:\nZane Chaplin, Mika Peer Shalem, Lynelle Goh\n\nMusic:\nZane Chaplin\n\nArt:\nSegolen Plihon")
             .setFontSize(58)
             .setOrigin(0.5); // using the above coordinates and this function will center
@@ -107,7 +137,7 @@ class Credits_Screen extends Phaser.Scene {
 }
 
 var config = {
-    scene: [Main_Title],
+    scene: [Credits_Screen, Main_Title, Options_Screen],
     backgroundColor: 0x43D58C,
     scale: {
         mode: Phaser.Scale.FIT,
