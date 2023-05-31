@@ -16,35 +16,25 @@ class Main_Title extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('clock', 'assets/clock.png');
 
     }
 
     create() {
-        // Clock transition
-        // this.clock = this.add.circle(this.cameras.main.centerX, this.cameras.main.centerY, 100, 0x000000);
-        // this.clockHand = this.add.rectangle(this.cameras.main.centerX, this.cameras.main.centerY, 10, 100, 0xffffff);
-      
-        // this.tweens.add({
-        //     targets: this.clockHand,
-        //     angle: 360,
-        //     duration: 2000, 
-        //     ease: 'Linear',
-        //     repeat: -1, 
-        //     yoyo: true 
-        // });
-        // this.tweens.add({
-        //     targets: [this.clockHand, this.clock],
-        //     scale: 360,
-        //     duration: 55000, 
-        //     ease: 'Linear',
-        //     repeat: -1, 
-        //     // yoyo: true 
-        // });
-
         let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            this.scene.start("start_screen");
+                // Clock transition when clicking the start button
+                this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock");
+            
+                this.tweens.add({
+                    targets: this.clock,
+                    angle: 360,
+                    scale: 3.2,
+                    duration: 2500, 
+                    ease: 'Linear',
+                    onComplete: () => { this.scene.start("start_screen"); }
+                });
             });
         let credits_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
@@ -115,6 +105,17 @@ class Start_Screen extends Phaser.Scene {
     }
     preload() {}
     create() {
+        // Clock transition on entering the scene
+        this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
+
+        this.tweens.add({
+            targets: this.clock,
+            angle: 360,
+            scale: 1,
+            duration: 2500, 
+            ease: 'Linear',
+            onComplete: () => { this.clock.setAlpha(0); }
+        });
         // Music
         this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(0)
             .setInteractive({useHandCursor: true})
