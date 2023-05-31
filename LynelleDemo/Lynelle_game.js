@@ -8,6 +8,8 @@ within the scene flow prototype.
 Prototype demonstrates at least one kind of fancy transition between scenes.
  */
 
+// Global vars to check music status
+let isMusicOn = 1; // 1 = true
 class Main_Title extends Phaser.Scene {
     constructor() {
       super('main_title');
@@ -96,29 +98,35 @@ class Start_Screen extends Phaser.Scene {
         this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(0)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                if (this.music.alpha == 1){
+                if (this.music.alpha > 0){
                     this.scene.start("options_screen");
                 }
             });
         this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(0)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                if (this.musicTxt.alpha == 1){
+                if (this.musicTxt.alpha > 0){
                     this.scene.start("options_screen");
                 }
             });
+        
+
+        // music is turned off
+        this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0);
+        
+
         // Main menu
         this.main = this.add.rectangle(1400,80,80,60,0x000000).setAlpha(0)
         .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                if (this.main.alpha == 1){
+                if (this.main.alpha > 0){
                     this.scene.start("main_title");
                 }
             });
         this.mainTxt = this.add.text(1370, 60, "㊂").setFontSize(50).setAlpha(0)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
-            if (this.mainTxt.alpha == 1){
+            if (this.mainTxt.alpha > 0){
                 this.scene.start("main_title");
             }
         });
@@ -127,10 +135,12 @@ class Start_Screen extends Phaser.Scene {
         this.options = this.add.rectangle(1460,80,190,60,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
+                this.options.setAlpha(0);
+                this.dots.setAlpha(0);
                 this.tweens.add({
                     targets: [this.options, this.dots],
                     alpha: 0,
-                    duration: 2000,
+                    duration: 300,
                     delay: 100,
                     ease: 'Power2',
                     onComplete: () => {
@@ -141,11 +151,22 @@ class Start_Screen extends Phaser.Scene {
                     targets: [this.music, this.main, this.musicTxt, this.mainTxt],
                     alpha: 1,
                     duration: 100,
-                    delay: 300,
+                    delay: 200,
                     ease: 'Power2',
                     onComplete: () => {
                     }
                 });
+                if (isMusicOn == 0) {
+                    this.tweens.add({
+                        targets: [ this.noMusic ],
+                        alpha: 1,
+                        duration: 100,
+                        delay: 200,
+                        ease: 'Power2',
+                        onComplete: () => {
+                        }
+                    });
+                }
             });
         
         
@@ -175,16 +196,25 @@ class Options_Screen extends Phaser.Scene {
         this.onMusic = this.add.rectangle(1210,450,200,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
+                isMusicOn = 1;
                 this.offMusic.setAlpha(0.25);
                 this.onMusic.setAlpha(1);
             });
 
-        this.offMusic = this.add.rectangle(1490,450,200,90,0x000000).setAlpha(0.25)
+        this.offMusic = this.add.rectangle(1490,450,200,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
+                isMusicOn = 0; 
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             });
+            if (isMusicOn == 1) {
+                this.onMusic.setAlpha(1);
+                this.offMusic.setAlpha(0.25);
+            } else {
+                this.onMusic.setAlpha(0.25);
+                this.offMusic.setAlpha(1);
+            }
 
         this.add.text(300,450, "Music:")
             .setFontSize(100)
