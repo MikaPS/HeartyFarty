@@ -20,6 +20,27 @@ class Main_Title extends Phaser.Scene {
     }
 
     create() {
+        // Clock transition
+        // this.clock = this.add.circle(this.cameras.main.centerX, this.cameras.main.centerY, 100, 0x000000);
+        // this.clockHand = this.add.rectangle(this.cameras.main.centerX, this.cameras.main.centerY, 10, 100, 0xffffff);
+      
+        // this.tweens.add({
+        //     targets: this.clockHand,
+        //     angle: 360,
+        //     duration: 2000, 
+        //     ease: 'Linear',
+        //     repeat: -1, 
+        //     yoyo: true 
+        // });
+        // this.tweens.add({
+        //     targets: [this.clockHand, this.clock],
+        //     scale: 360,
+        //     duration: 55000, 
+        //     ease: 'Linear',
+        //     repeat: -1, 
+        //     // yoyo: true 
+        // });
+
         let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
