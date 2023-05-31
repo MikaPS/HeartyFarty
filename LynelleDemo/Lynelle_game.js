@@ -176,7 +176,7 @@ class Start_Screen extends Phaser.Scene {
     update() {}
 }
 
-class Options_Screen extends Phaser.Scene {
+class Options_Screen extends TweenScene {
     constructor() {
         super('options_screen');
     }
@@ -185,13 +185,17 @@ class Options_Screen extends Phaser.Scene {
 
     // i want the on and off buttons to be light or dark
     create(){
+        // creating a text array for the text and button
+        let fade_objects = [];
+
         // Go back to main screen
-        this.add.rectangle(1410,80,300,90,0x000000)
+        let a = this.add.rectangle(1410,80,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
             this.scene.start("main_title");
             });
-        this.add.text(1340, 55, "Back").setFontSize(60);
+        let b = this.add.text(1340, 55, "Back").setFontSize(60);
+
         // Music on and off text
         this.onMusic = this.add.rectangle(1210,450,200,90,0x000000)
             .setInteractive({useHandCursor: true})
@@ -216,19 +220,19 @@ class Options_Screen extends Phaser.Scene {
                 this.offMusic.setAlpha(1);
             }
 
-        this.add.text(300,450, "Music:")
+        let c = this.add.text(300,450, "Music:")
             .setFontSize(100)
             .setOrigin(0.5);
 
-        this.add.text(1200,450, "On")
+        let d =this.add.text(1200,450, "On")
             .setFontSize(100)
             .setOrigin(0.5);
         
-        this.add.text(1490,450, "Off")
+        let e= this.add.text(1490,450, "Off")
             .setFontSize(100)
             .setOrigin(0.5);
 
-        this.add.text(1340,450, " / ")
+        let f=this.add.text(1340,450, " / ")
             .setFontSize(100)
             .setOrigin(0.5);
 
@@ -246,21 +250,42 @@ class Options_Screen extends Phaser.Scene {
             this.onCap.setAlpha(0.25);
             this.offCap.setAlpha(1);
         });
-        this.add.text(600,850, "Closed Captions:")
+        let i =this.add.text(600,850, "Closed Captions:")
             .setFontSize(100)
             .setOrigin(0.5);
 
-        this.add.text(1200,850, "On")
+        let j=this.add.text(1200,850, "On")
             .setFontSize(100)
             .setOrigin(0.5);
         
-        this.add.text(1490,850, "Off")
+        let k=this.add.text(1490,850, "Off")
             .setFontSize(100)
             .setOrigin(0.5);
 
-        this.add.text(1340,850, " / ")
+        let l=this.add.text(1340,850, " / ")
             .setFontSize(100)
             .setOrigin(0.5);
+
+        // push the variables into the array
+        // i am so sorry for its ungliness
+        fade_objects.push(a);
+        fade_objects.push(b);
+        fade_objects.push(f);
+        fade_objects.push(e);
+        fade_objects.push(d);
+        fade_objects.push(c);
+        fade_objects.push(i);
+        fade_objects.push(j);
+        fade_objects.push(k);
+        fade_objects.push(l);
+
+        // make all the objects have an alpha of 0
+        fade_objects.forEach(text => {
+            text.alpha = 0;
+          });
+
+        // tween animation for options text and back button
+        this.fade_in(fade_objects,0,1700);
     }
 
     update(){
@@ -268,7 +293,7 @@ class Options_Screen extends Phaser.Scene {
     }
 }
 
-class Credits_Screen extends Phaser.Scene {
+class Credits_Screen extends TweenScene {
     constructor() {
         super('credits_screen');
     }
@@ -295,12 +320,7 @@ class Credits_Screen extends Phaser.Scene {
         credit_text.alpha = 0;
 
         // tween for the credits text and the back button
-        this.tweens.add({
-            targets: [credit_text, credits_back_rect, back_text],
-            alpha: 1, 
-            duration: 1500, 
-            ease: 'Quart', 
-        });
+        this.fade_in([credit_text, credits_back_rect, back_text],0,1700 );
           
     }
 
@@ -310,8 +330,8 @@ class Credits_Screen extends Phaser.Scene {
 }
 
 var config = {
-    scene: [Main_Title, Credits_Screen, Options_Screen, Start_Screen],
-    // scene: [Start_Screen],
+    scene: [Main_Title,Start_Screen, Credits_Screen, Options_Screen],
+    // scene: [Main_Title,Start_Screen, Credits_Screen, Options_Screen],
     backgroundColor: 0x43D58C,
     scale: {
         mode: Phaser.Scale.FIT,
