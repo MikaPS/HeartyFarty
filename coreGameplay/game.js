@@ -8,7 +8,7 @@ class intro extends Phaser.Scene {
     this.x = 0;
     this.y = 0;
     this.track = 0;
-    this.currentSide = 1; // 0 past, 1 present
+    this.currentSide = 1; // 0 present, 1 past
   }
 
   preload() {
@@ -22,20 +22,23 @@ class intro extends Phaser.Scene {
 
   create() {
     // Background
-    this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
+    this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
     this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
+
+      
+
 
   // Switch between past/present. Clicking on each side of the screen switches the current view
   this.present = this.add.rectangle(395,600,800,1200,0x000000).setDepth(-2)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
-        this.currentSide = 1;
+        this.currentSide = 0;
     });
   this.past = this.add.rectangle(1200,600,800,1200,0x00000).setDepth(-2)
     .setInteractive({useHandCursor: true})  
     .on('pointerdown', () => {
-      this.currentSide = 0;
+      this.currentSide = 1;
     });
 
   // Level 1 design
@@ -94,10 +97,24 @@ class intro extends Phaser.Scene {
   this.ball1.setCollideWorldBounds(true);
   this.ball2.setCollideWorldBounds(true);
   this.wall.setCollideWorldBounds(true);
+
+      // On screen controllers
+      this.pastRightKey = this.add.rectangle(1520,1120,75,75, 0xff0000);
+      this.pastDownKey = this.add.rectangle(1420,1120,75,75, 0xff0000)        
+      this.pastLeftKey = this.add.rectangle(1320,1120,75,75, 0xff0000);
+      this.pastUpKey = this.add.rectangle(1420,1020,75,75, 0xff0000);
+      this.presentRightKey = this.add.rectangle(1520,1120,75,75, 0xff0000);
+      this.presentDownKey = this.add.rectangle(1420,1120,75,75, 0xff0000)        
+      this.presentLeftKey = this.add.rectangle(1320,1120,75,75, 0xff0000);
+      this.presentUpKey = this.add.rectangle(1420,1020,75,75, 0xff0000);
+
+
+      
   // Add collision detection between ball and basket
     let graphics = this.add.graphics();
     graphics.lineStyle(4, 0xffffff, 1);
     // detect up and down arrow key presses
+
     const cursors = this.input.keyboard.createCursorKeys();
     this.input.keyboard.on('keydown', (event) => {
       // if current side is the past, can control both characters
@@ -181,6 +198,20 @@ class intro extends Phaser.Scene {
   }
 
   update() {
+    // On screen controllers 
+    if (this.currentSide == 1) {
+      this.pastKeyboardMovement(this.pastRightKey, this.ball1, this.ball2,150,0);
+      this.pastKeyboardMovement(this.pastLeftKey, this.ball1, this.ball2,-150,0);
+      this.pastKeyboardMovement(this.pastUpKey, this.ball1, this.ball2,0,-150);
+      this.pastKeyboardMovement(this.pastDownKey, this.ball1, this.ball2,0,150);
+    }
+    else {
+      this.presentKeyboardMovement(this.presentRightKey, this.ball1,150,0);
+      this.presentKeyboardMovement(this.presentLeftKey, this.ball1,-150,0);
+      this.presentKeyboardMovement(this.presentUpKey, this.ball1,0,-150);
+      this.presentKeyboardMovement(this.presentDownKey, this.ball1,0,150);
+    }
+
     // checking collision with button to remove the objects upon collision
     if (this.isButtonOn == true) {
       this.button1.setAlpha(0);
@@ -188,6 +219,41 @@ class intro extends Phaser.Scene {
       this.physics.world.removeCollider(this.button1Collision);
       this.physics.world.removeCollider(this.button2Collision);
     }
+  }
+
+  
+  pastKeyboardMovement(item, ball1, ball2, vel1, vel2) {
+    this.presentRightKey.disableInteractive();
+    this.presentLeftKey.disableInteractive();
+    this.presentUpKey.disableInteractive();
+    this.presentDownKey.disableInteractive();
+
+    item.setInteractive()
+    .on('pointerdown', () => {
+      ball1.setVelocity(vel1, vel2);
+      ball2.setVelocity(vel1, vel2);
+    })
+    .on('pointerup', () => {
+      // Stop player when button is released
+      ball1.setVelocity(0);
+      ball2.setVelocity(0);
+    });
+  }
+
+  presentKeyboardMovement(item, ball1, vel1, vel2) {
+    this.pastRightKey.disableInteractive();
+    this.pastLeftKey.disableInteractive();
+    this.pastUpKey.disableInteractive();
+    this.pastDownKey.disableInteractive();
+
+    item.setInteractive()
+    .on('pointerdown', () => {
+      ball1.setVelocity(vel1, vel2);
+    })
+    .on('pointerup', () => {
+      // Stop player when button is released
+      ball1.setVelocity(0);
+    });
   }
 }
 
