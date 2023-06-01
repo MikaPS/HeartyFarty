@@ -174,8 +174,48 @@ class Ending extends Phaser.Scene {
   update() { }
 }
 
+class SplashScreen extends TweenScene {
+  constructor() {
+    super('splash_screen');
+    
+  }
+
+  create () {
+    // Calculate the position to center the square horizontally
+    var x = (this.cameras.main.width - 250) / 2;
+
+    // Calculate the position to center the square vertically
+    var y = (this.cameras.main.height - 250) / 2;
+
+    // adding in a white square
+    this.graphics = this.add.graphics();
+
+    this.graphics.fillStyle(0xffffff);
+
+    let white_square = this.graphics.fillRect(x,y,250,250);
+    white_square.alpha = 0;
+
+    // adding text onto the white square
+    let splash_text = this.add.text(this.cameras.main.centerX,this.cameras.main.centerY, "LMSZ")
+      .setFontSize(100)
+      .setOrigin(0.5)
+      .setAlpha(0);
+    splash_text.setStyle({ color: '#000000' });
+
+    // fade in and fade out the logo
+    this.fade_in([splash_text,white_square], 0,2500);
+    this.fade_out([splash_text, white_square], 2600,2500);
+
+    // go to the main menu...which we need to add
+    this.time.delayedCall(3500, function() {
+      this.scene.start('introduction');
+    }, [], this);
+  }
+}
+
 var config = {
-  scene: [Introduction,Ending],
+  scene: [SplashScreen, Introduction,Ending],
+  // scene: [SplashScreen, Introduction,Ending],
   backgroundColor: 0x43D58C,
   scale: {
       mode: Phaser.Scale.FIT,
