@@ -10,17 +10,37 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 
 // Global vars to check music status
 let isMusicOn = 1; // 1 = true
-class Main_Title extends Phaser.Scene {
+class Main_Title extends TweenScene {
     constructor() {
       super('main_title');
     }
 
     preload() {
         this.load.image('clock', 'assets/clock.png');
+        this.load.image('forest', 'assets/forest_path.png');
+        this.load.image('leftorb', 'assets/Leftorb.png');
+        this.load.image('rightorb', 'assets/Rightorb.png');
+        this.load.image('orb', 'assets/Crackedorb.png');
 
     }
 
     create() {
+        // background stuff
+        this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
+        this.cameras.main.setBackgroundColor('#000000');
+        this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
+        // this.orbLeft = this.add.image(400,300, 'leftorb').setScale(0.3).setAngle(20) // left side
+        // this.orbRight = this.add.image(1200,450, 'rightorb').setScale(0.3).setAngle(20) // right side
+    
+        this.orb = this.add.image(800,400, 'orb').setScale(0.3); // cracked orb
+        this.orbRight = this.add.image(850,400, 'rightorb').setScale(0.3).setAngle(20).setAlpha(0); // right side
+        this.orbLeft = this.add.image(750,400, 'leftorb').setScale(0.3).setAngle(20).setAlpha(0); // left side
+        this.fade_out(this.orb,100,2000);
+        this.fade_in([this.orbLeft, this.orbRight],600,1000);
+        this.move(this.orbRight,600,2000,1200,450);
+        this.move(this.orbLeft,600,2000,400,300);
+
+
         let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
