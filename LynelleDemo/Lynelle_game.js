@@ -114,6 +114,28 @@ class Main_Title extends TweenScene {
             delay: 1500,
             ease: 'Expo',
         });
+
+        // bouncing tween for right orb
+        this.tweens.add({
+            targets: [this.orbRight],
+            y: '+=100', // Adjust the distance as desired
+            duration: 2000, // Adjust the duration as desired
+            ease: 'Sine.easeInOut',
+            delay: 2000,
+            yoyo: true,
+            repeat: -1 // Set to -1 for infinite repeat
+        });
+
+        // bouncing tween for left orb
+        this.tweens.add({
+            targets: [this.orbLeft],
+            y: '-=100', // Adjust the distance as desired
+            duration: 2000, // Adjust the duration as desired
+            ease: 'Sine.easeInOut',
+            delay: 2000,
+            yoyo: true,
+            repeat: -1 // Set to -1 for infinite repeat
+        });
     }
 
     update(){}
