@@ -393,9 +393,34 @@ class Credits_Screen extends TweenScene {
     }
 }
 
+class Ending_Credits_Screen extends Phaser.Scene {
+    constructor() {
+        super('end_credits_screen');
+    }
+
+    create() {
+
+        // create the text
+        let end_credit_text = this.add.text(this.cameras.main.centerX,this.cameras.main.height + 230, "Programming:\nZane Chaplin, Mika Peer Shalem, Lynelle Goh\n\nMusic:\nZane Chaplin\n\nArt:\nSegolen Plihon")
+            .setFontSize(58)
+            .setOrigin(0.5); 
+
+        // tween to slide the text all the way up and destroy
+        this.tweens.add({
+            targets: end_credit_text,
+            y: -end_credit_text.height,
+            duration: 10000,
+            ease: 'Linear',
+            onComplete: function () {
+                end_credit_text.destroy();
+            }
+        });
+    }
+}
+
 var config = {
-    scene: [Main_Title,Start_Screen, Credits_Screen, Options_Screen],
-    // scene: [Main_Title,Start_Screen, Credits_Screen, Options_Screen],
+    scene: [Main_Title,Start_Screen, Credits_Screen, Options_Screen, Ending_Credits_Screen],
+    // Main_Title,Start_Screen, Credits_Screen, Options_Screen, Ending_Credits_Screen
     backgroundColor: 0x43D58C,
     scale: {
         mode: Phaser.Scale.FIT,
