@@ -21,11 +21,12 @@ class intro extends Phaser.Scene {
   }
 
   create() {
+    // Background
     this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
     this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
 
-  // Switch between past/present 
+  // Switch between past/present. Clicking on each side of the screen switches the current view
   this.present = this.add.rectangle(395,600,800,1200,0x000000).setDepth(-2)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
@@ -48,7 +49,7 @@ class intro extends Phaser.Scene {
   // Button for both players, but in the past it's usable, and in the future it isn't
   this.button1 = this.physics.add.image(150, 500, 'wall');
   this.button1.body.setImmovable(true);
-  this.button1.setScale(.5,.1).setAlpha(0.6); // The idea is that overtime, something covered the button in the present
+  this.button1.setScale(.5,.1).setAlpha(0.6); // The idea is that over time, something covered the button in the present
   this.button2 = this.physics.add.image(950, 500, 'wall');
   this.button2.body.setImmovable(true);
   this.button2.setScale(.5,.1); 
@@ -75,6 +76,7 @@ class intro extends Phaser.Scene {
   this.button1Collision = this.physics.add.collider(this.ball1, this.button1, () => {
     
   });
+  // Colliding with second button will remove the gates and buttons
   this.button2Collision = this.physics.add.collider(this.ball2, this.button2, () => {
     this.gate1.setAlpha(0);
     this.gate2.setAlpha(0);
@@ -82,7 +84,6 @@ class intro extends Phaser.Scene {
     this.physics.world.removeCollider(this.gate2Collision);
     this.isButtonOn = true;
   });
-
 
   this.ball1.setScale(0.7);
   this.ball2.setScale(0.7);
@@ -94,12 +95,12 @@ class intro extends Phaser.Scene {
   this.ball2.setCollideWorldBounds(true);
   this.wall.setCollideWorldBounds(true);
   // Add collision detection between ball and basket
-
     let graphics = this.add.graphics();
     graphics.lineStyle(4, 0xffffff, 1);
     // detect up and down arrow key presses
     const cursors = this.input.keyboard.createCursorKeys();
     this.input.keyboard.on('keydown', (event) => {
+      // if current side is the past, can control both characters
       if (this.currentSide == 0) {
         if (event.code === 'ArrowUp') {
           this.ball1.setVelocity(0, -150);
@@ -117,6 +118,7 @@ class intro extends Phaser.Scene {
           this.ball1.setVelocity(150, 0);
           this.ball2.setVelocity(150, 0);
         }
+      // if current side is the present, can control one character
       } else {
         if (event.code === 'ArrowUp') {
           // stop moving left
@@ -179,6 +181,7 @@ class intro extends Phaser.Scene {
   }
 
   update() {
+    // checking collision with button to remove the objects upon collision
     if (this.isButtonOn == true) {
       this.button1.setAlpha(0);
       this.button2.setAlpha(0);
