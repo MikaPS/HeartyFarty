@@ -42,7 +42,7 @@ class intro extends Phaser.Scene {
       targets: this.graphics,
       delay: 1300,
       duration: 1000, 
-      scaleX: 0.009, 
+      scaleX: 0.001, 
       scaleY: 1, 
       x: this.cameras.main.centerX,
       ease: 'Quad.easeInOut', 
