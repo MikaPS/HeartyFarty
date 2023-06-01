@@ -35,7 +35,7 @@ class Main_Title extends TweenScene {
         this.orb = this.add.image(800,400, 'orb').setScale(0.3); // cracked orb
         this.orbRight = this.add.image(850,400, 'rightorb').setScale(0.3).setAngle(20).setAlpha(0); // right side
         this.orbLeft = this.add.image(750,400, 'leftorb').setScale(0.3).setAngle(20).setAlpha(0); // left side
-        this.fade_out(this.orb,100,2000);
+        this.fade_out(this.orb,200,2500);
         this.fade_in([this.orbLeft, this.orbRight],600,1000);
         this.move(this.orbRight,600,2000,1200,450);
         this.move(this.orbLeft,600,2000,400,300);

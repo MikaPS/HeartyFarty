@@ -41,17 +41,17 @@ class intro extends Phaser.Scene {
   // Create a gate for both players
   this.gate1 = this.physics.add.image(400, 600, 'wall');
   this.gate1.body.setImmovable(true);
-  this.gate1.setScale(3,.1);
+  this.gate1.setScale(7.5,.1);
   this.gate2 = this.physics.add.image(1200, 600, 'wall');
   this.gate2.body.setImmovable(true);
-  this.gate2.setScale(3,.1);
+  this.gate2.setScale(7.5,.1);
   // Button for both players, but in the past it's usable, and in the future it isn't
-  this.button1 = this.physics.add.image(150, 600, 'wall');
+  this.button1 = this.physics.add.image(150, 500, 'wall');
   this.button1.body.setImmovable(true);
-  this.button1.setScale(.5,.1).setAlpha(0.5);
-  this.button2 = this.physics.add.image(950, 600, 'wall');
+  this.button1.setScale(.5,.1).setAlpha(0.6); // The idea is that overtime, something covered the button in the present
+  this.button2 = this.physics.add.image(950, 500, 'wall');
   this.button2.body.setImmovable(true);
-  this.button2.setScale(.5,.1); // The idea is that overtime, something covered the button in the present
+  this.button2.setScale(.5,.1); 
 
    // Set depth to 0
   this.ball1 = this.physics.add.image(430, 330, 'ball');
@@ -102,38 +102,38 @@ class intro extends Phaser.Scene {
     this.input.keyboard.on('keydown', (event) => {
       if (this.currentSide == 0) {
         if (event.code === 'ArrowUp') {
-          this.ball1.setVelocity(0, -100);
-          this.ball2.setVelocity(0, -100);
+          this.ball1.setVelocity(0, -150);
+          this.ball2.setVelocity(0, -150);
         } else if (event.code === 'ArrowDown') {
           // move ball down
-          this.ball1.setVelocity(0, 100);
-          this.ball2.setVelocity(0, 100);
+          this.ball1.setVelocity(0, 150);
+          this.ball2.setVelocity(0, 150);
         } else if (event.code === 'ArrowLeft') {
           // move ball left
-          this.ball1.setVelocity(-100, 0);
-          this.ball2.setVelocity(-100, 0);
+          this.ball1.setVelocity(-150, 0);
+          this.ball2.setVelocity(-150, 0);
         } else if (event.code === 'ArrowRight') {
           // move ball right
-          this.ball1.setVelocity(100, 0);
-          this.ball2.setVelocity(100, 0);
+          this.ball1.setVelocity(150, 0);
+          this.ball2.setVelocity(150, 0);
         }
       } else {
         if (event.code === 'ArrowUp') {
           // stop moving left
-          this.ball1.setVelocity(0, -100);
+          this.ball1.setVelocity(0, -150);
         }
         else if (event.code === 'ArrowDown') {
           // stop moving right
-          this.ball1.setVelocity(0, 100);
+          this.ball1.setVelocity(0, 150);
         }
       
         else if (event.code === 'ArrowLeft') {
           // stop moving up
-          this.ball1.setVelocity(-100, 0);
+          this.ball1.setVelocity(-150, 0);
         }
         else if (event.code === 'ArrowRight') {
           // stop moving down
-          this.ball1.setVelocity(100, 0);
+          this.ball1.setVelocity(150, 0);
         }
       }
     });
