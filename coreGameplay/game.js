@@ -21,6 +21,34 @@ class intro extends Phaser.Scene {
   }
 
   create() {
+
+    // Calculate the position to center the square horizontally
+    var x = (this.cameras.main.width - 2000) / 2;
+
+    // Calculate the position to center the square vertically
+    var y = (this.cameras.main.height - 1500) / 2;
+
+    this.graphics = this.add.graphics();
+    this.graphics.fillStyle(0xc67aff);
+
+    // add in square that fills the scene
+    let large_rect = this.graphics.fillRect(x,y,2000,1500);
+
+    // fade in the scene
+    this.cameras.main.fadeIn(1800, 0, 0, 0);
+
+    // tween to squish the rectangle into the diving line
+    this.tweens.add({
+      targets: this.graphics,
+      delay: 1300,
+      duration: 1000, 
+      scaleX: 0.009, 
+      scaleY: 1, 
+      x: this.cameras.main.centerX,
+      ease: 'Quad.easeInOut', 
+    });
+    
+
     // Background
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
