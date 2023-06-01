@@ -33,12 +33,12 @@ class intro extends Phaser.Scene {
   this.present = this.add.rectangle(395,600,800,1200,0x000000).setDepth(-2)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
-        this.currentSide = 0;
+        this.currentSide = 1;
     });
   this.past = this.add.rectangle(1200,600,800,1200,0x00000).setDepth(-2)
     .setInteractive({useHandCursor: true})  
     .on('pointerdown', () => {
-      this.currentSide = 1;
+      this.currentSide = 0;
     });
 
   // Level 1 design
@@ -199,7 +199,7 @@ class intro extends Phaser.Scene {
 
   update() {
     // On screen controllers 
-    if (this.currentSide == 1) {
+    if (this.currentSide == 0) {
       this.pastKeyboardMovement(this.pastRightKey, this.ball1, this.ball2,150,0);
       this.pastKeyboardMovement(this.pastLeftKey, this.ball1, this.ball2,-150,0);
       this.pastKeyboardMovement(this.pastUpKey, this.ball1, this.ball2,0,-150);
