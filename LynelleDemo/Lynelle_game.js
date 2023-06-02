@@ -151,7 +151,7 @@ class Main_Title extends TweenScene {
     update(){}
 }
 
-class Start_Screen extends Phaser.Scene {
+class Start_Screen extends TweenScene {
     constructor() {
         super('start_screen');
     }
@@ -162,14 +162,17 @@ class Start_Screen extends Phaser.Scene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 if (this.music.alpha > 0){
-                    this.scene.start("options_screen");
+                    this.cameras.main.fadeOut(900);
+                    this.time.delayedCall(900, () => this.scene.start('options_screen'));
+
                 }
             });
         this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(0)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 if (this.musicTxt.alpha > 0){
-                    this.scene.start("options_screen");
+                    this.cameras.main.fadeOut(900);
+                    this.time.delayedCall(900, () => this.scene.start('options_screen'));
                 }
             });
         
@@ -183,14 +186,16 @@ class Start_Screen extends Phaser.Scene {
         .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 if (this.main.alpha > 0){
-                    this.scene.start("main_title");
+                    this.cameras.main.fadeOut(900);
+                    this.time.delayedCall(900, () => this.scene.start('main_title'));
                 }
             });
         this.mainTxt = this.add.text(1370, 60, "㊂").setFontSize(50).setAlpha(0)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
             if (this.mainTxt.alpha > 0){
-                this.scene.start("main_title");
+                this.cameras.main.fadeOut(900);
+                this.time.delayedCall(900, () => this.scene.start('main_title'));
             }
         });
 
@@ -200,35 +205,10 @@ class Start_Screen extends Phaser.Scene {
             .on('pointerdown', () => {
                 this.options.setAlpha(0);
                 this.dots.setAlpha(0);
-                this.tweens.add({
-                    targets: [this.options, this.dots],
-                    alpha: 0,
-                    duration: 300,
-                    delay: 100,
-                    ease: 'Power2',
-                    onComplete: () => {
-                    }
-                });
-
-                this.tweens.add({
-                    targets: [this.music, this.main, this.musicTxt, this.mainTxt],
-                    alpha: 1,
-                    duration: 100,
-                    delay: 200,
-                    ease: 'Power2',
-                    onComplete: () => {
-                    }
-                });
+                this.fade_out([this.options, this.dots], 100, 300);
+                this.fade_in([this.music, this.main, this.musicTxt, this.mainTxt], 200, 100);
                 if (isMusicOn == 0) {
-                    this.tweens.add({
-                        targets: [ this.noMusic ],
-                        alpha: 1,
-                        duration: 100,
-                        delay: 200,
-                        ease: 'Power2',
-                        onComplete: () => {
-                        }
-                    });
+                    this.fade_in(this.noMusic, 100, 200);
                 }
             });
         
