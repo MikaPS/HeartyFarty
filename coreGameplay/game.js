@@ -3,11 +3,6 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
     super(scene, x, y, texture);
     scene.add.existing(this);
   }
-
-  // Add any custom methods or behavior specific to your prefab
-  customMethod() {
-    // ...
-  }
 }
 
 
@@ -28,16 +23,14 @@ class Victory extends Phaser.Scene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 2;
-          this.cameras.main.fade(500, 0,0,0);
-          this.time.delayedCall(500, () => this.scene.start('intro'));
+          this.sceneTransition("intro");
         });
     } else {
       this.add.text(600,600,"Restart?").setFontSize(80)
         .setInteractive()
         .on('pointerdown', () => {
           level = 1;
-          this.cameras.main.fade(500, 0,0,0);
-          this.time.delayedCall(500, () => this.scene.start('intro'));
+          this.sceneTransition("intro");
         });
     }
   }
@@ -56,14 +49,13 @@ class Losing extends Phaser.Scene {
     this.add.text(600,600,"Restart?").setFontSize(80)
       .setInteractive()
       .on('pointerdown', () => {
-        this.cameras.main.fade(500, 0,0,0);
-        this.time.delayedCall(500, () => this.scene.start('intro'));
+        this.sceneTransition("intro");
       });
   }
 }
 
 
-class Intro extends Phaser.Scene {
+class Intro extends TweenScene {
   constructor() {
     super('intro');
     this.left = false;
@@ -74,6 +66,8 @@ class Intro extends Phaser.Scene {
     this.y = 0;
     this.track = 0;
     this.currentSide = 1; // 0 present, 1 past
+    this.ball1;
+    this.ball2;
     // level = 1;
   }
 
@@ -90,9 +84,6 @@ class Intro extends Phaser.Scene {
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
     this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
-
-    // prefab
-    const myPrefab = new WaterPrefab(this, 200,200, 'water');
 
     // Switch between past/present. Clicking on each side of the screen switches the current view
     this.present = this.add.rectangle(395,600,800,1200,0x000000).setDepth(-2)
@@ -118,9 +109,9 @@ class Intro extends Phaser.Scene {
     this.physics.add.collider(this.ball2, this.wall, () => {
     });
 
-    this.ball1.setScale(0.7);
-    this.ball2.setScale(0.7);
-    this.wall.setScale(.1,10);
+    this.ball1.setScale(0.7).setDepth(1);
+    this.ball2.setScale(0.7).setDepth(1);
+    this.wall.setScale(.1,10).setDepth(1);
     this.ball1.setBounce(0);
     this.ball2.setBounce(0);
     this.wall.setBounce(0);
@@ -192,8 +183,7 @@ class Intro extends Phaser.Scene {
       this.add.rectangle(220,500,40,40,0xff0000);
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
-        this.cameras.main.fade(500, 0,0,0);
-        this.time.delayedCall(500, () => this.scene.start('losing'));
+        this.sceneTransition("losing");
       });
 
       // Gate collision
@@ -214,6 +204,16 @@ class Intro extends Phaser.Scene {
         this.physics.world.removeCollider(this.gate2Collision);
         this.isButtonOn = true;
       });
+    }
+    if (level == 3) {
+      // prefab
+      this.water = this.add.rectangle(75, 1120, 75, 75, 0x00ffff)
+        .setInteractive()
+        .on('pointerdown', () => {
+          this.createWater();
+        });      
+
+      this.dirt = this.physics.add.image(1400, 550, "wall").setScale(0.65,0.25);
     }
 
 
@@ -314,8 +314,7 @@ class Intro extends Phaser.Scene {
   update() {
     // Move to new levels
     if (this.ball1.y >= 1150 && this.ball2.y >= 1150) {
-        this.cameras.main.fade(500, 0,0,0);
-        this.time.delayedCall(500, () => this.scene.start('victory'));
+      this.sceneTransition("victory");
     }
     // On screen controllers 
     if (this.currentSide == 0) {
@@ -342,6 +341,31 @@ class Intro extends Phaser.Scene {
     // }
   }
 
+  createWater() {
+    // Define the x and y positions for the prefabs
+    const prefabPositions = [
+      { x: this.ball2.x+70, y: this.ball2.y-10 },
+      { x: this.ball2.x+110, y: this.ball2.y-30 },
+      { x: this.ball2.x+170, y: this.ball2.y-10 }
+      // Add more positions as needed
+    ];
+
+    // Instantiate the prefab at each position
+    for (const position of prefabPositions) {
+      const prefab = new WaterPrefab(this, position.x, position.y, 'water');
+      prefab.rotation = Phaser.Math.DegToRad(-45);
+      this.time.addEvent({
+        delay: 1500, 
+        callback: () => { prefab.destroy(); }, 
+      });
+      this.physics.world.enable(prefab);
+      this.gate2Collision = this.physics.add.collider(this.dirt, prefab, () => {
+        this.add.rectangle(500,600,200,200,0x00ff00);
+      });
+    }
+    
+
+  }
   
   pastKeyboardMovement(item, ball1, ball2, vel1, vel2) {
     this.presentRightKey.disableInteractive();
