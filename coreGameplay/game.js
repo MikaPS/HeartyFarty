@@ -4,7 +4,7 @@ class Victory extends Phaser.Scene {
     super('victory');
   }
   preload() {
-    this.load.image('forest', 'assets/forest_path.png');
+    this.load.image('forest', '../assets/forest_path.png');
   }
   create() {
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
@@ -34,7 +34,7 @@ class Losing extends Phaser.Scene {
     super('losing');
   }
   preload() {
-    this.load.image('forest', 'assets/forest_path.png');
+    this.load.image('forest', '../assets/forest_path.png');
   }
   create() {
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
@@ -64,11 +64,11 @@ class Intro extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('ball', 'assets/BALL.png');
-    this.load.image('basket', 'assets/Basket.png');
-    this.load.image('wall', 'assets/Wall.png');
-    this.load.image('button', 'assets/Next.png');
-    this.load.image('forest', 'assets/forest_path.png');
+    this.load.image('ball', '../assets/BALL.png');
+    this.load.image('basket', '../assets/Basket.png');
+    this.load.image('wall', '../assets/Wall.png');
+    this.load.image('button', '../assets/Next.png');
+    this.load.image('forest', '../assets/forest_path.png');
 
   }
 
