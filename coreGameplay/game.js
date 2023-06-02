@@ -1,3 +1,17 @@
+class WaterPrefab extends Phaser.GameObjects.Sprite {
+  constructor(scene, x, y, texture) {
+    super(scene, x, y, texture);
+    scene.add.existing(this);
+  }
+
+  // Add any custom methods or behavior specific to your prefab
+  customMethod() {
+    // ...
+  }
+}
+
+
+
 let level = 1;
 class Victory extends Phaser.Scene {
   constructor() {
@@ -65,10 +79,9 @@ class Intro extends Phaser.Scene {
 
   preload() {
     this.load.image('ball', '../assets/BALL.png');
-    this.load.image('basket', '../assets/Basket.png');
     this.load.image('wall', '../assets/Wall.png');
-    this.load.image('button', '../assets/Next.png');
     this.load.image('forest', '../assets/forest_path.png');
+    this.load.image('water', '../assets/water3.png');
 
   }
 
@@ -77,6 +90,9 @@ class Intro extends Phaser.Scene {
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
     this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
+
+    // prefab
+    const myPrefab = new WaterPrefab(this, 200,200, 'water');
 
     // Switch between past/present. Clicking on each side of the screen switches the current view
     this.present = this.add.rectangle(395,600,800,1200,0x000000).setDepth(-2)
