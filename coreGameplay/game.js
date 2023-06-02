@@ -8,7 +8,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
 
 
 let level = 1;
-class Victory extends Phaser.Scene {
+class Victory extends TweenScene {
   constructor() {
     super('victory');
   }
@@ -25,7 +25,16 @@ class Victory extends Phaser.Scene {
           level = 2;
           this.sceneTransition("intro");
         });
-    } else {
+    }
+    if (level == 2) {
+      this.add.text(600,600,"Next level?").setFontSize(80)
+        .setInteractive()
+        .on('pointerdown', () => {
+          level = 3;
+          this.sceneTransition("intro");
+        });
+    }
+    if (level == 3) {
       this.add.text(600,600,"Restart?").setFontSize(80)
         .setInteractive()
         .on('pointerdown', () => {
@@ -36,7 +45,7 @@ class Victory extends Phaser.Scene {
   }
 }
 
-class Losing extends Phaser.Scene {
+class Losing extends TweenScene {
   constructor() {
     super('losing');
   }
@@ -207,7 +216,7 @@ class Intro extends TweenScene {
     }
     if (level == 3) {
       // prefab
-      this.water = this.add.rectangle(75, 1120, 75, 75, 0x00ffff)
+      this.water = this.add.rectangle(1520,1120,75,75, 0x00ffff)
         .setInteractive()
         .on('pointerdown', () => {
           this.createWater();
@@ -218,14 +227,14 @@ class Intro extends TweenScene {
 
 
     // On screen controllers
-    this.pastRightKey = this.add.rectangle(1520,1120,75,75, 0xff0000);
-    this.pastDownKey = this.add.rectangle(1420,1120,75,75, 0xff0000)        
-    this.pastLeftKey = this.add.rectangle(1320,1120,75,75, 0xff0000);
-    this.pastUpKey = this.add.rectangle(1420,1020,75,75, 0xff0000);
-    this.presentRightKey = this.add.rectangle(1520,1120,75,75, 0xff0000);
-    this.presentDownKey = this.add.rectangle(1420,1120,75,75, 0xff0000)        
-    this.presentLeftKey = this.add.rectangle(1320,1120,75,75, 0xff0000);
-    this.presentUpKey = this.add.rectangle(1420,1020,75,75, 0xff0000);
+    this.pastRightKey = this.add.rectangle(275,1120,75,75, 0xff0000);
+    this.pastDownKey = this.add.rectangle(175,1120,75,75, 0xff0000)        
+    this.pastLeftKey = this.add.rectangle(75,1120,75,75, 0xff0000);
+    this.pastUpKey = this.add.rectangle(175,1020,75,75, 0xff0000);
+    this.presentRightKey = this.add.rectangle(275,1120,75,75, 0xff0000);
+    this.presentDownKey = this.add.rectangle(175,1120,75,75, 0xff0000)        
+    this.presentLeftKey = this.add.rectangle(75,1120,75,75, 0xff0000);
+    this.presentUpKey = this.add.rectangle(175,1020,75,75, 0xff0000);
 
 
     // detect up and down arrow key presses
@@ -360,7 +369,7 @@ class Intro extends TweenScene {
       });
       this.physics.world.enable(prefab);
       this.gate2Collision = this.physics.add.collider(this.dirt, prefab, () => {
-        this.add.rectangle(500,600,200,200,0x00ff00);
+        this.add.rectangle(500,1200,200,200,0x00ff00);
       });
     }
     
