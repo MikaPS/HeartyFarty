@@ -16,11 +16,11 @@ class Main_Title extends TweenScene {
     }
 
     preload() {
-        this.load.image('clock', 'assets/clock.png');
-        this.load.image('forest', 'assets/forest_path.png');
-        this.load.image('leftorb', 'assets/Leftorb.png');
-        this.load.image('rightorb', 'assets/Rightorb.png');
-        this.load.image('orb', 'assets/Crackedorb.png');
+        this.load.image('clock', '../assets/Fullclock.png');
+        this.load.image('forest', '../assets/forest_path.png');
+        this.load.image('leftorb', '../assets/Leftorb.png');
+        this.load.image('rightorb', '../assets/Rightorb.png');
+        this.load.image('orb', '../assets/Crackedorb.png');
 
     }
 
@@ -44,27 +44,37 @@ class Main_Title extends TweenScene {
         let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                // Clock transition when clicking the start button
-                this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock");
-            
-                this.tweens.add({
-                    targets: this.clock,
-                    angle: 360,
-                    scale: 3.2,
-                    duration: 2500, 
-                    ease: 'Linear',
-                    onComplete: () => { this.scene.start("start_screen"); }
-                });
+                this.scene.start("start_screen");
             });
         let credits_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            this.scene.start("credits_screen");
+                // Clock transition when clicking the start button
+                this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(0.05);
+            
+                this.tweens.add({
+                    targets: this.clock,
+                    angle: 360,
+                    scale: 2.8,
+                    duration: 3750, 
+                    ease: 'Linear',
+                    onComplete: () => { this.scene.start("credits_screen"); }
+                });
             });
         let options_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-            this.scene.start("options_screen");
+                // Clock transition when clicking the start button
+                this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(0.05);
+            
+                this.tweens.add({
+                    targets: this.clock,
+                    angle: 360,
+                    scale: 2.8,
+                    duration: 3750, 
+                    ease: 'Linear',
+                    onComplete: () => { this.scene.start("options_screen"); }
+                });
             });
 
         // we should do a fade in for the title
@@ -147,17 +157,6 @@ class Start_Screen extends Phaser.Scene {
     }
     preload() {}
     create() {
-        // Clock transition on entering the scene
-        this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
-
-        this.tweens.add({
-            targets: this.clock,
-            angle: 360,
-            scale: 1,
-            duration: 2500, 
-            ease: 'Linear',
-            onComplete: () => { this.clock.setAlpha(0); }
-        });
         // Music
         this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(0)
             .setInteractive({useHandCursor: true})
@@ -249,6 +248,17 @@ class Options_Screen extends TweenScene {
 
     // i want the on and off buttons to be light or dark
     create(){
+         // Clock transition on entering the scene
+         this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
+
+         this.tweens.add({
+             targets: this.clock,
+             angle: 360,
+             scale: 0.2,
+             duration: 2500, 
+             ease: 'Linear',
+             onComplete: () => { this.clock.setAlpha(0); }
+         });
         // creating a text array for the text and button
         let fade_objects = [];
 
@@ -342,6 +352,10 @@ class Options_Screen extends TweenScene {
         fade_objects.push(j);
         fade_objects.push(k);
         fade_objects.push(l);
+        fade_objects.push(this.onMusic);
+        fade_objects.push(this.onCap);
+        fade_objects.push(this.offMusic);
+        fade_objects.push(this.offCap);
 
         // make all the objects have an alpha of 0
         fade_objects.forEach(text => {
@@ -349,7 +363,14 @@ class Options_Screen extends TweenScene {
           });
 
         // tween animation for options text and back button
-        this.fade_in(fade_objects,0,1700);
+        this.fade_in(fade_objects,2500,1700)
+        this.tweens.add({
+            targets: [this.offCap, this.offMusic],
+            alpha: 0.25,
+            delay: 2500,
+            duration: 1700,
+            ease: 'Quart'
+        });
     }
 
     update(){
@@ -365,6 +386,17 @@ class Credits_Screen extends TweenScene {
     preload(){}
 
     create(data){
+        // Clock transition on entering the scene
+        this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
+
+        this.tweens.add({
+            targets: this.clock,
+            angle: 360,
+            scale: 0.2,
+            duration: 2500, 
+            ease: 'Linear',
+            onComplete: () => { this.clock.setAlpha(0); }
+        });
         // Go back to main screen
         let credits_back_rect = this.add.rectangle(1410,80,300,90,0x000000)
             .setInteractive({useHandCursor: true})
@@ -384,7 +416,7 @@ class Credits_Screen extends TweenScene {
         credit_text.alpha = 0;
 
         // tween for the credits text and the back button
-        this.fade_in([credit_text, credits_back_rect, back_text],0,1700 );
+        this.fade_in([credit_text, credits_back_rect, back_text],2500,1700 );
           
     }
 
