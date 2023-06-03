@@ -44,7 +44,17 @@ class Main_Title extends TweenScene {
         let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                this.scene.start("start_screen");
+                // Clock transition when clicking the start button
+                this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(0.05);
+            
+                this.tweens.add({
+                    targets: this.clock,
+                    angle: 360,
+                    scale: 2.8,
+                    duration: 1500, 
+                    ease: 'Linear',
+                    onComplete: () => { this.scene.start("intro", {isMusicOn}); }
+                });
             });
         let credits_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
             .setInteractive({useHandCursor: true})
@@ -56,7 +66,7 @@ class Main_Title extends TweenScene {
                     targets: this.clock,
                     angle: 360,
                     scale: 2.8,
-                    duration: 3750, 
+                    duration: 1500, 
                     ease: 'Linear',
                     onComplete: () => { this.scene.start("credits_screen"); }
                 });
@@ -71,7 +81,7 @@ class Main_Title extends TweenScene {
                     targets: this.clock,
                     angle: 360,
                     scale: 2.8,
-                    duration: 3750, 
+                    duration: 1500, 
                     ease: 'Linear',
                     onComplete: () => { this.scene.start("options_screen"); }
                 });
@@ -224,10 +234,16 @@ class Options_Screen extends TweenScene {
         super('options_screen');
     }
 
-    preload(){}
+    preload(){
+        this.load.image('forest', '../assets/forest_path.png');
+    }
 
     // i want the on and off buttons to be light or dark
     create(){
+        this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
+        this.cameras.main.setBackgroundColor('#000000');
+        this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
+
          // Clock transition on entering the scene
          this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
 
@@ -235,7 +251,7 @@ class Options_Screen extends TweenScene {
              targets: this.clock,
              angle: 360,
              scale: 0.2,
-             duration: 2500, 
+             duration: 1500, 
              ease: 'Linear',
              onComplete: () => { this.clock.setAlpha(0); }
          });
@@ -343,11 +359,11 @@ class Options_Screen extends TweenScene {
           });
 
         // tween animation for options text and back button
-        this.fade_in(fade_objects,2500,1700)
+        this.fade_in(fade_objects,1900,1700)
         this.tweens.add({
             targets: [this.offCap, this.offMusic],
             alpha: 0.25,
-            delay: 2500,
+            delay: 1900,
             duration: 1700,
             ease: 'Quart'
         });
@@ -363,9 +379,15 @@ class Credits_Screen extends TweenScene {
         super('credits_screen');
     }
 
-    preload(){}
+    preload(){
+        this.load.image('forest', '../assets/forest_path.png');
+    }
 
-    create(data){
+    create(){
+        this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
+        this.cameras.main.setBackgroundColor('#000000');
+        this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
+
         // Clock transition on entering the scene
         this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
 
@@ -373,7 +395,7 @@ class Credits_Screen extends TweenScene {
             targets: this.clock,
             angle: 360,
             scale: 0.2,
-            duration: 2500, 
+            duration: 1500, 
             ease: 'Linear',
             onComplete: () => { this.clock.setAlpha(0); }
         });
@@ -396,7 +418,7 @@ class Credits_Screen extends TweenScene {
         credit_text.alpha = 0;
 
         // tween for the credits text and the back button
-        this.fade_in([credit_text, credits_back_rect, back_text],2500,1700 );
+        this.fade_in([credit_text, credits_back_rect, back_text],1900,1700 );
           
     }
 
@@ -421,25 +443,37 @@ class Ending_Credits_Screen extends Phaser.Scene {
         this.tweens.add({
             targets: end_credit_text,
             y: -end_credit_text.height,
-            duration: 10000,
+            duration: 8300,
             ease: 'Linear',
-            onComplete: function () {
+            onComplete: () => {
                 end_credit_text.destroy();
+                this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, "Return to menu?")
+                    .setFontSize(58)
+                    .setOrigin(0.5)
+                    .setInteractive({ useHandCursor: true })
+                    .on('pointerdown', () => {
+                        this.scene.start('main_title');
+                    });
             }
-        });
+        });        
     }
 }
 
 var config = {
-    scene: [Main_Title,Start_Screen, Credits_Screen, Options_Screen, Ending_Credits_Screen],
-    // Main_Title,Start_Screen, Credits_Screen, Options_Screen, Ending_Credits_Screen
-    backgroundColor: 0x43D58C,
+    type: Phaser.AUTO,
     scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 1600,
-        height: 1200
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH,
+      width: 1600,
+      height: 1200
     },
+    physics: {
+      default: 'arcade',
+      arcade: {
+        gravity: { y: 0 }
+      }
+    },
+    scene: [Main_Title, intro, Options_Screen, Credits_Screen, Ending_Credits_Screen]
   };
   
-var game = new Phaser.Game(config);
+  var game = new Phaser.Game(config);
