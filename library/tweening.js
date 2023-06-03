@@ -35,4 +35,8 @@ class TweenScene extends Phaser.Scene {
             ease: 'Quart'
         });
     }
+    sceneTransition(scene) {
+        this.cameras.main.fade(500, 0,0,0);
+        this.time.delayedCall(500, () => this.scene.start(scene));
+    }
 }
