@@ -38,9 +38,9 @@ class TweenScene extends Phaser.Scene {
             onComplete: onCompleteCallback
         });
     }
-    sceneTransition(scene) {
+    sceneTransition(scene, isMusicOn) {
         this.cameras.main.fade(500, 0,0,0);
-        this.time.delayedCall(500, () => this.scene.start(scene));
+        this.time.delayedCall(500, () => this.scene.start(scene, {isMusicOn}));
     }
 
     fullScreen(button) {

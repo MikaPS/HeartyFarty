@@ -21,7 +21,6 @@ class Main_Title extends TweenScene {
         this.load.image('leftorb', '../assets/Leftorb.png');
         this.load.image('rightorb', '../assets/Rightorb.png');
         this.load.image('orb', '../assets/Crackedorb.png');
-
     }
 
     create() {

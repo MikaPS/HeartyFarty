@@ -13,7 +13,9 @@ class Victory extends TweenScene {
   preload() {
     this.load.image('forest', '../assets/forest_path.png');
   }
-  create() {
+  create(data) {
+    let isMusicOn = data.isMusicOn;
+
     // Option to have full screen
     this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
     const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
@@ -26,7 +28,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 2;
-          this.sceneTransition("intro");
+          this.sceneTransition("intro", isMusicOn);
         });
     }
     if (level == 2) {
@@ -34,7 +36,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 3;
-          this.sceneTransition("intro");
+          this.sceneTransition("intro", isMusicOn);
         });
     }
     if (level == 3) {
@@ -42,7 +44,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 1;
-          this.sceneTransition("main_title");
+          this.sceneTransition("main_title", isMusicOn);
         });
     }
   }
@@ -55,7 +57,8 @@ class Losing extends TweenScene {
   preload() {
     this.load.image('forest', '../assets/forest_path.png');
   }
-  create() {
+  create(data) {
+    let isMusicOn = data.isMusicOn;
     // Option to have full screen
     this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
     const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
@@ -66,7 +69,7 @@ class Losing extends TweenScene {
     this.add.text(600,600,"Restart?").setFontSize(80)
       .setInteractive()
       .on('pointerdown', () => {
-        this.sceneTransition("intro");
+        this.sceneTransition("intro", isMusicOn);
       });
   }
 }
@@ -262,7 +265,8 @@ class Intro extends TweenScene {
       graphics.strokeRect(200,480,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
-        this.sceneTransition("losing");
+        let isMusicOn = this.isMusicOn;
+        this.sceneTransition("losing", isMusicOn);
       });
 
       // Gate collision
@@ -297,8 +301,6 @@ class Intro extends TweenScene {
 
 
     // On screen controllers
-    
-
     this.pastRightKey = this.add.image(270,1040, "arrowkey").setScale(0.2).setAngle(90).setDepth(2);
     this.pastDownKey = this.add.image(171,1140, "arrowkey").setScale(0.2).setAngle(180).setDepth(2);  
     this.pastLeftKey = this.add.image(70,1040, "arrowkey").setScale(0.2).setAngle(270).setDepth(2);
@@ -402,7 +404,8 @@ class Intro extends TweenScene {
     }
     // Move to new levels
     if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
-      this.sceneTransition("victory");
+      let isMusicOn = this.isMusicOn;
+      this.sceneTransition("victory", isMusicOn);
     }
     // On screen controllers 
     if (this.currentSide == 0) {
