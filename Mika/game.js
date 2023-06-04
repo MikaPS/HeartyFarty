@@ -1,4 +1,3 @@
-
 class Introduction extends TweenScene {
   constructor() {
     super('introduction');
@@ -42,8 +41,8 @@ class Introduction extends TweenScene {
     this.playerFront = this.add.image(1000,320,"player").setScale(0.9).setAlpha(0);
     this.orb = this.add.image(520,400, 'orb').setScale(0.1); // cracked orb
     this.orbLeft = this.add.image(1200,400, 'leftorb').setScale(0.1).setAlpha(0); // left side
-    this.orbRight = this.add.image(1090,400, 'rightorb').setScale(0.1).setAlpha(0); // right side
-    this.hole = this.add.rectangle(1300,500,130,90,0x000000).setDepth(-1);
+    this.orbRight = this.add.image(1120,400, 'rightorb').setScale(0.1).setAlpha(0); // right side
+    this.hole = this.add.rectangle(1300,500,130,90,0x000000).setDepth(-1).setAlpha(2);
     this.line = this.add.rectangle(800,600,20,1200, 0xffffff).setAlpha(0); // dividor
     this.playerPast = this.add.image(200,320,"player").setScale(0.9).setAlpha(0);
     this.orbLeftPast = this.add.image(270,400, 'leftorb').setScale(0.1).setAlpha(0);
@@ -55,23 +54,25 @@ class Introduction extends TweenScene {
 
     // Make the cracked orb disappear, and show the two sides of it
     this.fade_out(this.orb, 3000, 2000);
-    this.fade_in([this.orbLeft, this.orbRight], 3200, 2000);
-    this.move(this.orbLeft, 3200, 2000, 1300, 500);
-
-    // In the split, change the background and add the left character
-    this.fade_out([this.orbLeft, this.bg, this.player], 3900, 2000);
-
-    this.tweens.add({
-      targets: [this.line, this.playerPast, this.orbLeftPast, this.holePast, this.leftBg, this.rightBg, this.playerFront],
-      alpha: 1,
-      duration: 2000,
-      delay: 4000,
-      ease: 'Power2',
-      onComplete: () => {
-        this.cameras.main.fadeOut(1500);
-        this.time.delayedCall(1500, () => this.scene.start('ending'));
-      }
+    this.fade_in([this.orbLeft, this.orbRight], 3200, 1400);
+    this.move(this.orbLeft, 3200, 1500, 1300, 500, () => {
+      this.fade_out([this.bg, this.player,this.orbLeft, this.orbRight], 0, 400, () => {
+          // In the split, change the background and add the left character
+          this.tweens.add({
+            targets: [this.line, this.playerPast, this.orbLeftPast, this.holePast, this.leftBg, this.rightBg, this.playerFront, this.orbRight],
+            alpha: 1,
+            duration: 2500,
+            delay: 0,
+            ease: 'Power2',
+            onComplete: () => {
+              this.cameras.main.fadeOut(1500);
+              this.time.delayedCall(1500, () => this.scene.start('ending'));
+            }
+          });
+      });
     });
+
+    
   }
  
   update() { }
@@ -147,22 +148,26 @@ class Ending extends TweenScene {
 
     // Orbs and players from the past and present combining
     this.move(this.orb, 1000, 3000, 825, 400);
-    this.move(this.orbPast, 1000, 3000, 795, 400);
-    this.move([this.player, this.playerPast], 3000, 2000, 720, 320);
-
-    // Change backgrounds
-    this.fade_out([this.line, this.leftBg, this.rightBg, this.playerPast, this.player], 4000, 2000);
-    this.tweens.add({
-      targets: [this.bg],
-      alpha: 1,
-      duration: 2000,
-      delay: 4500,
-      ease: 'Power2',
-      onComplete: () => {
-        this.playerFront.setAlpha(1);
-        this.cameras.main.fadeOut(4000);
-      }
+    this.move(this.orbPast, 1000, 3000, 795, 400, () => {
+      this.move([this.player, this.playerPast], 0, 1500, 720, 320, () => {
+        // Change backgrounds
+        this.fade_out([this.line, this.leftBg, this.rightBg, this.playerPast, this.player], 0, 2000);
+        this.tweens.add({
+          targets: [this.bg],
+          alpha: 1,
+          duration: 1500,
+          delay: 750,
+          ease: 'Power2',
+          onComplete: () => {
+            this.playerFront.setAlpha(1);
+            this.cameras.main.fadeOut(4000);
+          }
+        });
+      });
     });
+    
+
+    
   }
  
   update() { }
@@ -273,8 +278,8 @@ class Main_Title extends TweenScene {
         //     callbackScope: this,
         // });
         // we should do a fade in for the title
-        let title_text =this.add.text(this.cameras.main.centerX,380, "Title")
-            .setFontSize(160)
+        let title_text =this.add.text(this.cameras.main.centerX,380, "Time Split")
+            .setFontSize(138)
             .setOrigin(0.5); // using the above coordinates and this function will center
     
         let play_text =this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Play")
@@ -320,8 +325,8 @@ class Main_Title extends TweenScene {
 }
 
 var config = {
-  scene: [Ending],
-  // scene: [SplashScreen, Main_Title, Introduction,Ending],
+  // scene: [Ending],
+  scene: [SplashScreen, Main_Title, Introduction,Ending],
   // backgroundColor: 0x43D58C,
   scale: {
       mode: Phaser.Scale.FIT,

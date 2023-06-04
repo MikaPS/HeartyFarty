@@ -15,24 +15,27 @@ class TweenScene extends Phaser.Scene {
         });
     }
     // fade out
-    fade_out(targets, delay, duration) {
+    fade_out(targets, delay, duration, onCompleteCallback) {
         this.tweens.add({
-            targets: targets,
-            alpha: 0,
-            delay: delay,
-            duration: duration,
-            ease: 'Quart'
+          targets: targets,
+          alpha: 0,
+          delay: delay,
+          duration: duration,
+          ease: 'Quart',
+          onComplete: onCompleteCallback
         });
-    }
+      }
+      
     // tween for movement
-    move(targets, delay, duration, xCoord, yCoord) {
+    move(targets, delay, duration, xCoord, yCoord, onCompleteCallback) {
         this.tweens.add({
             targets: targets,
             x: xCoord,
             y: yCoord,
             delay: delay,
             duration: duration,
-            ease: 'Quart'
+            ease: 'Quart',
+            onComplete: onCompleteCallback
         });
     }
     sceneTransition(scene) {
