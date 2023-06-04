@@ -249,7 +249,7 @@ class intro extends Phaser.Scene {
     this.tweens.add({
       targets: this.graphics,
       delay: 150,
-      duration: 1000,
+      duration: 1500,
       scaleX: 0.001,
       scaleY: 1,
       x: this.cameras.main.centerX,

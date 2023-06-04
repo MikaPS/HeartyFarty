@@ -84,7 +84,6 @@ class Intro extends TweenScene {
     this.load.image('water', '../assets/Water/water3.png');
     this.load.image('arrowkey', '../assets/Keys/arrowkey.png');
     this.load.image('waterkey', '../assets/Keys/waterkey.png');
-
   }
 
   create() {

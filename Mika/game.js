@@ -10,11 +10,11 @@ class Introduction extends TweenScene {
     this.load.image('leftorb', '../assets/Leftorb.png');
     this.load.image('rightorb', '../assets/Rightorb.png');
     this.load.image('forest', '../assets/forest_path.png');
-    // this.load.spritesheet('player', '../assets/Player/PlayerSprite.png', {
-    //   frameWidth: 32,
-    //   frameHeight: 48
-    // });
-  
+    
+    this.load.image('playerWalk1', '../assets/Player/Rright.png');
+    this.load.image('playerWalk2', '../assets/Player/right.png');
+    this.load.image('playerWalk3', '../assets/Player/Lright.png');
+
     this.load.image('player', '../assets/Player/RFront.png');
   }
 
@@ -24,44 +24,48 @@ class Introduction extends TweenScene {
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setAlpha(0).setDepth(-1);
     this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setAlpha(0).setDepth(-1);
-    // Player animation
-    // this.anims.create({
-    //   key: 'walk',
-    //   frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
-    //   frameRate: 10,
-    //   repeat: -1 // Set to -1 to loop indefinitely, or specify the desired number of repetitions
-    // });
-    // this.player = this.add.sprite(200, 200, 'player');
-    // this.player.play('walk');
-
+    this.anims.create({
+      key: 'walk',
+      frames: [
+        { key: 'playerWalk1' },
+        { key: 'playerWalk2' },
+        { key: 'playerWalk3' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
+  
+    this.player = this.add.sprite(400,320, 'playerWalk1').setScale(0.9);
+    this.player.play('walk');
+  
     // player holding an orb
-    this.player = this.add.image(400,320,"player").setScale(0.9);
-    this.orb = this.add.image(500,400, 'orb').setScale(0.1); // cracked orb
+    this.playerFront = this.add.image(1000,320,"player").setScale(0.9).setAlpha(0);
+    this.orb = this.add.image(520,400, 'orb').setScale(0.1); // cracked orb
     this.orbLeft = this.add.image(1200,400, 'leftorb').setScale(0.1).setAlpha(0); // left side
-    this.orbRight = this.add.image(1070,400, 'rightorb').setScale(0.1).setAlpha(0); // right side
+    this.orbRight = this.add.image(1090,400, 'rightorb').setScale(0.1).setAlpha(0); // right side
     this.hole = this.add.rectangle(1300,500,130,90,0x000000).setDepth(-1);
     this.line = this.add.rectangle(800,600,20,1200, 0xffffff).setAlpha(0); // dividor
-    this.playerPast = this.add.rectangle(200,320,150,300,0x000000).setAlpha(0);
+    this.playerPast = this.add.image(200,320,"player").setScale(0.9).setAlpha(0);
     this.orbLeftPast = this.add.image(270,400, 'leftorb').setScale(0.1).setAlpha(0);
     this.holePast = this.add.rectangle(500,500,130,90,0x000000).setDepth(-1).setAlpha(0);
     
     // Player and orb move from left side of the screen to the right side
-    this.move(this.player, 1000, 2500, 1000, 320);
-    this.move(this.orb, 1000, 2500, 1100, 400);
+    this.move(this.player, 1000, 3000, 1000, 320);
+    this.move(this.orb, 1000, 3000, 1120, 400);
 
     // Make the cracked orb disappear, and show the two sides of it
-    this.fade_out(this.orb, 2500, 2000);
-    this.fade_in([this.orbLeft, this.orbRight], 2700, 2000);
-    this.move(this.orbLeft, 2700, 2000, 1300, 500);
+    this.fade_out(this.orb, 3000, 2000);
+    this.fade_in([this.orbLeft, this.orbRight], 3200, 2000);
+    this.move(this.orbLeft, 3200, 2000, 1300, 500);
 
     // In the split, change the background and add the left character
-    this.fade_out([this.orbLeft, this.bg], 3400, 2000);
+    this.fade_out([this.orbLeft, this.bg, this.player], 3900, 2000);
 
     this.tweens.add({
-      targets: [this.line, this.playerPast, this.orbLeftPast, this.holePast, this.leftBg, this.rightBg],
+      targets: [this.line, this.playerPast, this.orbLeftPast, this.holePast, this.leftBg, this.rightBg, this.playerFront],
       alpha: 1,
       duration: 2000,
-      delay: 3500,
+      delay: 4000,
       ease: 'Power2',
       onComplete: () => {
         this.cameras.main.fadeOut(1500);
@@ -86,6 +90,16 @@ class Ending extends TweenScene {
     this.load.image('leftorb', '../assets/Leftorb.png');
     this.load.image('rightorb', '../assets/Rightorb.png');
     this.load.image('forest', '../assets/forest_path.png');
+    
+    this.load.image('lplayerWalk1', '../assets/Player/Rright.png');
+    this.load.image('lplayerWalk2', '../assets/Player/right.png');
+    this.load.image('lplayerWalk3', '../assets/Player/Lright.png');
+    this.load.image('rplayerWalk1', '../assets/Player/Lleft.png');
+    this.load.image('rplayerWalk2', '../assets/Player/left.png');
+    this.load.image('rplayerWalk3', '../assets/Player/Rleft.png');
+
+    this.load.image('player', '../assets/Player/RFront.png');
+
   }
 
   create() {
@@ -96,20 +110,48 @@ class Ending extends TweenScene {
     this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
     this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1);
 
+    this.anims.create({
+      key: 'walkLeft',
+      frames: [
+        { key: 'rplayerWalk1' },
+        { key: 'rplayerWalk2' },
+        { key: 'rplayerWalk3' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
+  
+    this.player = this.add.sprite(1200,320, 'rplayerWalk1').setScale(0.9);
+    this.player.play('walkLeft');
+
+    this.anims.create({
+      key: 'walkRight',
+      frames: [
+        { key: 'lplayerWalk1' },
+        { key: 'lplayerWalk2' },
+        { key: 'lplayerWalk3' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
+    this.playerPast = this.add.sprite(200,320, 'lplayerWalk1').setScale(0.9);
+    this.playerPast.play('walkRight');
+
+
     // player holding an orb
-    this.player = this.add.rectangle(1000,400,150,300,0x000000);
+    this.playerFront = this.add.image(720,320,"player").setAlpha(0);
     this.orb = this.add.image(1070,400, 'rightorb').setScale(0.1);
     this.line = this.add.rectangle(800,600,20,1200, 0xffffff).setAlpha(1).setDepth(-1);
-    this.playerPast = this.add.rectangle(200,400,150,300,0x000000).setAlpha(1);
+    // this.playerPast = this.add.rectangle(200,400,150,300,0x000000).setAlpha(1);
     this.orbPast = this.add.image(270,400, 'leftorb').setScale(0.1);
 
     // Orbs and players from the past and present combining
     this.move(this.orb, 1000, 3000, 825, 400);
     this.move(this.orbPast, 1000, 3000, 795, 400);
-    this.move([this.player, this.playerPast], 3000, 2000, 720, 400);
+    this.move([this.player, this.playerPast], 3000, 2000, 720, 320);
 
     // Change backgrounds
-    this.fade_out([this.line, this.leftBg, this.rightBg], 4000, 2000);
+    this.fade_out([this.line, this.leftBg, this.rightBg, this.playerPast, this.player], 4000, 2000);
     this.tweens.add({
       targets: [this.bg],
       alpha: 1,
@@ -117,7 +159,8 @@ class Ending extends TweenScene {
       delay: 4500,
       ease: 'Power2',
       onComplete: () => {
-        this.cameras.main.fadeOut(2000);
+        this.playerFront.setAlpha(1);
+        this.cameras.main.fadeOut(4000);
       }
     });
   }
@@ -277,7 +320,7 @@ class Main_Title extends TweenScene {
 }
 
 var config = {
-  scene: [Main_Title, Introduction],
+  scene: [Ending],
   // scene: [SplashScreen, Main_Title, Introduction,Ending],
   // backgroundColor: 0x43D58C,
   scale: {

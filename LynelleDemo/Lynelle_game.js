@@ -16,7 +16,7 @@ class Main_Title extends TweenScene {
     }
 
     preload() {
-        this.load.image('clock', '../assets/Fullclock.png');
+        this.load.image('clock', '../assets/Clock/Fullclock.png');
         this.load.image('forest', '../assets/forest_path.png');
         this.load.image('leftorb', '../assets/Leftorb.png');
         this.load.image('rightorb', '../assets/Rightorb.png');
@@ -88,8 +88,8 @@ class Main_Title extends TweenScene {
             });
 
         // we should do a fade in for the title
-        let title_text =this.add.text(this.cameras.main.centerX,380, "Title")
-            .setFontSize(160)
+        let title_text =this.add.text(this.cameras.main.centerX,380, "Time Split")
+            .setFontSize(140)
             .setOrigin(0.5); // using the above coordinates and this function will center
     
         let play_text =this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Play")
