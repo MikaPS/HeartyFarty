@@ -193,18 +193,42 @@ class Main_Title extends TweenScene {
         this.move(this.orbRight,600,2000,1200,450);
         this.move(this.orbLeft,600,2000,400,300);
 
+        // tween chain to make the orbs leave the screen
+        let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            this.tweens.add({
+              targets: this.orbLeft,
+              x: -150,
+              duration: 500,
+              ease: 'Quint',
+              onComplete: () => { 
+                this.orbLeft.destroy();
 
-        let start_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000);
+                this.tweens.add({
+                  targets: this.orbRight,
+                  x: 1750,
+                  duration: 500,
+                  ease: 'Quint',
+                  onComplete: () => {
+                    this.orbRight.destroy();
+                    this.scene.start("introduction");
+                  }
+                }); 
+              }
+            });
 
-        this.time.addEvent({
-            delay: 4000, 
-            callback: () => {        
-              start_rect.setStrokeStyle(5, 0x45fffc);
-              this.cameras.main.fadeOut(900);
-              this.time.delayedCall(900, () => this.scene.start('introduction'));
-            }, 
-            callbackScope: this,
         });
+
+        // this.time.addEvent({
+        //     delay: 4000, 
+        //     callback: () => {        
+        //       start_rect.setStrokeStyle(5, 0x45fffc);
+        //       this.cameras.main.fadeOut(900);
+        //       this.time.delayedCall(900, () => this.scene.start('introduction'));
+        //     }, 
+        //     callbackScope: this,
+        // });
         // we should do a fade in for the title
         let title_text =this.add.text(this.cameras.main.centerX,380, "Title")
             .setFontSize(160)
@@ -253,8 +277,8 @@ class Main_Title extends TweenScene {
 }
 
 var config = {
-  scene: [SplashScreen, Main_Title, Introduction,Ending],
-  // scene: [Introduction],
+  scene: [Main_Title, Introduction],
+  // scene: [SplashScreen, Main_Title, Introduction,Ending],
   // backgroundColor: 0x43D58C,
   scale: {
       mode: Phaser.Scale.FIT,
