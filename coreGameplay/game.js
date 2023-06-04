@@ -414,6 +414,52 @@ class Intro extends TweenScene {
   }
 }
 
+class Instructions extends Phaser.Scene {
+  constructor() {
+    super('instructions');
+  }
+
+  create() {
+    // Create the lines group
+    const linesGroup = this.add.group();
+
+    // Add lines to the group
+    const line1 = this.add.text(-900, 300, "Instructions:").setFontSize(60).setAlpha(0);
+    const line2 = this.add.text(-800, 450, "Use the arrow keys on the screen to move.").setFontSize(50).setAlpha(0);
+    const line3 = this.add.text(-700, 600, "Move the character to interact!").setFontSize(50).setAlpha(0);
+    const line4 = this.add.text(-600, 750, "Click the screen to continue.").setFontSize(50).setAlpha(0);
+
+    // Add lines to the group
+    linesGroup.add(line1);
+    linesGroup.add(line2);
+    linesGroup.add(line3);
+    linesGroup.add(line4);
+
+    // Set initial delay and duration for the animation
+    let delay = 500;
+    const duration = 500; 
+
+    // Slide in the lines one at a time
+    linesGroup.getChildren().forEach((line) => {
+      this.tweens.add({
+        targets: line,
+        alpha: 1,
+        x: "+=1000", 
+        duration: duration,
+        ease: 'Power2', 
+        delay: delay,
+      });
+      
+      delay += 200; 
+    });
+
+    this.input.on('pointerdown', () => {
+      this.scene.start('intro'); 
+  });
+  
+  }
+}
+
   var config = {
     type: Phaser.AUTO,
     scale: {
@@ -428,7 +474,7 @@ class Intro extends TweenScene {
         gravity: { y: 0 }
       }
     },
-    scene: [Intro, Losing, Victory]
+    scene: [Instructions,Intro, Losing, Victory]
   };
   
   var game = new Phaser.Game(config);
