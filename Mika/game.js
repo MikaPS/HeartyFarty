@@ -18,6 +18,11 @@ class Introduction extends TweenScene {
   }
 
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
+    
     this.cameras.main.fadeIn(1000);
     // background
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
@@ -104,6 +109,11 @@ class Ending extends TweenScene {
   }
 
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
+    
     // fade in
     this.cameras.main.fadeIn(1700);
     // forest background
@@ -180,6 +190,11 @@ class SplashScreen extends TweenScene {
   }
 
   create () {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
+    
     // Calculate the position to center the square horizontally
     var x = (this.cameras.main.width - 250) / 2;
 

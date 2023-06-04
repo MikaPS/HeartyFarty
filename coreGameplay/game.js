@@ -14,6 +14,10 @@ class Victory extends TweenScene {
     this.load.image('forest', '../assets/forest_path.png');
   }
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.add.text(450,400,"YOU WON!").setFontSize(150);
     if (level == 1) {
@@ -51,6 +55,10 @@ class Losing extends TweenScene {
     this.load.image('forest', '../assets/forest_path.png');
   }
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.add.text(450,400,"YOU LOST!").setFontSize(150);
     this.add.text(600,600,"Restart?").setFontSize(80)
@@ -87,6 +95,11 @@ class Intro extends TweenScene {
   }
 
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
+
     // Background
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
@@ -474,6 +487,7 @@ class Instructions extends Phaser.Scene {
       }
     },
     scene: [Instructions,Intro, Losing, Victory]
+    // scene: [Intro]
   };
   
   var game = new Phaser.Game(config);

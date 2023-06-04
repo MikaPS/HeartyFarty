@@ -25,6 +25,11 @@ class Main_Title extends TweenScene {
     }
 
     create() {
+        // Option to have full screen
+        this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+        const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+        this.fullScreen(fullScreen);
+
         // background stuff
         this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
         this.cameras.main.setBackgroundColor('#000000');
@@ -167,6 +172,11 @@ class Start_Screen extends TweenScene {
     }
     preload() {}
     create() {
+        // Option to have full screen
+        this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+        const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+        this.fullScreen(fullScreen);
+
         // Music
         this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(0)
             .setInteractive({useHandCursor: true})
@@ -240,6 +250,11 @@ class Options_Screen extends TweenScene {
 
     // i want the on and off buttons to be light or dark
     create(){
+        // Option to have full screen
+        this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+        const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+        this.fullScreen(fullScreen);
+
         this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
         this.cameras.main.setBackgroundColor('#000000');
         this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
@@ -384,6 +399,11 @@ class Credits_Screen extends TweenScene {
     }
 
     create(){
+        // Option to have full screen
+        this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+        const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+        this.fullScreen(fullScreen);
+
         this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
         this.cameras.main.setBackgroundColor('#000000');
         this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
@@ -427,12 +447,16 @@ class Credits_Screen extends TweenScene {
     }
 }
 
-class Ending_Credits_Screen extends Phaser.Scene {
+class Ending_Credits_Screen extends TweenScene {
     constructor() {
         super('end_credits_screen');
     }
 
     create() {
+        // Option to have full screen
+        this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+        const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+        this.fullScreen(fullScreen);
 
         // create the text
         let end_credit_text = this.add.text(this.cameras.main.centerX,this.cameras.main.height + 230, "Programming:\nZane Chaplin, Mika Peer Shalem, Lynelle Goh\n\nMusic:\nZane Chaplin\n\nArt:\nSegolen Plihon")

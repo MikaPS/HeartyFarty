@@ -42,4 +42,15 @@ class TweenScene extends Phaser.Scene {
         this.cameras.main.fade(500, 0,0,0);
         this.time.delayedCall(500, () => this.scene.start(scene));
     }
+
+    fullScreen(button) {
+        button.setInteractive()
+      .on('pointerdown', () => {
+        if (this.scale.isFullscreen) {
+            this.scale.stopFullscreen();
+        } else {
+            this.scale.startFullscreen();
+        }
+      });
+    }
 }
