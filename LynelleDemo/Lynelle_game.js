@@ -53,7 +53,7 @@ class Main_Title extends TweenScene {
                     scale: 2.8,
                     duration: 1500, 
                     ease: 'Linear',
-                    onComplete: () => { this.scene.start("intro", {isMusicOn}); }
+                    onComplete: () => { this.scene.start("instructions", {isMusicOn}); }
                 });
             });
         let credits_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
@@ -473,7 +473,7 @@ var config = {
         gravity: { y: 0 }
       }
     },
-    scene: [Main_Title, intro, Options_Screen, Credits_Screen, Ending_Credits_Screen]
+    scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen]
   };
   
   var game = new Phaser.Game(config);
