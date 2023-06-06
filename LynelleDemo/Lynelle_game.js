@@ -28,6 +28,7 @@ class Main_Title extends TweenScene {
     create() {
         // Music
         bgMusic = this.sound.add('bgMusic');
+        bgMusic.setLoop(true);
         bgMusic.play();
 
         // Option to have full screen
