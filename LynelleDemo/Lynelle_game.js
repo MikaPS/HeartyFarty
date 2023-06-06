@@ -10,6 +10,7 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 
 // Global vars to check music status
 let isMusicOn = 1; // 1 = true
+let bgMusic;
 class Main_Title extends TweenScene {
     constructor() {
       super('main_title');
@@ -26,7 +27,7 @@ class Main_Title extends TweenScene {
 
     create() {
         // Music
-        const bgMusic = this.sound.add('bgMusic');
+        bgMusic = this.sound.add('bgMusic');
         bgMusic.play();
 
         // Option to have full screen
@@ -232,6 +233,7 @@ class Start_Screen extends TweenScene {
                 this.fade_out([this.options, this.dots], 100, 300);
                 this.fade_in([this.music, this.main, this.musicTxt, this.mainTxt], 200, 100);
                 if (isMusicOn == 0) {
+                    
                     this.fade_in(this.noMusic, 100, 200);
                 }
             });
@@ -290,6 +292,7 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 1;
+                bgMusic.play();
                 this.offMusic.setAlpha(0.25);
                 this.onMusic.setAlpha(1);
             });
@@ -298,13 +301,16 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 0; 
+                bgMusic.pause();
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             });
             if (isMusicOn == 1) {
+                bgMusic.play();
                 this.onMusic.setAlpha(1);
                 this.offMusic.setAlpha(0.25);
             } else {
+                bgMusic.pause(); 
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             }

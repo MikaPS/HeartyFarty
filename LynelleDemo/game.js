@@ -112,13 +112,13 @@ class Intro extends TweenScene {
     this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
-          if (this.isMusicOn == 1) { this.isMusicOn = 0;} else { this.isMusicOn = 1;}
+          if (this.isMusicOn == 1) { bgMusic.pause(); this.isMusicOn = 0;} else { bgMusic.play(); this.isMusicOn = 1;}
     });
     this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
-            if (this.isMusicOn == 1) { this.isMusicOn = 0;} 
-            else { this.isMusicOn = 1;}
+            if (this.isMusicOn == 1) { bgMusic.pause(); this.isMusicOn = 0;} 
+            else { bgMusic.play(); this.isMusicOn = 1;}
         });
     // music is turned off
     this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0).setDepth(2);
