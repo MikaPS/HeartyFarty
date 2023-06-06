@@ -5,8 +5,6 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-
-
 let level = 1;
 class Victory extends TweenScene {
   constructor() {
@@ -14,8 +12,13 @@ class Victory extends TweenScene {
   }
   preload() {
     this.load.image('forest', '../assets/forest_path.png');
+
   }
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.add.text(450,400,"YOU WON!").setFontSize(150);
     if (level == 1) {
@@ -53,6 +56,10 @@ class Losing extends TweenScene {
     this.load.image('forest', '../assets/forest_path.png');
   }
   create() {
+    // Option to have full screen
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.add.text(450,400,"YOU LOST!").setFontSize(150);
     this.add.text(600,600,"Restart?").setFontSize(80)
@@ -77,18 +84,27 @@ class Intro extends TweenScene {
     this.currentSide = 1; // 0 present, 1 past
     this.ball1;
     this.ball2;
-    // level = 1;
   }
 
   preload() {
-    this.load.image('ball', '../assets/BALL.png');
+    this.load.audio('audio', '../assets/music/Now_and_Then.mp3');
+    this.load.image('ball', '../assets/Player/RFront.png');
     this.load.image('wall', '../assets/Wall.png');
     this.load.image('forest', '../assets/forest_path.png');
-    this.load.image('water', '../assets/water3.png');
-
+    this.load.image('water', '../assets/Water/water3.png');
+    this.load.image('arrowkey', '../assets/Keys/arrowkey.png');
+    this.load.image('waterkey', '../assets/Keys/waterkey.png');
+    this.load.audio('waterSound', '../assets/Music/Water_Sound.mp3');
   }
 
   create() {
+    // Option to have full screen
+    this.audio = this.sound.add('audio');
+    this.audio.play();
+    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
+    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    this.fullScreen(fullScreen);
+
     // Background
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
@@ -118,8 +134,8 @@ class Intro extends TweenScene {
     this.physics.add.collider(this.ball2, this.wall, () => {
     });
 
-    this.ball1.setScale(0.7).setDepth(1);
-    this.ball2.setScale(0.7).setDepth(1);
+    this.ball1.setScale(0.6).setDepth(1);
+    this.ball2.setScale(0.6).setDepth(1);
     this.wall.setScale(.1,10).setDepth(1);
     this.ball1.setBounce(0);
     this.ball2.setBounce(0);
@@ -186,12 +202,15 @@ class Intro extends TweenScene {
       this.barrier2 = this.physics.add.image(150,450,'wall').setScale(0.4,0.15); this.barrier2.body.setImmovable(true); this.group.add(this.barrier2);
       this.barrier3 = this.physics.add.image(150,550,'wall').setScale(0.4,0.15); this.barrier3.body.setImmovable(true); this.group.add(this.barrier3);
       this.barrier4 = this.physics.add.image(220,500,'wall').setScale(0.4,0.15); this.barrier4.body.setImmovable(true); this.group.add(this.barrier4);
-      this.add.rectangle(80,500,40,40,0xff0000);
-      this.add.rectangle(150,450,40,40,0xff0000);
-      this.add.rectangle(150,550,40,40,0xff0000);
-      this.add.rectangle(220,500,40,40,0xff0000);
+      const graphics = this.add.graphics();
+      graphics.lineStyle(5,0xff0000); // set color of squares
+      graphics.strokeRect(60,480,40,40); 
+      graphics.strokeRect(130,430,40,40); 
+      graphics.strokeRect(130,530,40,40); 
+      graphics.strokeRect(200,480,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
+        this.audio.stop();
         this.sceneTransition("losing");
       });
 
@@ -216,7 +235,7 @@ class Intro extends TweenScene {
     }
     if (level == 3) {
       // prefab
-      this.water = this.add.rectangle(1520,1120,75,75, 0x00ffff)
+      this.water = this.add.image(170,1040,"waterkey").setScale(0.22).setDepth(2)
         .setInteractive()
         .on('pointerdown', () => {
           this.createWater();
@@ -227,14 +246,16 @@ class Intro extends TweenScene {
 
 
     // On screen controllers
-    this.pastRightKey = this.add.rectangle(275,1120,75,75, 0xff0000);
-    this.pastDownKey = this.add.rectangle(175,1120,75,75, 0xff0000)        
-    this.pastLeftKey = this.add.rectangle(75,1120,75,75, 0xff0000);
-    this.pastUpKey = this.add.rectangle(175,1020,75,75, 0xff0000);
-    this.presentRightKey = this.add.rectangle(275,1120,75,75, 0xff0000);
-    this.presentDownKey = this.add.rectangle(175,1120,75,75, 0xff0000)        
-    this.presentLeftKey = this.add.rectangle(75,1120,75,75, 0xff0000);
-    this.presentUpKey = this.add.rectangle(175,1020,75,75, 0xff0000);
+    
+
+    this.pastRightKey = this.add.image(270,1040, "arrowkey").setScale(0.2).setAngle(90).setDepth(2);
+    this.pastDownKey = this.add.image(171,1140, "arrowkey").setScale(0.2).setAngle(180).setDepth(2);  
+    this.pastLeftKey = this.add.image(70,1040, "arrowkey").setScale(0.2).setAngle(270).setDepth(2);
+    this.pastUpKey = this.add.image(171,940, "arrowkey").setScale(0.2).setDepth(2);
+    this.presentRightKey = this.add.image(270,1040, "arrowkey").setScale(0.2).setAngle(90).setDepth(2);
+    this.presentDownKey = this.add.image(171,1140, "arrowkey").setScale(0.2).setAngle(180).setDepth(2);  
+    this.presentLeftKey = this.add.image(70,1040, "arrowkey").setScale(0.2).setAngle(270).setDepth(2);
+    this.presentUpKey = this.add.image(171,940, "arrowkey").setScale(0.2).setDepth(2);
 
 
     // detect up and down arrow key presses
@@ -322,7 +343,8 @@ class Intro extends TweenScene {
 
   update() {
     // Move to new levels
-    if (this.ball1.y >= 1150 && this.ball2.y >= 1150) {
+    if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
+      this.audio.stop();
       this.sceneTransition("victory");
     }
     // On screen controllers 
@@ -352,6 +374,8 @@ class Intro extends TweenScene {
 
   createWater() {
     // Define the x and y positions for the prefabs
+    this.waterSound = this.sound.add('waterSound');
+    this.waterSound.play();
     const prefabPositions = [
       { x: this.ball2.x+70, y: this.ball2.y-10 },
       { x: this.ball2.x+110, y: this.ball2.y-30 },
@@ -411,6 +435,52 @@ class Intro extends TweenScene {
   }
 }
 
+class Instructions extends Phaser.Scene {
+  constructor() {
+    super('instructions');
+  }
+
+  create() {
+    // Create the lines group
+    const linesGroup = this.add.group();
+
+    // Add lines to the group
+    const line1 = this.add.text(-900, 300, "Instructions:").setFontSize(60).setAlpha(0);
+    const line2 = this.add.text(-800, 450, "Use the arrow keys on the screen to move.").setFontSize(50).setAlpha(0);
+    const line3 = this.add.text(-700, 600, "Clicking on the different halves of the\nscreen changes your movement.").setFontSize(50).setAlpha(0);
+    const line4 = this.add.text(-300, 1100, "Click the screen to continue.").setFontSize(50).setAlpha(0);
+
+    // Add lines to the group
+    linesGroup.add(line1);
+    linesGroup.add(line2);
+    linesGroup.add(line3);
+    linesGroup.add(line4);
+
+    // Set initial delay and duration for the animation
+    let delay = 500;
+    const duration = 500; 
+
+    // Slide in the lines one at a time
+    linesGroup.getChildren().forEach((line) => {
+      this.tweens.add({
+        targets: line,
+        alpha: 1,
+        x: "+=1000", 
+        duration: duration,
+        ease: 'Power2', 
+        delay: delay,
+      });
+      
+      delay += 200; 
+    });
+
+    this.input.on('pointerdown', () => {
+      this.scene.start('intro'); 
+  });
+  
+  }
+}
+
   var config = {
     type: Phaser.AUTO,
     scale: {
@@ -425,7 +495,8 @@ class Intro extends TweenScene {
         gravity: { y: 0 }
       }
     },
-    scene: [Intro, Losing, Victory]
+    scene: [Instructions,Intro, Losing, Victory]
+    // scene: [Intro]
   };
   
   var game = new Phaser.Game(config);
