@@ -12,6 +12,7 @@ class Victory extends TweenScene {
   }
   preload() {
     this.load.image('forest', '../assets/forest_path.png');
+
   }
   create() {
     // Option to have full screen
@@ -86,16 +87,20 @@ class Intro extends TweenScene {
   }
 
   preload() {
+    this.load.audio('audio', '../assets/music/Now_and_Then.mp3');
     this.load.image('ball', '../assets/Player/RFront.png');
     this.load.image('wall', '../assets/Wall.png');
     this.load.image('forest', '../assets/forest_path.png');
     this.load.image('water', '../assets/Water/water3.png');
     this.load.image('arrowkey', '../assets/Keys/arrowkey.png');
     this.load.image('waterkey', '../assets/Keys/waterkey.png');
+    this.load.audio('waterSound', '../assets/Music/Water_Sound.mp3');
   }
 
   create() {
     // Option to have full screen
+    this.audio = this.sound.add('audio');
+    this.audio.play();
     this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
     const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
     this.fullScreen(fullScreen);
@@ -205,6 +210,7 @@ class Intro extends TweenScene {
       graphics.strokeRect(200,480,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
+        this.audio.stop();
         this.sceneTransition("losing");
       });
 
@@ -338,6 +344,7 @@ class Intro extends TweenScene {
   update() {
     // Move to new levels
     if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
+      this.audio.stop();
       this.sceneTransition("victory");
     }
     // On screen controllers 
@@ -367,6 +374,8 @@ class Intro extends TweenScene {
 
   createWater() {
     // Define the x and y positions for the prefabs
+    this.waterSound = this.sound.add('waterSound');
+    this.waterSound.play();
     const prefabPositions = [
       { x: this.ball2.x+70, y: this.ball2.y-10 },
       { x: this.ball2.x+110, y: this.ball2.y-30 },
