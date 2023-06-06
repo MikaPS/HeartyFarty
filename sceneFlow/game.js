@@ -93,12 +93,12 @@ class Intro extends TweenScene {
   }
 
   preload() {
-    this.load.image('ball', '../assets/Player/RFront.png');
-    this.load.image('wall', '../assets/Wall.png');
+    this.load.image('ball', '../assets/player/rfront.png');
+    this.load.image('wall', '../assets/wall.png');
     this.load.image('forest', '../assets/forest_path.png');
-    this.load.image('water', '../assets/Water/water3.png');
-    this.load.image('arrowkey', '../assets/Keys/arrowkey.png');
-    this.load.image('waterkey', '../assets/Keys/waterkey.png');
+    this.load.image('water', '../assets/water/water3.png');
+    this.load.image('arrowkey', '../assets/keys/arrowkey.png');
+    this.load.image('waterkey', '../assets/keys/waterkey.png');
   }
 
   create(data) {
@@ -543,22 +543,3 @@ this.input.on('pointerdown', () => {
 
   }
 }
-
-  // var config = {
-  //   type: Phaser.AUTO,
-  //   scale: {
-  //     mode: Phaser.Scale.FIT,
-  //     autoCenter: Phaser.Scale.CENTER_BOTH,
-  //     width: 1600,
-  //     height: 1200
-  //   },
-  //   physics: {
-  //     default: 'arcade',
-  //     arcade: {
-  //       gravity: { y: 0 }
-  //     }
-  //   },
-  //   scene: [Instructions,Intro, Losing, Victory]
-  // };
-  
-  // var game = new Phaser.Game(config);

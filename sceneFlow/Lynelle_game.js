@@ -17,12 +17,12 @@ class Main_Title extends TweenScene {
     }
 
     preload() {
-        this.load.image('clock', '../assets/Clock/Fullclock.png');
+        this.load.image('clock', '../assets/clock/fullclock.png');
         this.load.image('forest', '../assets/forest_path.png');
-        this.load.image('leftorb', '../assets/Leftorb.png');
-        this.load.image('rightorb', '../assets/Rightorb.png');
-        this.load.image('orb', '../assets/Crackedorb.png');
-        this.load.audio('bgMusic', '../assets/Music/bgMusic.wav');
+        this.load.image('leftorb', '../assets/leftorb.png');
+        this.load.image('rightorb', '../assets/rightorb.png');
+        this.load.image('orb', '../assets/crackedorb.png');
+        this.load.audio('bgMusic', '../assets/music/bgmusic.wav');
     }
 
     create() {

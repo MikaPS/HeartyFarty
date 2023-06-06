@@ -87,14 +87,14 @@ class Intro extends TweenScene {
   }
 
   preload() {
-    this.load.audio('audio', '../assets/music/Now_and_Then.mp3');
-    this.load.image('ball', '../assets/Player/RFront.png');
-    this.load.image('wall', '../assets/Wall.png');
+    this.load.audio('audio', '../assets/music/now_and_then.mp3');
+    this.load.image('ball', '../assets/player/rfront.png');
+    this.load.image('wall', '../assets/wall.png');
     this.load.image('forest', '../assets/forest_path.png');
-    this.load.image('water', '../assets/Water/water3.png');
-    this.load.image('arrowkey', '../assets/Keys/arrowkey.png');
-    this.load.image('waterkey', '../assets/Keys/waterkey.png');
-    this.load.audio('waterSound', '../assets/Music/Water_Sound.mp3');
+    this.load.image('water', '../assets/water/water3.png');
+    this.load.image('arrowkey', '../assets/keys/arrowkey.png');
+    this.load.image('waterkey', '../assets/keys/waterkey.png');
+    this.load.audio('waterSound', '../assets/music/water_Sound.mp3');
   }
 
   create() {

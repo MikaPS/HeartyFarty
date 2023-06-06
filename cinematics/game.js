@@ -5,16 +5,16 @@ class Introduction extends TweenScene {
   }
 
   preload() {
-    this.load.image('orb', '../assets/Crackedorb.png');
-    this.load.image('leftorb', '../assets/Leftorb.png');
-    this.load.image('rightorb', '../assets/Rightorb.png');
+    this.load.image('orb', '../assets/crackedorb.png');
+    this.load.image('leftorb', '../assets/leftorb.png');
+    this.load.image('rightorb', '../assets/rightorb.png');
     this.load.image('forest', '../assets/forest_path.png');
     
-    this.load.image('playerWalk1', '../assets/Player/Rright.png');
-    this.load.image('playerWalk2', '../assets/Player/right.png');
-    this.load.image('playerWalk3', '../assets/Player/Lright.png');
+    this.load.image('playerWalk1', '../assets/player/rright.png');
+    this.load.image('playerWalk2', '../assets/player/right.png');
+    this.load.image('playerWalk3', '../assets/player/lright.png');
 
-    this.load.image('player', '../assets/Player/RFront.png');
+    this.load.image('player', '../assets/player/rfront.png');
   }
 
   create() {
@@ -92,19 +92,19 @@ class Ending extends TweenScene {
   }
 
   preload() {
-    this.load.image('orb', '../assets/Crackedorb.png');
-    this.load.image('leftorb', '../assets/Leftorb.png');
-    this.load.image('rightorb', '../assets/Rightorb.png');
+    this.load.image('orb', '../assets/crackedorb.png');
+    this.load.image('leftorb', '../assets/leftorb.png');
+    this.load.image('rightorb', '../assets/rightorb.png');
     this.load.image('forest', '../assets/forest_path.png');
     
-    this.load.image('lplayerWalk1', '../assets/Player/Rright.png');
-    this.load.image('lplayerWalk2', '../assets/Player/right.png');
-    this.load.image('lplayerWalk3', '../assets/Player/Lright.png');
-    this.load.image('rplayerWalk1', '../assets/Player/Lleft.png');
-    this.load.image('rplayerWalk2', '../assets/Player/left.png');
-    this.load.image('rplayerWalk3', '../assets/Player/Rleft.png');
+    this.load.image('lplayerWalk1', '../assets/player/rright.png');
+    this.load.image('lplayerWalk2', '../assets/player/right.png');
+    this.load.image('lplayerWalk3', '../assets/player/lright.png');
+    this.load.image('rplayerWalk1', '../assets/player/lleft.png');
+    this.load.image('rplayerWalk2', '../assets/player/left.png');
+    this.load.image('rplayerWalk3', '../assets/player/rleft.png');
 
-    this.load.image('player', '../assets/Player/RFront.png');
+    this.load.image('player', '../assets/player/rfront.png');
 
   }
 
@@ -235,9 +235,9 @@ class Main_Title extends TweenScene {
 
     preload() {
         this.load.image('forest', '../assets/forest_path.png');
-        this.load.image('leftorb', '../assets/Leftorb.png');
-        this.load.image('rightorb', '../assets/Rightorb.png');
-        this.load.image('orb', '../assets/Crackedorb.png');
+        this.load.image('leftorb', '../assets/leftorb.png');
+        this.load.image('rightorb', '../assets/rightorb.png');
+        this.load.image('orb', '../assets/crackedorb.png');
     }
 
     create() {
