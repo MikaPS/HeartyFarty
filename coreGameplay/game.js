@@ -210,7 +210,7 @@ class Intro extends TweenScene {
       graphics.strokeRect(200,480,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
-        this.audio.stop();
+        // this.audio.stop();
         this.sceneTransition("losing");
       });
 
@@ -344,7 +344,7 @@ class Intro extends TweenScene {
   update() {
     // Move to new levels
     if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
-      this.audio.stop();
+      // this.audio.stop();
       this.sceneTransition("victory");
     }
     // On screen controllers 
