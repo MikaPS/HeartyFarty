@@ -1,7 +1,7 @@
 # Scene Flow Prototype Requirements
 ## Audio 
-1. Looping background sound:  <br>
-2. Sound effect: <br><br>
+1. Looping background sound: The game has a looping background music that plays during the game. <br>
+2. Sound effect: When pressing the water button (introduced in level 3), a water sound effect plays. <br><br>
 
 ## Visual 
 1. Image-based assets (sprites). For example, player, background, wall, on-screen controllers. <br>

@@ -44,6 +44,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 1;
+          console.log("Winning: ", isMusicOn);
           this.sceneTransition("main_title", isMusicOn);
         });
     }
@@ -69,6 +70,7 @@ class Losing extends TweenScene {
     this.add.text(600,600,"Restart?").setFontSize(80)
       .setInteractive()
       .on('pointerdown', () => {
+        console.log("Losing: ", isMusicOn);
         this.sceneTransition("intro", isMusicOn);
       });
   }
@@ -505,8 +507,8 @@ class Instructions extends Phaser.Scene {
     // Add lines to the group
     const line1 = this.add.text(-900, 300, "Instructions:").setFontSize(60).setAlpha(0);
     const line2 = this.add.text(-800, 450, "Use the arrow keys on the screen to move.").setFontSize(50).setAlpha(0);
-    const line3 = this.add.text(-700, 600, "Move the character to interact!").setFontSize(50).setAlpha(0);
-    const line4 = this.add.text(-600, 750, "Click the screen to continue.").setFontSize(50).setAlpha(0);
+    const line3 = this.add.text(-700, 600, "Clicking on the different halves of the\nscreen changes your movement.").setFontSize(50).setAlpha(0);
+    const line4 = this.add.text(-300, 1100, "Click the screen to continue.").setFontSize(50).setAlpha(0);
 
     // Add lines to the group
     linesGroup.add(line1);
@@ -533,10 +535,12 @@ class Instructions extends Phaser.Scene {
     });
 
     let isMusicOn = data.isMusicOn;
-    this.input.on('pointerdown', () => {
-      this.scene.start('intro', {isMusicOn}); 
-  });
+this.input.on('pointerdown', () => {
   
+      this.scene.start('intro', {isMusicOn});
+    
+  });
+
   }
 }
 
