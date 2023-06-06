@@ -21,9 +21,14 @@ class Main_Title extends TweenScene {
         this.load.image('leftorb', '../assets/Leftorb.png');
         this.load.image('rightorb', '../assets/Rightorb.png');
         this.load.image('orb', '../assets/Crackedorb.png');
+        this.load.audio('bgMusic', '../assets/Music/bgMusic.wav');
     }
 
     create() {
+        // Music
+        const bgMusic = this.sound.add('bgMusic');
+        bgMusic.play();
+
         // Option to have full screen
         this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
         const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
