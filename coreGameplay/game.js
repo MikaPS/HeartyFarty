@@ -447,8 +447,8 @@ class Instructions extends Phaser.Scene {
     // Add lines to the group
     const line1 = this.add.text(-900, 300, "Instructions:").setFontSize(60).setAlpha(0);
     const line2 = this.add.text(-800, 450, "Use the arrow keys on the screen to move.").setFontSize(50).setAlpha(0);
-    const line3 = this.add.text(-700, 600, "Move the character to interact!").setFontSize(50).setAlpha(0);
-    const line4 = this.add.text(-600, 750, "Click the screen to continue.").setFontSize(50).setAlpha(0);
+    const line3 = this.add.text(-700, 600, "Clicking on the different halves of the\nscreen changes your movement.").setFontSize(50).setAlpha(0);
+    const line4 = this.add.text(-300, 1100, "Click the screen to continue.").setFontSize(50).setAlpha(0);
 
     // Add lines to the group
     linesGroup.add(line1);

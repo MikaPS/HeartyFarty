@@ -1,4 +1,4 @@
-# HeartyFarty
+# Time Skip
 CMPM120 Final Project
 
 Credits: <br>

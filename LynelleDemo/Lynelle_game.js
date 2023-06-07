@@ -28,6 +28,7 @@ class Main_Title extends TweenScene {
     create() {
         // Music
         bgMusic = this.sound.add('bgMusic');
+        bgMusic.setLoop(true);
         bgMusic.play();
 
         // Option to have full screen
@@ -233,7 +234,7 @@ class Start_Screen extends TweenScene {
                 this.fade_out([this.options, this.dots], 100, 300);
                 this.fade_in([this.music, this.main, this.musicTxt, this.mainTxt], 200, 100);
                 if (isMusicOn == 0) {
-                    
+                    isMusicOn.pause();
                     this.fade_in(this.noMusic, 100, 200);
                 }
             });
@@ -292,6 +293,7 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 1;
+                console.log("this.onMusic? ", isMusicOn);
                 bgMusic.play();
                 this.offMusic.setAlpha(0.25);
                 this.onMusic.setAlpha(1);
@@ -301,15 +303,18 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 0; 
+                console.log("this.offMusic? ", isMusicOn);
                 bgMusic.pause();
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             });
             if (isMusicOn == 1) {
+                console.log("Options Music play?: ", isMusicOn);
                 bgMusic.play();
                 this.onMusic.setAlpha(1);
                 this.offMusic.setAlpha(0.25);
             } else {
+                console.log("Options Music pause?: ", isMusicOn);
                 bgMusic.pause(); 
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
@@ -508,6 +513,7 @@ var config = {
       }
     },
     scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen]
+    // Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen
   };
   
   var game = new Phaser.Game(config);
