@@ -95,9 +95,54 @@ class Intro extends TweenScene {
     this.load.image('arrowkey', '../assets/keys/arrowkey.png');
     this.load.image('waterkey', '../assets/keys/waterkey.png');
     this.load.audio('waterSound', '../assets/music/water_sound.mp3'); 
+    this.load.image('newgate', '../assets/newgate.png'); 
+    this.load.image('oldgate', '../assets/oldgate.png'); 
+    // Walk animation to right
+    this.load.image('playerRight1', '../assets/player/rright.png');
+    this.load.image('playerRight2', '../assets/player/right.png');
+    this.load.image('playerRight3', '../assets/player/lright.png');
+    // Walk animation to left
+    this.load.image('playerLeft1', '../assets/player/rleft.png');
+    this.load.image('playerLeft2', '../assets/player/left.png');
+    this.load.image('playerLeft3', '../assets/player/lleft.png');
+    // Walk animation to up
+    this.load.image('playerFront1', '../assets/player/rfront.png');
+    this.load.image('playerFront2', '../assets/player/front.png');
+    this.load.image('playerFront3', '../assets/player/lfront.png');
   }
 
   create() {
+    // Player animation
+    this.anims.create({
+      key: 'walkRight',
+      frames: [
+        { key: 'playerRight1' },
+        { key: 'playerRight2' },
+        { key: 'playerRight3' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'walkFront',
+      frames: [
+        { key: 'playerFront1' },
+        { key: 'playerFront2' },
+        { key: 'playerFront3' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'walkLeft',
+      frames: [
+        { key: 'playerLeft1' },
+        { key: 'playerLeft2' },
+        { key: 'playerLeft3' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
     // Option to have full screen
     this.audio = this.sound.add('audio');
     this.audio.play();
@@ -123,8 +168,8 @@ class Intro extends TweenScene {
       });
 
     // General settings we will need for all levels
-    this.ball1 = this.physics.add.image(400, 150, 'ball');
-    this.ball2 = this.physics.add.image(1200, 150, 'ball');
+    this.ball1 = this.physics.add.sprite(400, 150, 'ball');
+    this.ball2 = this.physics.add.sprite(1200, 150, 'ball');
     this.wall = this.physics.add.image(800, 600, 'wall');
     this.wall.body.setImmovable(true);
     this.wall.setScale(.1,10);
@@ -147,12 +192,10 @@ class Intro extends TweenScene {
     // Level 1 design
     if (level == 1) {
       // Create a gate for both players
-      this.gate1 = this.physics.add.image(400, 600, 'wall');
+      this.gate1 = this.physics.add.image(400, 620, 'newgate');
       this.gate1.body.setImmovable(true);
-      this.gate1.setScale(7.5,.1);
-      this.gate2 = this.physics.add.image(1200, 600, 'wall');
+      this.gate2 = this.physics.add.image(1200, 620, 'oldgate');
       this.gate2.body.setImmovable(true);
-      this.gate2.setScale(7.5,.1);
       // Button for both players, but in the past it's usable, and in the future it isn't
       this.button1 = this.physics.add.image(150, 500, 'wall');
       this.button1.body.setImmovable(true);
@@ -183,10 +226,10 @@ class Intro extends TweenScene {
     // Level 2 Design
     if (level == 2) {
       // Create a gate for both players
-      this.gate1 = this.physics.add.image(400, 600, 'wall');
+      this.gate1 = this.physics.add.image(400, 620, 'newgate');
       this.gate1.body.setImmovable(true);
       this.gate1.setScale(7.5,.1);
-      this.gate2 = this.physics.add.image(1200, 600, 'wall');
+      this.gate2 = this.physics.add.image(1200, 620, 'oldgate');
       this.gate2.body.setImmovable(true);
       this.gate2.setScale(7.5,.1);
       // Button for both players, but in the past it's usable, and in the future it isn't
@@ -264,17 +307,29 @@ class Intro extends TweenScene {
       // if current side is the past, can control both characters
       if (this.currentSide == 0) {
         if (event.code === 'ArrowUp') {
+          this.ball1.play('walkFront');
+          this.ball2.play('walkFront');
+
           this.ball1.setVelocity(0, -150);
           this.ball2.setVelocity(0, -150);
         } else if (event.code === 'ArrowDown') {
+          this.ball1.play('walkFront');
+          this.ball2.play('walkFront');
+
           // move ball down
           this.ball1.setVelocity(0, 150);
           this.ball2.setVelocity(0, 150);
         } else if (event.code === 'ArrowLeft') {
+          this.ball1.play('walkLeft');
+          this.ball2.play('walkLeft');
+
           // move ball left
           this.ball1.setVelocity(-150, 0);
           this.ball2.setVelocity(-150, 0);
         } else if (event.code === 'ArrowRight') {
+          this.ball1.play('walkRight');
+          this.ball2.play('walkRight');
+
           // move ball right
           this.ball1.setVelocity(150, 0);
           this.ball2.setVelocity(150, 0);
@@ -296,6 +351,8 @@ class Intro extends TweenScene {
         }
         else if (event.code === 'ArrowRight') {
           // stop moving down
+          this.ball1.setTexture('playerWalk1').setScale(0.6);
+          this.ball1.play('walkRight');
           this.ball1.setVelocity(150, 0);
         }
       }
