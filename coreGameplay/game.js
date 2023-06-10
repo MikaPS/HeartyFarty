@@ -228,10 +228,8 @@ class Intro extends TweenScene {
       // Create a gate for both players
       this.gate1 = this.physics.add.image(400, 620, 'newgate');
       this.gate1.body.setImmovable(true);
-      this.gate1.setScale(7.5,.1);
       this.gate2 = this.physics.add.image(1200, 620, 'oldgate');
       this.gate2.body.setImmovable(true);
-      this.gate2.setScale(7.5,.1);
       // Button for both players, but in the past it's usable, and in the future it isn't
       this.button1 = this.physics.add.image(150, 500, 'wall');
       this.button1.body.setImmovable(true);
@@ -337,21 +335,19 @@ class Intro extends TweenScene {
       // if current side is the present, can control one character
       } else {
         if (event.code === 'ArrowUp') {
-          // stop moving left
+          this.ball1.play('walkFront');
           this.ball1.setVelocity(0, -150);
         }
         else if (event.code === 'ArrowDown') {
-          // stop moving right
+          this.ball1.play('walkFront');
           this.ball1.setVelocity(0, 150);
-        }
-      
+        }      
         else if (event.code === 'ArrowLeft') {
-          // stop moving up
+          this.ball1.play('walkLeft');
           this.ball1.setVelocity(-150, 0);
         }
         else if (event.code === 'ArrowRight') {
           // stop moving down
-          this.ball1.setTexture('playerWalk1').setScale(0.6);
           this.ball1.play('walkRight');
           this.ball1.setVelocity(150, 0);
         }
@@ -359,6 +355,12 @@ class Intro extends TweenScene {
     });
     
     this.input.keyboard.on('keyup', (event) => {
+      this.ball1.setTexture('ball').setScale(0.6);
+      this.ball2.setTexture('ball').setScale(0.6);
+      this.ball1.anims.stop();
+      this.ball2.anims.stop();
+
+
       if (this.currentSide == 0) {
         if (event.code === 'ArrowUp') {
           this.ball1.setVelocity(0, 0);
@@ -467,11 +469,25 @@ class Intro extends TweenScene {
     .on('pointerdown', () => {
       ball1.setVelocity(vel1, vel2);
       ball2.setVelocity(vel1, vel2);
+      if (item == this.pastRightKey) {
+        ball1.play('walkRight');
+        ball2.play('walkRight');
+      } else if (item == this.pastLeftKey) {
+        ball1.play('walkLeft');
+        ball2.play('walkLeft');
+      } else {
+        ball1.play('walkFront');
+        ball2.play('walkFront');
+      }
     })
     .on('pointerup', () => {
       // Stop player when button is released
       ball1.setVelocity(0);
       ball2.setVelocity(0);
+      ball1.setTexture('ball').setScale(0.6);
+      ball2.setTexture('ball').setScale(0.6);
+      ball1.anims.stop();
+      ball2.anims.stop();
     });
   }
 
@@ -484,10 +500,19 @@ class Intro extends TweenScene {
     item.setInteractive()
     .on('pointerdown', () => {
       ball1.setVelocity(vel1, vel2);
+      if (item == this.presentRightKey) {
+        ball1.play('walkRight');
+      } else if (item == this.presentLeftKey) {
+        ball1.play('walkLeft');
+      } else {
+        ball1.play('walkFront');
+      }
     })
     .on('pointerup', () => {
       // Stop player when button is released
       ball1.setVelocity(0);
+      ball1.setTexture('ball').setScale(0.6);
+      ball1.anims.stop();
     });
   }
 }
