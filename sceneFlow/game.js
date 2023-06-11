@@ -240,7 +240,9 @@ class Intro extends TweenScene {
         lifespan: 2400,
         quantity: 1,
         scale: { start: 0.2, end: 0.09 },
-        frequency: 40
+        frequency: 40,
+        alpha: 0.2,
+        emitting: false
     });
 
     // make the particles to get to the bottom of the screen
@@ -253,12 +255,18 @@ class Intro extends TweenScene {
       frequency: 10,
       gravityY: 90,
       x: { start: 10, end: 1500, steps: 110, yoyo: true },
-      emitting: false
+      emitting: false,
+      alpha: 0.2
       // alpha: 0
   });
 
       // make the particles go in a circle
       emitter1.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
+
+      // delay before the emitter begins
+      this.time.delayedCall(12000, () => {
+        emitter1.start();
+      }, [], this);
       
       // Colliding with second button will remove the gates and buttons
       this.button2Collision = this.physics.add.collider(this.ball2, this.button2, () => {
@@ -272,7 +280,7 @@ class Intro extends TweenScene {
         emitter1.stop();
         
         // start the second emitter
-        emitter2.start(7000);
+        emitter2.start();
 
       });
     }
