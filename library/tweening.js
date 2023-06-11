@@ -5,13 +5,14 @@ class TweenScene extends Phaser.Scene {
         this.name = name;
     }
     // tween animation for fading in
-    fade_in(targets, delay, duration) {
+    fade_in(targets, delay, duration, onCompleteCallback) {
         this.tweens.add({
             targets: targets,
             alpha: 1,
             delay: delay,
             duration: duration,
-            ease: 'Quart'
+            ease: 'Quart',
+            onComplete: onCompleteCallback
         });
     }
     // fade out

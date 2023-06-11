@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 4;
+let level = 3;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -39,6 +39,15 @@ class Victory extends TweenScene {
         });
     }
     if (level == 3) {
+      this.add.text(200,900, "watch out because if a tree grows\nin the past where you are standing\nin the future you might end up\nstuck inside for eternity.").setFontSize(60);
+      this.add.text(600,600,"Next level?").setFontSize(80)
+        .setInteractive()
+        .on('pointerdown', () => {
+          level = 4;
+          this.sceneTransition("intro", isMusicOn);
+        });
+    }
+    if (level == 4) {
       this.add.text(600,600,"Restart?").setFontSize(80)
         .setInteractive()
         .on('pointerdown', () => {
@@ -110,7 +119,6 @@ class Intro extends TweenScene {
     this.load.image('smalltree', '../assets/tree/smalltree.png'); 
     this.load.image('bigtree', '../assets/tree/bigtree.png'); 
     this.load.image('doortree', '../assets/tree/btreewdoor.png'); 
-
     // Walk animation to right
     this.load.image('playerRight1', '../assets/player/rright.png');
     this.load.image('playerRight2', '../assets/player/right.png');
@@ -340,7 +348,7 @@ class Intro extends TweenScene {
       // 5 buttons that old player needs to click, as more buttons are clicked, the tree will grow
         // over time, the buttons will turn off
       // present player can press a button that will increase the time it takes for the buttons to turn off
-      this.tree = this.physics.add.image(400, 650, "sapling").setScale(0.4); this.tree.body.setImmovable(true);
+      this.tree = this.physics.add.image(400, 650, "sapling").setScale(0.3); this.tree.body.setImmovable(true);
 
       this.button1 = this.physics.add.image(1000, 650, 'offbutton').setScale(0.4); this.button1.body.setImmovable(true);
       this.button2 = this.physics.add.image(1250, 400, 'offbutton').setScale(0.4); this.button2.body.setImmovable(true);
@@ -358,15 +366,22 @@ class Intro extends TweenScene {
               this.buttonsOn += 1;
             }
           }
-          if (this.buttonsOn == 1) { this.tree.setTexture("smalltree"); }
-          if (this.buttonsOn == 2) { this.tree.setTexture("bigtree"); }
-          if (this.buttonsOn == 3) { this.tree.setTexture("bigtree"); }
+          if (this.buttonsOn == 1) { 
+            this.tree.setTexture("smalltree"); 
+            this.treeCollision();
+          }
+          if (this.buttonsOn == 2) {
+            this.tree.setTexture("bigtree"); 
+            this.treeCollision();
+          }
+          if (this.buttonsOn == 3) { 
+            this.tree.setTexture("bigtree"); 
+            this.treeCollision();
+          }
           if (this.buttonsOn == 4) { 
             this.tree.setTexture("doortree"); 
-            this.winningCollision = this.physics.add.collider(this.ball1, this.tree, () => {
-              let isMusicOn = this.isMusicOn;
-              this.sceneTransition("victory", isMusicOn);
-            });
+            console.log("here");
+            this.treeCollision();
           }
         });
       
@@ -639,8 +654,33 @@ class Intro extends TweenScene {
         });
       } 
     }
-   
+  }
 
+  treeCollision() {
+    this.fade_out(this.tree, 0, 300); 
+    this.fade_in(this.tree, 400, 300); 
+    this.fade_out(this.tree, 800, 300); 
+    this.fade_in(this.tree, 1200, 300); 
+    this.fade_out(this.tree, 1600, 300); 
+    this.fade_in(this.tree, 2000, 300); 
+    
+    this.enableCollision = false;
+    this.time.addEvent({
+      delay: 2000, 
+      callback: () => { this.enableCollision = true; }, 
+    });
+
+   
+    this.physics.add.collider(this.ball1, this.tree, () => {
+      if (this.enableCollision) {
+        let isMusicOn = this.isMusicOn;
+        if (this.buttonsOn <= 3) {
+        this.sceneTransition("losing", isMusicOn);
+        } else {
+          this.sceneTransition("victory", isMusicOn);
+        }
+      }
+    }); 
 
   }
 }
