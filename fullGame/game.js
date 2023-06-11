@@ -12,12 +12,13 @@ class Victory extends TweenScene {
   }
   preload() {
     this.load.image('forest', '../assets/forest_path.png');
+    this.load.image('fullscreen', '../assets/keys/fullscreen.png');
 
   }
-  create() {
+  create(data) {
+    let isMusicOn = data.isMusicOn;
     // Option to have full screen
-    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
-    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.add.text(450,400,"YOU WON!").setFontSize(150);
@@ -26,7 +27,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 2;
-          this.sceneTransition("intro");
+          this.sceneTransition("intro", isMusicOn);
         });
     }
     if (level == 2) {
@@ -34,7 +35,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 3;
-          this.sceneTransition("intro");
+          this.sceneTransition("intro", isMusicOn);
         });
     }
     if (level == 3) {
@@ -42,7 +43,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 1;
-          this.sceneTransition("intro");
+          this.sceneTransition("intro", isMusicOn);
         });
     }
   }
@@ -54,18 +55,19 @@ class Losing extends TweenScene {
   }
   preload() {
     this.load.image('forest', '../assets/forest_path.png');
+    this.load.image('fullscreen', '../assets/keys/fullscreen.png');
   }
-  create() {
+  create(data) {
+    let isMusicOn = data.isMusicOn;
     // Option to have full screen
-    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
-    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
     this.add.text(450,400,"YOU LOST!").setFontSize(150);
     this.add.text(600,600,"Restart?").setFontSize(80)
       .setInteractive()
       .on('pointerdown', () => {
-        this.sceneTransition("intro");
+        this.sceneTransition("intro", isMusicOn);
       });
   }
 }
@@ -89,6 +91,7 @@ class Intro extends TweenScene {
   preload() {
     this.load.audio('audio', '../assets/music/now_and_then.mp3');
     this.load.image('ball', '../assets/player/rfront.png');
+    this.load.image('fullscreen', '../assets/keys/fullscreen.png');
     this.load.image('wall', '../assets/wall.png');
     this.load.image('forest', '../assets/forest_path.png');
     this.load.image('water', '../assets/water/water3.png');
@@ -111,7 +114,7 @@ class Intro extends TweenScene {
     this.load.image('playerFront3', '../assets/player/lfront.png');
   }
 
-  create() {
+  create(data) {
     // Player animation
     this.anims.create({
       key: 'walkRight',
@@ -143,12 +146,51 @@ class Intro extends TweenScene {
       frameRate: 5,
       repeat: -1
     });
+    // Intro animation
+    // Calculate the position to center the square 
+    var x = (this.cameras.main.width - 2000) / 2;
+    var y = (this.cameras.main.height - 1500) / 2;
+    this.graphics = this.add.graphics();
+    this.graphics.fillStyle(0x0000);
+    // add in square that fills the scene
+    let large_rect = this.graphics.fillRect(x,y,2000,1500).setDepth(3);
+    // fade in the scene
+    this.cameras.main.fadeIn(1500, 0, 0, 0);    
+    // Tween chain to squish the rectangle into the diving line
+    this.tweens.add({
+      targets: this.graphics,
+      delay: 150,
+      duration: 1200,
+      scaleX: 0.001,
+      scaleY: 1,
+      x: this.cameras.main.centerX,
+      ease: 'Quad.easeInOut',
+    });
     // Option to have full screen
-    this.audio = this.sound.add('audio');
-    this.audio.play();
-    this.add.text(1505,1120, "full\nscreen").setDepth(1).setFontSize(20);
-    const fullScreen = this.add.rectangle(1540, 1140, 75, 75, 0xff0000)
+    bgMusic.stop();
+    bgMusic = this.sound.add('audio');
+    bgMusic.setLoop(true);
+    bgMusic.play();
+
+    const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
+
+    // Music
+    this.isMusicOn = data.isMusicOn;
+    // Music
+    this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
+    .setInteractive({useHandCursor: true})
+    .on('pointerdown', () => {
+          if (this.isMusicOn == 1) { bgMusic.pause(); this.isMusicOn = 0;} else { bgMusic.play(); this.isMusicOn = 1;}
+    });
+    this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            if (this.isMusicOn == 1) { bgMusic.pause(); this.isMusicOn = 0;} 
+            else { bgMusic.play(); this.isMusicOn = 1;}
+        });
+    // music is turned off
+    this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0).setDepth(2);
 
     // Background
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
@@ -251,8 +293,8 @@ class Intro extends TweenScene {
       graphics.strokeRect(200,480,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
-        // this.audio.stop();
-        this.sceneTransition("losing");
+        let isMusicOn = this.isMusicOn;
+        this.sceneTransition("losing", isMusicOn);
       });
 
       // Gate collision
@@ -401,10 +443,16 @@ class Intro extends TweenScene {
   }
 
   update() {
+    // Music
+    if (this.isMusicOn == 1) {
+      this.noMusic.setAlpha(0);
+    } else if (this.isMusicOn == 0){
+      this.noMusic.setAlpha(1);
+    }
     // Move to new levels
     if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
-      // this.audio.stop();
-      this.sceneTransition("victory");
+      let isMusicOn = this.isMusicOn;
+      this.sceneTransition("victory", isMusicOn);
     }
     // On screen controllers 
     if (this.currentSide == 0) {
@@ -522,7 +570,13 @@ class Instructions extends Phaser.Scene {
     super('instructions');
   }
 
-  create() {
+  preload() {
+    this.load.image('fullscreen', '../assets/keys/fullscreen.png');
+  }
+  create(data) {
+    let isMusicOn = data.isMusicOn;
+    const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
+    this.fullScreen(fullScreen);
     // Create the lines group
     const linesGroup = this.add.group();
 
@@ -557,28 +611,28 @@ class Instructions extends Phaser.Scene {
     });
 
     this.input.on('pointerdown', () => {
-      this.scene.start('intro'); 
+      this.scene.start('intro', {isMusicOn});
   });
   
   }
 }
 
-  var config = {
-    type: Phaser.AUTO,
-    scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
-      width: 1600,
-      height: 1200
-    },
-    physics: {
-      default: 'arcade',
-      arcade: {
-        gravity: { y: 0 }
-      }
-    },
-    scene: [Instructions,Intro, Losing, Victory]
-    // scene: [Intro]
-  };
+  // var config = {
+  //   type: Phaser.AUTO,
+  //   scale: {
+  //     mode: Phaser.Scale.FIT,
+  //     autoCenter: Phaser.Scale.CENTER_BOTH,
+  //     width: 1600,
+  //     height: 1200
+  //   },
+  //   physics: {
+  //     default: 'arcade',
+  //     arcade: {
+  //       gravity: { y: 0 }
+  //     }
+  //   },
+  //   scene: [Instructions,Intro, Losing, Victory]
+  //   // scene: [Intro]
+  // };
   
-  var game = new Phaser.Game(config);
+  // var game = new Phaser.Game(config);
