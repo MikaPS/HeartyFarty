@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 3;
+let level = 1;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -186,7 +186,7 @@ class Intro extends TweenScene {
       ease: 'Quad.easeInOut',
     });
     // Option to have full screen
-    // bgMusic.stop();
+    bgMusic.stop();
     bgMusic = this.sound.add('audio');
     bgMusic.setLoop(true);
     bgMusic.play();
@@ -691,12 +691,12 @@ class Instructions extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('fullscreen', '../assets/keys/fullscreen.png');
+    // this.load.image('fullscreen', '../assets/keys/fullscreen.png');
   }
   create(data) {
     let isMusicOn = data.isMusicOn;
-    const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
-    this.fullScreen(fullScreen);
+    // const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
+    // this.fullScreen(fullScreen);
     // Create the lines group
     const linesGroup = this.add.group();
 

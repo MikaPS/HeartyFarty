@@ -11,6 +11,27 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 // Global vars to check music status
 let isMusicOn = 1; // 1 = true
 let bgMusic;
+var GameData = {    
+    onLoad: function() {
+      // Retrieve the value from localStorage if it exists
+      var storedValue = localStorage.getItem('isMusicOn');
+      
+      if (storedValue !== null) {
+        // If a value is stored, parse it to the appropriate data type
+        isMusicOn = JSON.parse(storedValue);
+      } else {
+        // If no value is stored, initialize the global variable
+        isMusicOn = 1;
+      }
+    },
+    
+    onExit: function() {
+      // Store the value of the global variable in localStorage
+      localStorage.setItem('isMusicOn', JSON.stringify(isMusicOn));
+    }
+  };
+
+  
 class Main_Title extends TweenScene {
     constructor() {
       super('main_title');
@@ -27,6 +48,8 @@ class Main_Title extends TweenScene {
     }
 
     create() {
+        GameData.onLoad();
+
         // Music
         bgMusic = this.sound.add('bgMusic');
         bgMusic.setLoop(true);
@@ -179,6 +202,7 @@ class Main_Title extends TweenScene {
     }
 
     update(){}
+  
 }
 
 class Start_Screen extends TweenScene {
@@ -509,6 +533,12 @@ class Ending_Credits_Screen extends TweenScene {
     }
 }
 
+// Event to call onExit before the game is closed or exited
+window.addEventListener('beforeunload', function() {
+    GameData.onExit();
+  });
+  
+
 var config = {
     type: Phaser.AUTO,
     scale: {
@@ -523,9 +553,9 @@ var config = {
         gravity: { y: 0 }
       }
     },
-    // scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen]
+    scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen],
     // Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen
-    scene: [Intro, Victory, Losing]
+    // scene: [Intro, Victory, Losing],
   };
   
   var game = new Phaser.Game(config);
