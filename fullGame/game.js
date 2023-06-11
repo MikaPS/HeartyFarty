@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 1;
+let level = 2;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -98,8 +98,11 @@ class Intro extends TweenScene {
     this.load.image('arrowkey', '../assets/keys/arrowkey.png');
     this.load.image('waterkey', '../assets/keys/waterkey.png');
     this.load.audio('waterSound', '../assets/music/water_sound.mp3'); 
+    // Gate and buttons
     this.load.image('newgate', '../assets/newgate.png'); 
     this.load.image('oldgate', '../assets/oldgate.png'); 
+    this.load.image('onbutton', '../assets/keys/onbutton.png'); 
+    this.load.image('offbutton', '../assets/keys/button.png'); 
     // Walk animation to right
     this.load.image('playerRight1', '../assets/player/rright.png');
     this.load.image('playerRight2', '../assets/player/right.png');
@@ -167,7 +170,7 @@ class Intro extends TweenScene {
       ease: 'Quad.easeInOut',
     });
     // Option to have full screen
-    bgMusic.stop();
+    // bgMusic.stop();
     bgMusic = this.sound.add('audio');
     bgMusic.setLoop(true);
     bgMusic.play();
@@ -239,12 +242,10 @@ class Intro extends TweenScene {
       this.gate2 = this.physics.add.image(1200, 620, 'oldgate');
       this.gate2.body.setImmovable(true);
       // Button for both players, but in the past it's usable, and in the future it isn't
-      this.button1 = this.physics.add.image(150, 500, 'wall');
+      this.button1 = this.physics.add.image(150, 450, 'offbutton').setScale(0.4);
       this.button1.body.setImmovable(true);
-      this.button1.setScale(.5,.1).setAlpha(0.6); // The idea is that over time, something covered the button in the present
-      this.button2 = this.physics.add.image(950, 500, 'wall');
+      this.button2 = this.physics.add.image(950, 450, 'onbutton').setScale(0.4);
       this.button2.body.setImmovable(true);
-      this.button2.setScale(.5,.1); 
 
       // Gate collision
       this.gate1Collision = this.physics.add.collider(this.ball1, this.gate1, () => {
@@ -273,24 +274,22 @@ class Intro extends TweenScene {
       this.gate2 = this.physics.add.image(1200, 620, 'oldgate');
       this.gate2.body.setImmovable(true);
       // Button for both players, but in the past it's usable, and in the future it isn't
-      this.button1 = this.physics.add.image(150, 500, 'wall');
+      this.button1 = this.physics.add.image(150, 400, 'offbutton').setScale(0.4);
       this.button1.body.setImmovable(true);
-      this.button1.setScale(.5,.1).setAlpha(0.6); // The idea is that over time, something covered the button in the present
-      this.button2 = this.physics.add.image(950, 500, 'wall');
+      this.button2 = this.physics.add.image(950, 400, 'onbutton').setScale(0.4);
       this.button2.body.setImmovable(true);
-      this.button2.setScale(.5,.1); 
       // Cover the present button in barriers that will kill the player
       this.group = this.add.group();
-      this.barrier1 = this.physics.add.image(80,500,'wall').setScale(0.4,0.15); this.barrier1.body.setImmovable(true); this.group.add(this.barrier1);
-      this.barrier2 = this.physics.add.image(150,450,'wall').setScale(0.4,0.15); this.barrier2.body.setImmovable(true); this.group.add(this.barrier2);
-      this.barrier3 = this.physics.add.image(150,550,'wall').setScale(0.4,0.15); this.barrier3.body.setImmovable(true); this.group.add(this.barrier3);
-      this.barrier4 = this.physics.add.image(220,500,'wall').setScale(0.4,0.15); this.barrier4.body.setImmovable(true); this.group.add(this.barrier4);
+      this.barrier1 = this.physics.add.image(55,400,'wall').setScale(0.4,0.15); this.barrier1.body.setImmovable(true); this.group.add(this.barrier1);
+      this.barrier2 = this.physics.add.image(150,300,'wall').setScale(0.4,0.15); this.barrier2.body.setImmovable(true); this.group.add(this.barrier2);
+      this.barrier3 = this.physics.add.image(150,500,'wall').setScale(0.4,0.15); this.barrier3.body.setImmovable(true); this.group.add(this.barrier3);
+      this.barrier4 = this.physics.add.image(240,400,'wall').setScale(0.4,0.15); this.barrier4.body.setImmovable(true); this.group.add(this.barrier4);
       const graphics = this.add.graphics();
       graphics.lineStyle(5,0xff0000); // set color of squares
-      graphics.strokeRect(60,480,40,40); 
-      graphics.strokeRect(130,430,40,40); 
-      graphics.strokeRect(130,530,40,40); 
-      graphics.strokeRect(200,480,40,40); 
+      graphics.strokeRect(35,380,40,40); 
+      graphics.strokeRect(130,280,40,40); 
+      graphics.strokeRect(130,480,40,40); 
+      graphics.strokeRect(220,380,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
         let isMusicOn = this.isMusicOn;
