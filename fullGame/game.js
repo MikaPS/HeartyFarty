@@ -100,7 +100,6 @@ class Intro extends TweenScene {
   }
 
   preload() {
-    this.load.audio('audio', '../assets/music/now_and_then.mp3');
     this.load.image('ball', '../assets/player/rfront.png');
     this.load.image('fullscreen', '../assets/keys/fullscreen.png');
     this.load.image('wall', '../assets/wall.png');
@@ -186,11 +185,6 @@ class Intro extends TweenScene {
       ease: 'Quad.easeInOut',
     });
     // Option to have full screen
-    bgMusic.stop();
-    bgMusic = this.sound.add('audio');
-    bgMusic.setLoop(true);
-    bgMusic.play();
-
     const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
 
@@ -380,7 +374,7 @@ class Intro extends TweenScene {
           }
           if (this.buttonsOn == 4) { 
             this.tree.setTexture("doortree"); 
-            console.log("here");
+            // console.log("here");
             this.treeCollision();
           }
         });
@@ -692,8 +686,13 @@ class Instructions extends Phaser.Scene {
 
   preload() {
     // this.load.image('fullscreen', '../assets/keys/fullscreen.png');
+    this.load.audio('audio', '../assets/music/now_and_then.mp3');
   }
   create(data) {
+    bgMusic.stop();   
+    bgMusic = this.sound.add('audio');
+    bgMusic.setLoop(true);
+    bgMusic.play();
     let isMusicOn = data.isMusicOn;
     // const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     // this.fullScreen(fullScreen);
