@@ -337,7 +337,7 @@ class Intro extends TweenScene {
       // 5 buttons that old player needs to click, as more buttons are clicked, the tree will grow
         // over time, the buttons will turn off
       // present player can press a button that will increase the time it takes for the buttons to turn off
-      this.tree = this.physics.add.image(400, 650, "sapling").setScale(0.4);
+      this.tree = this.physics.add.image(400, 650, "sapling").setScale(0.4); this.tree.body.setImmovable(true);
 
       this.button1 = this.physics.add.image(1000, 650, 'offbutton').setScale(0.4); this.button1.body.setImmovable(true);
       this.button2 = this.physics.add.image(1250, 400, 'offbutton').setScale(0.4); this.button2.body.setImmovable(true);
@@ -358,8 +358,15 @@ class Intro extends TweenScene {
           if (this.buttonsOn == 1) { this.tree.setTexture("smalltree"); }
           if (this.buttonsOn == 2) { this.tree.setTexture("bigtree"); }
           if (this.buttonsOn == 3) { this.tree.setTexture("bigtree"); }
-          if (this.buttonsOn == 4) { this.tree.setTexture("doortree"); }
+          if (this.buttonsOn == 4) { 
+            this.tree.setTexture("doortree"); 
+            this.winningCollision = this.physics.add.collider(this.ball1, this.tree, () => {
+              let isMusicOn = this.isMusicOn;
+              this.sceneTransition("victory", isMusicOn);
+            });
+          }
         });
+      
     }
 
 
