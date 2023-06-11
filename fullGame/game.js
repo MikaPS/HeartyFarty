@@ -331,7 +331,10 @@ class Intro extends TweenScene {
           this.createWater();
         });      
 
-      this.dirt = this.physics.add.image(1400, 550, "wall").setScale(0.65,0.25);
+      this.dirt = this.physics.add.image(1410, 710, "wall").setScale(0.85,0.25);
+      this.sap = this.physics.add.image(1400, 550, "sapling").setScale(0.4);
+      this.endTree = this.physics.add.image(600, 550, "sapling").setScale(0.4);
+      
     }
     if (level == 4) {
       // 5 buttons that old player needs to click, as more buttons are clicked, the tree will grow
@@ -490,9 +493,11 @@ class Intro extends TweenScene {
       this.noMusic.setAlpha(1);
     }
     // Move to new levels
-    if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
-      let isMusicOn = this.isMusicOn;
-      this.sceneTransition("victory", isMusicOn);
+    if (level == 1 || level == 2) {
+      if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
+        let isMusicOn = this.isMusicOn;
+        this.sceneTransition("victory", isMusicOn);
+      }
     }
     // On screen controllers 
     if (this.currentSide == 0) {
@@ -600,8 +605,19 @@ class Intro extends TweenScene {
       });
       this.physics.world.enable(prefab);
       if (level ==3) {
-        this.gate2Collision = this.physics.add.collider(this.dirt, prefab, () => {
-          this.add.rectangle(500,1200,200,200,0x00ff00);
+        this.physics.add.collider(this.dirt, prefab, () => {
+          this.endTree.setTexture("doortree");
+          this.physics.add.collider(this.ball1, this.endTree, () => {
+            let isMusicOn = this.isMusicOn;
+            this.sceneTransition("victory", isMusicOn);
+          });
+        });
+        this.physics.add.collider(this.sap, prefab, () => {
+          this.endTree.setTexture("doortree");
+          this.physics.add.collider(this.ball1, this.endTree, () => {
+            let isMusicOn = this.isMusicOn;
+            this.sceneTransition("victory", isMusicOn);
+          });
         });
       }
       else if (level == 4) {
