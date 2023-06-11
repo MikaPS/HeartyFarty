@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 2;
+let level = 4;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -86,6 +86,8 @@ class Intro extends TweenScene {
     this.currentSide = 1; // 0 present, 1 past
     this.ball1;
     this.ball2;
+    this.buttonsOn = 0;
+    this.isButtonOn = [false, false, false, false];
   }
 
   preload() {
@@ -103,6 +105,12 @@ class Intro extends TweenScene {
     this.load.image('oldgate', '../assets/oldgate.png'); 
     this.load.image('onbutton', '../assets/keys/onbutton.png'); 
     this.load.image('offbutton', '../assets/keys/button.png'); 
+    // tree
+    this.load.image('sapling', '../assets/tree/sapling.png'); 
+    this.load.image('smalltree', '../assets/tree/smalltree.png'); 
+    this.load.image('bigtree', '../assets/tree/bigtree.png'); 
+    this.load.image('doortree', '../assets/tree/btreewdoor.png'); 
+
     // Walk animation to right
     this.load.image('playerRight1', '../assets/player/rright.png');
     this.load.image('playerRight2', '../assets/player/right.png');
@@ -325,11 +333,37 @@ class Intro extends TweenScene {
 
       this.dirt = this.physics.add.image(1400, 550, "wall").setScale(0.65,0.25);
     }
+    if (level == 4) {
+      // 5 buttons that old player needs to click, as more buttons are clicked, the tree will grow
+        // over time, the buttons will turn off
+      // present player can press a button that will increase the time it takes for the buttons to turn off
+      this.tree = this.physics.add.image(400, 650, "sapling").setScale(0.4);
+
+      this.button1 = this.physics.add.image(1000, 650, 'offbutton').setScale(0.4); this.button1.body.setImmovable(true);
+      this.button2 = this.physics.add.image(1250, 400, 'offbutton').setScale(0.4); this.button2.body.setImmovable(true);
+      this.button3 = this.physics.add.image(1250, 900, 'offbutton').setScale(0.4); this.button3.body.setImmovable(true);
+      this.button4 = this.physics.add.image(1500, 650, 'offbutton').setScale(0.4); this.button4.body.setImmovable(true);
+      this.water = this.add.image(170,1040,"waterkey").setScale(0.22).setDepth(2)
+        .setInteractive()
+        .on('pointerdown', () => {
+          this.createWater();
+        })
+        .on('pointerup', () => {
+          this.buttonsOn = 0;
+          for (let i = 0; i < this.isButtonOn.length; i++) {
+            if (this.isButtonOn[i] == true) {
+              this.buttonsOn += 1;
+            }
+          }
+          if (this.buttonsOn == 1) { this.tree.setTexture("smalltree"); }
+          if (this.buttonsOn == 2) { this.tree.setTexture("bigtree"); }
+          if (this.buttonsOn == 3) { this.tree.setTexture("bigtree"); }
+          if (this.buttonsOn == 4) { this.tree.setTexture("doortree"); }
+        });
+    }
 
 
     // On screen controllers
-    
-
     this.pastRightKey = this.add.image(270,1040, "arrowkey").setScale(0.2).setAngle(90).setDepth(2);
     this.pastDownKey = this.add.image(171,1140, "arrowkey").setScale(0.2).setAngle(180).setDepth(2);  
     this.pastLeftKey = this.add.image(70,1040, "arrowkey").setScale(0.2).setAngle(270).setDepth(2);
@@ -478,33 +512,7 @@ class Intro extends TweenScene {
     // }
   }
 
-  createWater() {
-    // Define the x and y positions for the prefabs
-    this.waterSound = this.sound.add('waterSound');
-    this.waterSound.play();
-    const prefabPositions = [
-      { x: this.ball2.x+70, y: this.ball2.y-10 },
-      { x: this.ball2.x+110, y: this.ball2.y-30 },
-      { x: this.ball2.x+170, y: this.ball2.y-10 }
-      // Add more positions as needed
-    ];
 
-    // Instantiate the prefab at each position
-    for (const position of prefabPositions) {
-      const prefab = new WaterPrefab(this, position.x, position.y, 'water');
-      prefab.rotation = Phaser.Math.DegToRad(-45);
-      this.time.addEvent({
-        delay: 1500, 
-        callback: () => { prefab.destroy(); }, 
-      });
-      this.physics.world.enable(prefab);
-      this.gate2Collision = this.physics.add.collider(this.dirt, prefab, () => {
-        this.add.rectangle(500,1200,200,200,0x00ff00);
-      });
-    }
-    
-
-  }
   
   pastKeyboardMovement(item, ball1, ball2, vel1, vel2) {
     this.presentRightKey.disableInteractive();
@@ -561,6 +569,56 @@ class Intro extends TweenScene {
       ball1.setTexture('ball').setScale(0.6);
       ball1.anims.stop();
     });
+  }
+
+  
+  createWater() {
+    // Define the x and y positions for the prefabs
+    this.waterSound = this.sound.add('waterSound');
+    this.waterSound.play();
+    const prefabPositions = [
+      { x: this.ball2.x+70, y: this.ball2.y-10 },
+      { x: this.ball2.x+110, y: this.ball2.y-30 },
+      { x: this.ball2.x+170, y: this.ball2.y-10 }
+      // Add more positions as needed
+    ];
+
+    // Instantiate the prefab at each position
+    for (const position of prefabPositions) {
+      const prefab = new WaterPrefab(this, position.x, position.y, 'water');
+      prefab.rotation = Phaser.Math.DegToRad(-45);
+      this.time.addEvent({
+        delay: 1500, 
+        callback: () => { prefab.destroy(); }, 
+      });
+      this.physics.world.enable(prefab);
+      if (level ==3) {
+        this.gate2Collision = this.physics.add.collider(this.dirt, prefab, () => {
+          this.add.rectangle(500,1200,200,200,0x00ff00);
+        });
+      }
+      else if (level == 4) {
+        this.button1Collision = this.physics.add.collider(this.button1, prefab, () => {
+          this.button1.setTexture("onbutton");
+          this.isButtonOn[0] = true;
+        });
+        this.button2Collision = this.physics.add.collider(this.button2, prefab, () => {
+          this.button2.setTexture("onbutton");
+          this.isButtonOn[1] = true;
+        });
+        this.button3Collision = this.physics.add.collider(this.button3, prefab, () => {
+          this.button3.setTexture("onbutton");
+          this.isButtonOn[2] = true;
+        });
+        this.button4Collision = this.physics.add.collider(this.button4, prefab, () => {
+          this.button4.setTexture("onbutton");
+          this.isButtonOn[3] = true;
+        });
+      } 
+    }
+   
+
+
   }
 }
 
