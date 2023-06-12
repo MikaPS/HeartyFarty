@@ -204,9 +204,26 @@ class Intro extends TweenScene {
 
     // particles so the player knows what the objective is
     const shape1 = new Phaser.Geom.Circle(0, 0, 100);
+
+    // make the particles to get to the bottom of the screen
+    let emitter2 = this.add.particles(50, 1180, 'waterdrops', {
+      blendMode: 'ADD',
+      scale: { start: 0.1, end: 0.09 },
+      // rotate: { start: 0, end: 360 },
+      speed: { min: 10, max: 30 },
+      lifespan: 6000,
+      frequency: 10,
+      gravityY: 90,
+      x: { start: 10, end: 1500, steps: 110, yoyo: true },
+      emitting: false,
+      alpha: 0.2
+      // alpha: 0
+  });
     
     // Level 1 design
     if (level == 1) {
+      // stop emitter2 before it begins
+      emitter2.stop();
 
       // Create a gate for both players
       this.gate1 = this.physics.add.image(400, 600, 'wall');
@@ -245,21 +262,6 @@ class Intro extends TweenScene {
         emitting: false
     });
 
-    // make the particles to get to the bottom of the screen
-    let emitter2 = this.add.particles(50, 1180, 'waterdrops', {
-      blendMode: 'ADD',
-      scale: { start: 0.1, end: 0.09 },
-      // rotate: { start: 0, end: 360 },
-      speed: { min: 10, max: 30 },
-      lifespan: 6000,
-      frequency: 10,
-      gravityY: 90,
-      x: { start: 10, end: 1500, steps: 110, yoyo: true },
-      emitting: false,
-      alpha: 0.2
-      // alpha: 0
-  });
-
       // make the particles go in a circle
       emitter1.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
 
@@ -286,6 +288,9 @@ class Intro extends TweenScene {
     }
     // Level 2 Design
     if (level == 2) {
+      // stop emitter 2 before it begins
+      emitter2.stop();
+
       // Create a gate for both players
       this.gate1 = this.physics.add.image(400, 600, 'wall');
       this.gate1.body.setImmovable(true);
@@ -328,6 +333,26 @@ class Intro extends TweenScene {
       this.button1Collision = this.physics.add.collider(this.ball1, this.button1, () => {
         
       });
+
+      // make the particles around button
+      let emitter3 = this.add.particles(950, 500, 'waterdrops', {
+        blendMode: 'ADD',
+        lifespan: 2400,
+        quantity: 1,
+        scale: { start: 0.2, end: 0.09 },
+        frequency: 40,
+        alpha: 0.2,
+        emitting: false
+    });
+
+    // make the particles go in a circle
+    emitter3.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
+    
+    // delay before the emitter begins
+    this.time.delayedCall(12000, () => {
+      emitter3.start();
+    }, [], this);
+
       // Colliding with second button will remove the gates and buttons
       this.button2Collision = this.physics.add.collider(this.ball2, this.button2, () => {
         this.gate1.setAlpha(0);
@@ -335,8 +360,16 @@ class Intro extends TweenScene {
         this.physics.world.removeCollider(this.gate1Collision);
         this.physics.world.removeCollider(this.gate2Collision);
         this.isButtonOn = true;
+
+         // stop emitter
+         emitter3.stop();
+        
+         // start the second emitter
+         emitter2.start();
       });
-    }
+
+      
+  }
     if (level == 3) {
       // prefab
       this.water = this.add.image(170,1040,"waterkey").setScale(0.22).setDepth(2)
