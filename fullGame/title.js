@@ -236,7 +236,7 @@ class Video_Screen extends TweenScene {
     }
     preload() {
         this.load.image('fullscreen', '../assets/keys/fullscreen.png');
-        this.load.video('video', 'assets/tutorial.mp4');
+        this.load.video('video', '../assets/tutorial.mp4');
     }
     create() {
         // Option to have full screen
@@ -257,6 +257,24 @@ class Video_Screen extends TweenScene {
              ease: 'Linear',
              onComplete: () => { this.clock.setAlpha(0); }
          });
+
+        // Includes video
+        this.videoObject = this.add.video(803,600,'video').setScale(1.65);
+        // this.videoObject.setPlaybackRate(1.7);
+        this.videoObject.play(true);
+        // this.videoObject.autoplay = true; // autoplays
+        // Go back to main screen
+        
+        let credits_back_rect = this.add.rectangle(1410,180,300,90,0x000000)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+        this.scene.start("main_title");
+        });
+        credits_back_rect.alpha = 0;
+            
+        let back_text = this.add.text(1340, 155, "Back").setFontSize(60);
+        back_text.alpha = 0;
+        this.fade_in([credits_back_rect, back_text],1900,1700 );
 
     }
 }
