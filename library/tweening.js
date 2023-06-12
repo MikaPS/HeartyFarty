@@ -54,4 +54,10 @@ class TweenScene extends Phaser.Scene {
         }
       });
     }
+
+    updateMusicSetting(value) {
+        isMusicOn = value;
+        console.log("saving in storage", isMusicOn);
+        localStorage.setItem('isMusicOn', value);
+    }
 }

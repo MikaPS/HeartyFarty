@@ -16,7 +16,7 @@ class Victory extends TweenScene {
 
   }
   create(data) {
-    let isMusicOn = data.isMusicOn;
+    isMusicOn = data.isMusicOn;
     // Option to have full screen
     const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
@@ -67,7 +67,7 @@ class Losing extends TweenScene {
     this.load.image('fullscreen', '../assets/keys/fullscreen.png');
   }
   create(data) {
-    let isMusicOn = data.isMusicOn;
+    isMusicOn = data.isMusicOn;
     // Option to have full screen
     const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
@@ -190,18 +190,20 @@ class Intro extends TweenScene {
     this.fullScreen(fullScreen);
 
     // Music
-    this.isMusicOn = data.isMusicOn;
+    isMusicOn = data.isMusicOn;
     // Music
     this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
-          if (this.isMusicOn == 1) { bgMusic.pause(); this.isMusicOn = 0;} else { bgMusic.play(); this.isMusicOn = 1;}
+          console.log("clicking on music...", isMusicOn);
+          if (isMusicOn == 1) { bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); } else { bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); }
+          console.log("clicking on music...", isMusicOn);
     });
     this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
-            if (this.isMusicOn == 1) { bgMusic.pause(); this.isMusicOn = 0;} 
-            else { bgMusic.play(); this.isMusicOn = 1;}
+            if (isMusicOn == 1) { bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); } 
+            else { bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); }
         });
     // music is turned off
     this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0).setDepth(2);
@@ -364,7 +366,6 @@ class Intro extends TweenScene {
       graphics.strokeRect(220,380,40,40); 
 
       this.gate1Collision = this.physics.add.collider(this.ball1, this.group, () => {
-        let isMusicOn = this.isMusicOn;
         this.sceneTransition("losing", isMusicOn);
       });
 
@@ -571,15 +572,14 @@ class Intro extends TweenScene {
 
   update() {
     // Music
-    if (this.isMusicOn == 1) {
+    if (isMusicOn == 1) {
       this.noMusic.setAlpha(0);
-    } else if (this.isMusicOn == 0){
+    } else if (isMusicOn == 0){
       this.noMusic.setAlpha(1);
     }
     // Move to new levels
     if (level == 1 || level == 2) {
       if (this.ball1.y >= 1000 && this.ball2.y >= 1000) {
-        let isMusicOn = this.isMusicOn;
         this.sceneTransition("victory", isMusicOn);
       }
     }
@@ -692,14 +692,12 @@ class Intro extends TweenScene {
         this.physics.add.collider(this.dirt, prefab, () => {
           this.endTree.setTexture("doortree");
           this.physics.add.collider(this.ball1, this.endTree, () => {
-            let isMusicOn = this.isMusicOn;
             this.sceneTransition("victory", isMusicOn);
           });
         });
         this.physics.add.collider(this.sap, prefab, () => {
           this.endTree.setTexture("doortree");
           this.physics.add.collider(this.ball1, this.endTree, () => {
-            let isMusicOn = this.isMusicOn;
             this.sceneTransition("victory", isMusicOn);
           });
         });
@@ -742,7 +740,6 @@ class Intro extends TweenScene {
    
     this.physics.add.collider(this.ball1, this.tree, () => {
       if (this.enableCollision) {
-        let isMusicOn = this.isMusicOn;
         if (this.buttonsOn <= 3) {
         this.sceneTransition("losing", isMusicOn);
         } else {
@@ -764,11 +761,19 @@ class Instructions extends Phaser.Scene {
     this.load.audio('audio', '../assets/music/now_and_then.mp3');
   }
   create(data) {
+    isMusicOn = data.isMusicOn;
     bgMusic.stop();   
-    bgMusic = this.sound.add('audio');
-    bgMusic.setLoop(true);
-    bgMusic.play();
-    let isMusicOn = data.isMusicOn;
+    if (checkTitle == 1 && isMusicOn == 1) {
+      bgMusic = this.sound.add('audio');
+      bgMusic.setLoop(true);
+      bgMusic.play();
+      checkTitle += 1;
+    }
+    if (checkTitle == 1 && isMusicOn == 0) {
+      bgMusic = this.sound.add('audio');
+      bgMusic.setLoop(true);
+      checkTitle += 1;
+    }
     // const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     // this.fullScreen(fullScreen);
     // Create the lines group

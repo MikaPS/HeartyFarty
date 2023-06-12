@@ -11,25 +11,7 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 // Global vars to check music status
 let isMusicOn = 1; // 1 = true
 let bgMusic;
-var GameData = {    
-    onLoad: function() {
-      // Retrieve the value from localStorage if it exists
-      var storedValue = localStorage.getItem('isMusicOn');
-      
-      if (storedValue !== null) {
-        // If a value is stored, parse it to the appropriate data type
-        isMusicOn = JSON.parse(storedValue);
-      } else {
-        // If no value is stored, initialize the global variable
-        isMusicOn = 1;
-      }
-    },
-    
-    onExit: function() {
-      // Store the value of the global variable in localStorage
-      localStorage.setItem('isMusicOn', JSON.stringify(isMusicOn));
-    }
-  };
+let checkTitle = 0;
 
   
 class Main_Title extends TweenScene {
@@ -43,17 +25,30 @@ class Main_Title extends TweenScene {
         this.load.image('leftorb', '../assets/leftorb.png');
         this.load.image('rightorb', '../assets/rightorb.png');
         this.load.image('orb', '../assets/crackedorb.png');
-        this.load.audio('bgMusic', '../assets/music/bgmusic.wav');
+        this.load.audio('bgMusic', '../assets/music/bgMusic.mp3');
         this.load.image('fullscreen', '../assets/keys/fullscreen.png');
     }
 
     create() {
-        GameData.onLoad();
-
+        // GameData.onLoad();
+        // Retrieve the global variable from localStorage
+        var savedValue = localStorage.getItem('isMusicOn');
+        if (savedValue) {
+            isMusicOn = savedValue;
+        }
+        console.log("in title screen", isMusicOn);
         // Music
-        bgMusic = this.sound.add('bgMusic');
-        bgMusic.setLoop(true);
-        bgMusic.play();
+        if (checkTitle == 0 && isMusicOn == 0) {
+            bgMusic = this.sound.add('bgMusic');
+            bgMusic.setLoop(true);
+            checkTitle += 1;
+        }
+        if (checkTitle == 0 && isMusicOn == 1) {
+            bgMusic = this.sound.add('bgMusic');
+            bgMusic.setLoop(true);
+            bgMusic.play();
+            checkTitle += 1;
+        }
 
         // Option to have full screen
         const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
@@ -327,6 +322,7 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 1;
+                this.updateMusicSetting(1);
                 console.log("this.onMusic? ", isMusicOn);
                 bgMusic.play();
                 this.offMusic.setAlpha(0.25);
@@ -337,22 +333,23 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 0; 
+                this.updateMusicSetting(0);
                 console.log("this.offMusic? ", isMusicOn);
                 bgMusic.pause();
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             });
-            if (isMusicOn == 1) {
-                console.log("Options Music play?: ", isMusicOn);
-                bgMusic.play();
-                this.onMusic.setAlpha(1);
-                this.offMusic.setAlpha(0.25);
-            } else {
-                console.log("Options Music pause?: ", isMusicOn);
-                bgMusic.pause(); 
-                this.onMusic.setAlpha(0.25);
-                this.offMusic.setAlpha(1);
-            }
+            // if (isMusicOn == 1) {
+            //     console.log("Options Music play?: ", isMusicOn);
+            //     bgMusic.play();
+            //     this.onMusic.setAlpha(1);
+            //     this.offMusic.setAlpha(0.25);
+            // } else {
+            //     console.log("Options Music pause?: ", isMusicOn);
+            //     bgMusic.pause(); 
+            //     this.onMusic.setAlpha(0.25);
+            //     this.offMusic.setAlpha(1);
+            // }
 
         let c = this.add.text(300,450, "Music:")
             .setFontSize(100)
@@ -553,9 +550,9 @@ var config = {
         gravity: { y: 0 }
       }
     },
-    // scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen],
+    scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen],
     // Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen
-    scene: [Intro, Victory, Losing],
+    // scene: [Intro, Victory, Losing],
   };
   
   var game = new Phaser.Game(config);
