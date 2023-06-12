@@ -9,7 +9,7 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
  */
 
 // Global vars to check music status
-let isMusicOn = 1; // 1 = true
+let isMusicOn; // 1 = true
 let bgMusic;
 let checkTitle = 0;
 
@@ -318,8 +318,22 @@ class Options_Screen extends TweenScene {
         let b = this.add.text(1340, 55, "Back").setFontSize(60);
 
         // Music on and off text
-        this.onMusic = this.add.rectangle(1210,450,200,90,0x000000)
-            .setInteractive({useHandCursor: true})
+        this.onMusic = this.add.rectangle(1210,450,200,90,0x000000);
+        this.offMusic = this.add.rectangle(1490,450,200,90,0x000000);
+        console.log(isMusicOn);
+        // if (isMusicOn == 1) {
+        //     // console.log("Options Music play?: ", isMusicOn);
+        //     // bgMusic.play();
+        //     this.onMusic.setAlpha(1);
+        //     this.offMusic.setAlpha(0.25);
+        // } else {
+        //     console.log("Options Music pause?: ", isMusicOn);
+        //     // bgMusic.pause(); 
+        //     this.onMusic.setAlpha(0.25);
+        //     this.offMusic.setAlpha(1);
+        // }
+       
+        this.onMusic.setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 1;
                 this.updateMusicSetting(1);
@@ -329,8 +343,7 @@ class Options_Screen extends TweenScene {
                 this.onMusic.setAlpha(1);
             });
 
-        this.offMusic = this.add.rectangle(1490,450,200,90,0x000000)
-            .setInteractive({useHandCursor: true})
+            this.offMusic.setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 0; 
                 this.updateMusicSetting(0);
@@ -339,17 +352,7 @@ class Options_Screen extends TweenScene {
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             });
-            // if (isMusicOn == 1) {
-            //     console.log("Options Music play?: ", isMusicOn);
-            //     bgMusic.play();
-            //     this.onMusic.setAlpha(1);
-            //     this.offMusic.setAlpha(0.25);
-            // } else {
-            //     console.log("Options Music pause?: ", isMusicOn);
-            //     bgMusic.pause(); 
-            //     this.onMusic.setAlpha(0.25);
-            //     this.offMusic.setAlpha(1);
-            // }
+            
 
         let c = this.add.text(300,450, "Music:")
             .setFontSize(100)
@@ -421,13 +424,23 @@ class Options_Screen extends TweenScene {
 
         // tween animation for options text and back button
         this.fade_in(fade_objects,1900,1700)
-        this.tweens.add({
-            targets: [this.offCap, this.offMusic],
-            alpha: 0.25,
-            delay: 1900,
-            duration: 1700,
-            ease: 'Quart'
-        });
+        if (isMusicOn == 1) {
+            this.tweens.add({
+                targets: [this.offCap, this.offMusic],
+                alpha: 0.25,
+                delay: 1900,
+                duration: 1700,
+                ease: 'Quart'
+            });
+        } else {
+            this.tweens.add({
+                targets: [this.offCap, this.onMusic],
+                alpha: 0.25,
+                delay: 1900,
+                duration: 1700,
+                ease: 'Quart'
+            });
+        }
     }
 
     update(){
