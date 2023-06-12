@@ -553,9 +553,9 @@ var config = {
         gravity: { y: 0 }
       }
     },
-    scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen],
+    // scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen],
     // Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen
-    // scene: [Intro, Victory, Losing],
+    scene: [Intro, Victory, Losing],
   };
   
   var game = new Phaser.Game(config);

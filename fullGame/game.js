@@ -96,7 +96,7 @@ class Intro extends TweenScene {
     this.ball1;
     this.ball2;
     this.buttonsOn = 0;
-    this.isButtonOn = [false, false, false, false];
+    this.fourButtons = [false, false, false, false];
   }
 
   preload() {
@@ -419,8 +419,8 @@ class Intro extends TweenScene {
       // present player can press a button that will increase the time it takes for the buttons to turn off
       this.tree = this.physics.add.image(400, 650, "sapling").setScale(0.3); this.tree.body.setImmovable(true);
 
-      this.button1 = this.physics.add.image(1000, 650, 'offbutton').setScale(0.4); this.button1.body.setImmovable(true);
-      this.button2 = this.physics.add.image(1250, 400, 'offbutton').setScale(0.4); this.button2.body.setImmovable(true);
+      this.button1tree = this.physics.add.image(1000, 650, 'offbutton').setScale(0.4); this.button1tree.body.setImmovable(true);
+      this.button2tree = this.physics.add.image(1250, 400, 'offbutton').setScale(0.4); this.button2tree.body.setImmovable(true);
       this.button3 = this.physics.add.image(1250, 900, 'offbutton').setScale(0.4); this.button3.body.setImmovable(true);
       this.button4 = this.physics.add.image(1500, 650, 'offbutton').setScale(0.4); this.button4.body.setImmovable(true);
       this.water = this.add.image(170,1040,"waterkey").setScale(0.22).setDepth(2)
@@ -430,8 +430,8 @@ class Intro extends TweenScene {
         })
         .on('pointerup', () => {
           this.buttonsOn = 0;
-          for (let i = 0; i < this.isButtonOn.length; i++) {
-            if (this.isButtonOn[i] == true) {
+          for (let i = 0; i < this.fourButtons.length; i++) {
+            if (this.fourButtons[i] == true) {
               this.buttonsOn += 1;
             }
           }
@@ -705,21 +705,21 @@ class Intro extends TweenScene {
         });
       }
       else if (level == 4) {
-        this.button1Collision = this.physics.add.collider(this.button1, prefab, () => {
-          this.button1.setTexture("onbutton");
-          this.isButtonOn[0] = true;
+        this.button1treeCollision = this.physics.add.collider(this.button1tree, prefab, () => {
+          this.button1tree.setTexture("onbutton");
+          this.fourButtons[0] = true;
         });
-        this.button2Collision = this.physics.add.collider(this.button2, prefab, () => {
-          this.button2.setTexture("onbutton");
-          this.isButtonOn[1] = true;
+        this.button2treeCollision = this.physics.add.collider(this.button2tree, prefab, () => {
+          this.button2tree.setTexture("onbutton");
+          this.fourButtons[1] = true;
         });
         this.button3Collision = this.physics.add.collider(this.button3, prefab, () => {
           this.button3.setTexture("onbutton");
-          this.isButtonOn[2] = true;
+          this.fourButtons[2] = true;
         });
         this.button4Collision = this.physics.add.collider(this.button4, prefab, () => {
           this.button4.setTexture("onbutton");
-          this.isButtonOn[3] = true;
+          this.fourButtons[3] = true;
         });
       } 
     }
