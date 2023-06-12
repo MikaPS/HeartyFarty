@@ -195,9 +195,9 @@ class Intro extends TweenScene {
     this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
-          console.log("clicking on music...", isMusicOn);
+          // console.log("clicking on music...", isMusicOn);
           if (isMusicOn == 1) { bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); } else { bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); }
-          console.log("clicking on music...", isMusicOn);
+          // console.log("clicking on music...", isMusicOn);
     });
     this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
         .setInteractive({useHandCursor: true})

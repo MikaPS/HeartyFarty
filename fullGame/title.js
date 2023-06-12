@@ -36,7 +36,7 @@ class Main_Title extends TweenScene {
         if (savedValue) {
             isMusicOn = savedValue;
         }
-        console.log("in title screen", isMusicOn);
+        // console.log("in title screen", isMusicOn);
         // Music
         if (checkTitle == 0 && isMusicOn == 0) {
             bgMusic = this.sound.add('bgMusic');
@@ -125,6 +125,22 @@ class Main_Title extends TweenScene {
                 });
             });
 
+        let video_rect = this.add.rectangle(this.cameras.main.centerX,this.cameras.main.height + 100,300,90,0x000000)
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                // Clock transition when clicking the start button
+                this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(0.05);
+            
+                this.tweens.add({
+                    targets: this.clock,
+                    angle: 360,
+                    scale: 2.8,
+                    duration: 1500, 
+                    ease: 'Linear',
+                    onComplete: () => { this.scene.start("video_screen"); }
+                });
+            });
+
         // we should do a fade in for the title
         let title_text =this.add.text(this.cameras.main.centerX,380, "Time Split")
             .setFontSize(140)
@@ -139,6 +155,10 @@ class Main_Title extends TweenScene {
             .setOrigin(0.5); 
 
         let credits_text =this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Credits")
+            .setFontSize(60)
+            .setOrigin(0.5); 
+        
+        let video_text =this.add.text(this.cameras.main.centerX,this.cameras.main.height + 100, "Tutorial")
             .setFontSize(60)
             .setOrigin(0.5); 
 
@@ -173,6 +193,16 @@ class Main_Title extends TweenScene {
             ease: 'Expo',
         });
 
+        this.tweens.add({
+            // tween for options button
+            targets: [video_rect, video_text],
+            x: this.cameras.main.centerX,
+            y: 1020,
+            duration: 2000,
+            delay: 2000,
+            ease: 'Expo',
+        });
+
         // bouncing tween for right orb
         this.tweens.add({
             targets: [this.orbRight],
@@ -198,6 +228,37 @@ class Main_Title extends TweenScene {
 
     update(){}
   
+}
+
+class Video_Screen extends TweenScene {
+    constructor() {
+        super('video_screen');
+    }
+    preload() {
+        this.load.image('fullscreen', '../assets/keys/fullscreen.png');
+        this.load.video('video', 'assets/tutorial.mp4');
+    }
+    create() {
+        // Option to have full screen
+        const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
+        this.fullScreen(fullScreen);
+        this.leftBg = this.add.image(370,570, "forest").setScale(1.9).setDepth(-1);
+        this.cameras.main.setBackgroundColor('#000000');
+        this.rightBg = this.add.image(1220,570, "forest").setScale(1.9).setDepth(-1).setAlpha(0.4);
+
+         // Clock transition on entering the scene
+         this.clock = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "clock").setScale(3.2);
+
+         this.tweens.add({
+             targets: this.clock,
+             angle: 360,
+             scale: 0.2,
+             duration: 1500, 
+             ease: 'Linear',
+             onComplete: () => { this.clock.setAlpha(0); }
+         });
+
+    }
 }
 
 class Start_Screen extends TweenScene {
@@ -320,37 +381,23 @@ class Options_Screen extends TweenScene {
         // Music on and off text
         this.onMusic = this.add.rectangle(1210,450,200,90,0x000000);
         this.offMusic = this.add.rectangle(1490,450,200,90,0x000000);
-        console.log(isMusicOn);
-        // if (isMusicOn == 1) {
-        //     // console.log("Options Music play?: ", isMusicOn);
-        //     // bgMusic.play();
-        //     this.onMusic.setAlpha(1);
-        //     this.offMusic.setAlpha(0.25);
-        // } else {
-        //     console.log("Options Music pause?: ", isMusicOn);
-        //     // bgMusic.pause(); 
-        //     this.onMusic.setAlpha(0.25);
-        //     this.offMusic.setAlpha(1);
-        // }
-       
         this.onMusic.setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                isMusicOn = 1;
-                this.updateMusicSetting(1);
-                console.log("this.onMusic? ", isMusicOn);
-                bgMusic.play();
                 this.offMusic.setAlpha(0.25);
                 this.onMusic.setAlpha(1);
+                isMusicOn = 1;
+                this.updateMusicSetting(1);
+                bgMusic.play();
+                
             });
 
-            this.offMusic.setInteractive({useHandCursor: true})
+        this.offMusic.setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                isMusicOn = 0; 
-                this.updateMusicSetting(0);
-                console.log("this.offMusic? ", isMusicOn);
-                bgMusic.pause();
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
+                isMusicOn = 0; 
+                this.updateMusicSetting(0);
+                bgMusic.pause();
             });
             
 
@@ -423,21 +470,21 @@ class Options_Screen extends TweenScene {
           });
 
         // tween animation for options text and back button
-        this.fade_in(fade_objects,1900,1700)
+        this.fade_in(fade_objects,1500,900)
         if (isMusicOn == 1) {
             this.tweens.add({
                 targets: [this.offCap, this.offMusic],
                 alpha: 0.25,
-                delay: 1900,
-                duration: 1700,
+                delay: 1500,
+                duration: 900,
                 ease: 'Quart'
             });
         } else {
             this.tweens.add({
                 targets: [this.offCap, this.onMusic],
                 alpha: 0.25,
-                delay: 1900,
-                duration: 1700,
+                delay: 1500,
+                duration: 900,
                 ease: 'Quart'
             });
         }
@@ -563,7 +610,7 @@ var config = {
         gravity: { y: 0 }
       }
     },
-    scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen],
+    scene: [Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Video_Screen, Ending_Credits_Screen],
     // Main_Title, Instructions, Intro, Victory, Losing, Options_Screen, Credits_Screen, Ending_Credits_Screen
     // scene: [Intro, Victory, Losing],
   };
