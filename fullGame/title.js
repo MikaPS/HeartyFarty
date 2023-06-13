@@ -286,81 +286,6 @@ class Video_Screen extends TweenScene {
     }
 }
 
-class Start_Screen extends TweenScene {
-    constructor() {
-        super('start_screen');
-    }
-    preload() {
-        this.load.image('fullscreen', '../assets/keys/fullscreen.png');
-    }
-    create() {
-        // Option to have full screen
-        const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
-        this.fullScreen(fullScreen);
-
-        // Music
-        this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(0)
-            .setInteractive({useHandCursor: true})
-            .on('pointerdown', () => {
-                if (this.music.alpha > 0){
-                    this.cameras.main.fadeOut(900);
-                    this.time.delayedCall(900, () => this.scene.start('options_screen'));
-
-                }
-            });
-        this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(0)
-            .setInteractive({useHandCursor: true})
-            .on('pointerdown', () => {
-                if (this.musicTxt.alpha > 0){
-                    this.cameras.main.fadeOut(900);
-                    this.time.delayedCall(900, () => this.scene.start('options_screen'));
-                }
-            });
-        
-
-        // music is turned off
-        this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0);
-        
-
-        // Main menu
-        this.main = this.add.rectangle(1400,80,80,60,0x000000).setAlpha(0)
-        .setInteractive({useHandCursor: true})
-            .on('pointerdown', () => {
-                if (this.main.alpha > 0){
-                    this.cameras.main.fadeOut(900);
-                    this.time.delayedCall(900, () => this.scene.start('main_title'));
-                }
-            });
-        this.mainTxt = this.add.text(1370, 60, "㊂").setFontSize(50).setAlpha(0)
-        .setInteractive({useHandCursor: true})
-        .on('pointerdown', () => {
-            if (this.mainTxt.alpha > 0){
-                this.cameras.main.fadeOut(900);
-                this.time.delayedCall(900, () => this.scene.start('main_title'));
-            }
-        });
-
-        this.dots = this.add.text(1405, 45, "...").setFontSize(60).setDepth(1);
-        this.options = this.add.rectangle(1460,80,190,60,0x000000)
-            .setInteractive({useHandCursor: true})
-            .on('pointerdown', () => {
-                this.options.setAlpha(0);
-                this.dots.setAlpha(0);
-                this.fade_out([this.options, this.dots], 100, 300);
-                this.fade_in([this.music, this.main, this.musicTxt, this.mainTxt], 200, 100);
-                if (isMusicOn == 0) {
-                    isMusicOn.pause();
-                    this.fade_in(this.noMusic, 100, 200);
-                }
-            });
-        
-        
-        
-
-    }
-    update() {}
-}
-
 class Options_Screen extends TweenScene {
     constructor() {
         super('options_screen');
@@ -413,7 +338,9 @@ class Options_Screen extends TweenScene {
                 isMusicOn = 1;
                 this.updateMusicSetting(1);
                 bgMusic.play();
-                
+                this.onCusMusic.setAlpha(0.25);
+                this.offCusMusic.setAlpha(1);
+                customMusic = false;
             });
 
         this.offMusic.setInteractive({useHandCursor: true})
@@ -450,7 +377,11 @@ class Options_Screen extends TweenScene {
                 this.offCusMusic.setAlpha(0.25);
                 this.onCusMusic.setAlpha(1);
                 customMusic = true;
-                
+                isMusicOn = 0;
+                this.onMusic.setAlpha(0.25);
+                this.offMusic.setAlpha(1);
+                this.updateMusicSetting(0);
+                bgMusic.pause();
             });
         this.onCusMusic.setAlpha(0.25);
         this.offCusMusic.setInteractive({useHandCursor: true})
@@ -573,7 +504,7 @@ class Options_Screen extends TweenScene {
                 ease: 'Quart'
             });
         }
-        if (customMusic == 1) {
+        if (customMusic == true) {
             this.tweens.add({
                 targets: [this.offCusMusic],
                 alpha: 0.25,
@@ -593,7 +524,6 @@ class Options_Screen extends TweenScene {
     }
 
     update(){
-        
     }
 }
 
