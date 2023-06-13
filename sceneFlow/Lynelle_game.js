@@ -22,7 +22,7 @@ class Main_Title extends TweenScene {
         this.load.image('leftorb', '../assets/leftorb.png');
         this.load.image('rightorb', '../assets/rightorb.png');
         this.load.image('orb', '../assets/crackedorb.png');
-        this.load.audio('bgMusic', '../assets/music/bgmusic.wav');
+        this.load.audio('bgMusic', '../assets/music/bgmusic.mp3');
     }
 
     create() {
@@ -293,7 +293,7 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 1;
-                console.log("this.onMusic? ", isMusicOn);
+                // console.log("this.onMusic? ", isMusicOn);
                 bgMusic.play();
                 this.offMusic.setAlpha(0.25);
                 this.onMusic.setAlpha(1);
@@ -303,18 +303,18 @@ class Options_Screen extends TweenScene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 isMusicOn = 0; 
-                console.log("this.offMusic? ", isMusicOn);
+                // console.log("this.offMusic? ", isMusicOn);
                 bgMusic.pause();
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
             });
             if (isMusicOn == 1) {
-                console.log("Options Music play?: ", isMusicOn);
+                // console.log("Options Music play?: ", isMusicOn);
                 bgMusic.play();
                 this.onMusic.setAlpha(1);
                 this.offMusic.setAlpha(0.25);
             } else {
-                console.log("Options Music pause?: ", isMusicOn);
+                // console.log("Options Music pause?: ", isMusicOn);
                 bgMusic.pause(); 
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
