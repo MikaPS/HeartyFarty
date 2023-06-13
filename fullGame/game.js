@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 3;
+let level = 4;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -457,6 +457,42 @@ class Intro extends TweenScene {
       
     }
     if (level == 4) {
+      // i push these different positions into a list
+      const positions = [
+        { x: 1000, y: 650 },
+        
+        { x: 1250, y: 400 }, 
+        
+        
+        { x: 1250, y: 900 }, 
+        { x: 1500, y: 650 },
+        
+        
+
+      ];
+      
+      const emitters = [];
+      const emitterSettings = {
+        blendMode: 'ADD',
+        lifespan: 2400,
+        quantity: 1,
+        scale: { start: 0.2, end: 0.09 },
+        frequency: 40,
+        alpha: 0.2,
+        emitting: false
+      };
+      
+      for (const position of positions) {
+        const emitter1234 = this.add.particles(position.x, position.y, 'waterdrops', emitterSettings);
+        emitter1234.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
+        emitters.push(emitter1234);
+        
+        this.time.delayedCall(1000, () => {
+          emitter1234.start();
+        });
+      }
+      
+
       // 5 buttons that old player needs to click, as more buttons are clicked, the tree will grow
         // over time, the buttons will turn off
       // present player can press a button that will increase the time it takes for the buttons to turn off
@@ -476,11 +512,15 @@ class Intro extends TweenScene {
           for (let i = 0; i < this.fourButtons.length; i++) {
             if (this.fourButtons[i] == true) {
               this.buttonsOn += 1;
+              
+              console.log(i);
+              emitters[i].stop();
             }
           }
           if (this.buttonsOn == 1) { 
             this.tree.setTexture("smalltree"); 
             this.treeCollision();
+
           }
           if (this.buttonsOn == 2) {
             this.tree.setTexture("bigtree"); 
@@ -753,19 +793,23 @@ class Intro extends TweenScene {
       else if (level == 4) {
         this.button1treeCollision = this.physics.add.collider(this.button1tree, prefab, () => {
           this.button1tree.setTexture("onbutton");
+          console.log("this is button 0");
           this.fourButtons[0] = true;
         });
         this.button2treeCollision = this.physics.add.collider(this.button2tree, prefab, () => {
           this.button2tree.setTexture("onbutton");
           this.fourButtons[1] = true;
+          console.log("this is button 1");
         });
         this.button3Collision = this.physics.add.collider(this.button3, prefab, () => {
           this.button3.setTexture("onbutton");
           this.fourButtons[2] = true;
+          console.log("this is button 2");
         });
         this.button4Collision = this.physics.add.collider(this.button4, prefab, () => {
           this.button4.setTexture("onbutton");
           this.fourButtons[3] = true;
+          console.log("this is button 3");
         });
       } 
     }
