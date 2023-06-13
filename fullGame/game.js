@@ -54,7 +54,7 @@ class Victory extends TweenScene {
         .setInteractive()
         .on('pointerdown', () => {
           level = 1;
-          this.sceneTransition("intro", isMusicOn);
+          this.sceneTransition("main_title", isMusicOn);
         });
     }
   }
