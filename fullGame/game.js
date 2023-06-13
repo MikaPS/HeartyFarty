@@ -1,5 +1,5 @@
 var musicList = Array(10).fill(false);
-var customMusic = false;
+
 class WaterPrefab extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -100,6 +100,7 @@ class Intro extends TweenScene {
     this.buttonsOn = 0;
     this.fourButtons = [false, false, false, false];
     this.musicText; 
+    this.soundText; 
     this.waterText;
   }
 
@@ -149,44 +150,73 @@ class Intro extends TweenScene {
   }
   playSound(sounds){
     if (sounds[0] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing chords1]").setAlpha(1); }
       const sound1 = this.sound.add('chords1');
       sound1.play();
     }
     if (sounds[1] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing chords2]").setAlpha(1); }
+
       const sound9 = this.sound.add('chords2');
       sound9.volume -= .3;
       sound9.play();
     }
     if (sounds[2] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing chords3]").setAlpha(1); }
+
       const sound2 = this.sound.add('chords3');
       sound2.play();
     }
     if (sounds[3] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing base1]").setAlpha(1); }
+
       const sound3 = this.sound.add('base1');
       sound3.play();
     }
     if (sounds[4] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing base2]").setAlpha(1); }
+
       const sound4 = this.sound.add('base2');
       sound4.play();
     }
     if (sounds[5] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing base3]").setAlpha(1); }
+
       const sound5 = this.sound.add('base3');
       sound5.play();
     }
     if (sounds[6] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing lead]").setAlpha(1); }
+
       const sound6 = this.sound.add('lead');
       sound6.volume -= .7;
       sound6.play();
     }
     if (sounds[7] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing melody1]").setAlpha(1); }
+
       const sound7 = this.sound.add('melody1');
       sound7.play();
     }
     if (sounds[8] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing melody2]").setAlpha(1); }
+
       const sound8 = this.sound.add('melody2');
       sound8.play();
     }
     if (sounds[9] == true){
+      this.turnOffText();
+      if (isCapOn == 1) { this.soundText.setText("[Playing words]").setAlpha(1); }
+
       const sound10 = this.sound.add('words');
       sound10.volume += 2;
       sound10.play();
@@ -253,6 +283,7 @@ class Intro extends TweenScene {
     // Music
     this.musicText = this.add.text(470,1100, "").setFontSize(55).setDepth(2);
     this.waterText = this.add.text(500,1100, "").setFontSize(55).setDepth(2);
+    this.soundText = this.add.text(470,1100, "").setFontSize(55).setDepth(2);
 
     this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
     .setInteractive({useHandCursor: true})
@@ -947,6 +978,7 @@ class Intro extends TweenScene {
   turnOffText() {
     this.waterText.setAlpha(0);
     this.musicText.setAlpha(0);
+    this.soundText.setAlpha(0);
   }
 }
 

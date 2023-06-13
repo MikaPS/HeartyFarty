@@ -12,6 +12,7 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 let isMusicOn; // 1 = true
 let isCapOn; // 1 = true
 let bgMusic;
+var customMusic = false;
 let checkTitle = 0;
 
   
