@@ -1110,7 +1110,9 @@ class Instructions extends Phaser.Scene {
   }
   create(data) {
     isMusicOn = data.isMusicOn;
-    bgMusic.stop();   
+    if (bgMusic != undefined) {
+      bgMusic.stop();   
+    }
     if (checkTitle == 1 && isMusicOn == 1) {
       bgMusic = this.sound.add('audio');
       bgMusic.setLoop(true);
