@@ -261,6 +261,7 @@ class Video_Screen extends TweenScene {
         // Includes video
         this.videoObject = this.add.video(803,600,'video').setScale(1.65);
         // this.videoObject.setPlaybackRate(1.7);
+        this.videoObject.setMute(true);
         this.videoObject.play(true);
         // this.videoObject.autoplay = true; // autoplays
         // Go back to main screen

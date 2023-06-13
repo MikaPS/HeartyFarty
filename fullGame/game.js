@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 1;
+let level = 3;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -97,6 +97,8 @@ class Intro extends TweenScene {
     this.ball2;
     this.buttonsOn = 0;
     this.fourButtons = [false, false, false, false];
+    this.musicText; 
+    this.waterText;
   }
 
   preload() {
@@ -192,18 +194,39 @@ class Intro extends TweenScene {
     // Music
     isMusicOn = data.isMusicOn;
     // Music
+    this.musicText = this.add.text(470,1100, "").setFontSize(55).setDepth(2);
+    this.waterText = this.add.text(500,1100, "").setFontSize(55).setDepth(2);
+
     this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
           // console.log("clicking on music...", isMusicOn);
-          if (isMusicOn == 1) { bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); } else { bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); }
-          // console.log("clicking on music...", isMusicOn);
+          if (isMusicOn == 1) { 
+            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
+            this.musicText.setText("[Background Music stopped]").setAlpha(1);
+           
+          } else { 
+            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
+            this.musicText.setText("[Background Music started]").setAlpha(1);
+            
+          }
     });
     this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
-            if (isMusicOn == 1) { bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); } 
-            else { bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); }
+          if (isMusicOn == 1) { 
+            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
+            this.musicText.setText("[Background Music stopped]").setAlpha(1);
+            
+          } else { 
+            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
+            this.musicText.setText("[Background Music started]").setAlpha(1);
+            
+          }
         });
     // music is turned off
     this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0).setDepth(2);
@@ -672,6 +695,12 @@ class Intro extends TweenScene {
     // Define the x and y positions for the prefabs
     this.waterSound = this.sound.add('waterSound');
     this.waterSound.play();
+    this.musicText.setAlpha(0);
+    this.waterText.setText("[Water sound is played]").setAlpha(1);
+    this.time.addEvent({
+      delay: 1200, 
+      callback: () => { this.waterText.setAlpha(0); }, 
+    });
     const prefabPositions = [
       { x: this.ball2.x+70, y: this.ball2.y-10 },
       { x: this.ball2.x+110, y: this.ball2.y-30 },
