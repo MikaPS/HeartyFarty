@@ -43,3 +43,5 @@ https://mikaps.github.io/HeartyFarty/fullGame/
 ## Asset credits
 1. All art assets were drawn by Segolen Plihon.
 2. All music assets were created by Zane Chaplin.
+
+* Full screen option works on both mobile and PC devices, however, it is not compatible with the Safari app on iPhones
