@@ -231,19 +231,21 @@ class Intro extends TweenScene {
     if (customMusic == 1) {
       if (sounds[0] == true){
         this.sound1 = this.sound.add('chords1');
+        this.sound1.volume -= .3;
         if (this.sound1.isPlaying == false) {
         this.sound1.play();
         }
       }
       if (sounds[1] == true){
         this.sound9 = this.sound.add('chords2');
-        this.sound9.volume -= .3;
+        this.sound9.volume -= .6;
         if (this.sound9.isPlaying == false) {
         this.sound9.play();
         }
       }
       if (sounds[2] == true){
         this.sound2 = this.sound.add('chords3');
+        this.sound2.volume = .4;
         if (this.sound2.isPlaying == false) {
         this.sound2.play();
         }
@@ -256,25 +258,28 @@ class Intro extends TweenScene {
       }
       if (sounds[4] == true){
         this.sound4 = this.sound.add('base2');
+        this.sound4.volume += .6;
         if (this.sound4.isPlaying == false) {
         this.sound4.play();
         }
       }
       if (sounds[5] == true){
         this.sound5 = this.sound.add('base3');
+        this.sound5.volume += .6;
         if (this.sound5.isPlaying == false) {
         this.sound5.play();
         }
       }
       if (sounds[6] == true){
         this.sound6 = this.sound.add('lead');
-        this.sound6.volume -= .7;
+        this.sound6.volume -= .5;
         if (this.sound6.isPlaying == false) {
         this.sound6.play();
         }
       }
       if (sounds[7] == true){
         this.sound7 = this.sound.add('melody1');
+        this.sound7.volume += .4;
         if (this.sound7.isPlaying == false) {
         this.sound7.play();
         }
@@ -287,7 +292,7 @@ class Intro extends TweenScene {
       }
       if (sounds[9] == true){
         this.sound10 = this.sound.add('words');
-        this.sound10.volume += 2;
+        this.sound10.volume = 3;
         if (this.sound10.isPlaying == false) {
         this.sound10.play();
         }
@@ -302,7 +307,7 @@ class Intro extends TweenScene {
       .on('pointerdown', () => {
         var rand = Math.floor(Math.random() * 10) + 1;
         let maxSearch =0;
-        while (musicList[rand] == true && maxSearch != 8){
+        while (musicList[rand] == true && maxSearch != 20){
           maxSearch+=1;
           rand = Math.floor(Math.random() * 10) + 1;
         }
