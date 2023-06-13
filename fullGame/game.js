@@ -23,9 +23,11 @@ class Victory extends TweenScene {
     const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
-    this.add.text(450,400,"YOU WON!").setFontSize(150);
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY-150, "YOU WON!")
+    .setFontSize(150)
+    .setOrigin(0.5, 0.5);
     if (level == 1) {
-      this.add.text(600,600,"Next level?").setFontSize(80)
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Next level?").setFontSize(80).setOrigin(0.5, 0.5)
         .setInteractive()
         .on('pointerdown', () => {
           level = 2;
@@ -33,7 +35,7 @@ class Victory extends TweenScene {
         });
     }
     if (level == 2) {
-      this.add.text(600,600,"Next level?").setFontSize(80)
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Next level?").setFontSize(80).setOrigin(0.5,0.5)
         .setInteractive()
         .on('pointerdown', () => {
           level = 3;
@@ -41,8 +43,8 @@ class Victory extends TweenScene {
         });
     }
     if (level == 3) {
-      this.add.text(200,900, "watch out because if a tree grows\nin the past where you are standing\nin the future you might end up\nstuck inside for eternity.").setFontSize(60);
-      this.add.text(600,600,"Next level?").setFontSize(80)
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 400, "If a tree grows in the past\nwhere you are standing in\nthe future you might end up\nstuck inside for eternity.").setFontSize(60).setOrigin(0.5,0.5).setAlign('center');
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Next level?").setFontSize(80).setOrigin(0.5,0.5)
         .setInteractive()
         .on('pointerdown', () => {
           level = 4;
@@ -50,7 +52,7 @@ class Victory extends TweenScene {
         });
     }
     if (level == 4) {
-      this.add.text(600,600,"Restart?").setFontSize(80)
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Restart?").setFontSize(80).setOrigin(0.5,0.5)
         .setInteractive()
         .on('pointerdown', () => {
           level = 1;
