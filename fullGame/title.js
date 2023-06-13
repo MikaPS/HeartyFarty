@@ -10,6 +10,7 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 
 // Global vars to check music status
 let isMusicOn; // 1 = true
+let isCapOn; // 1 = true
 let bgMusic;
 let checkTitle = 0;
 
@@ -35,6 +36,10 @@ class Main_Title extends TweenScene {
         var savedValue = localStorage.getItem('isMusicOn');
         if (savedValue) {
             isMusicOn = savedValue;
+        }
+        var capValue = localStorage.getItem('isCapOn');
+        if (capValue) {
+            isCapOn = capValue;
         }
         // console.log("in title screen", isMusicOn);
         // Music
@@ -477,6 +482,7 @@ class Options_Screen extends TweenScene {
         .on('pointerdown', () => {
             this.offCap.setAlpha(0.25);
             this.onCap.setAlpha(1);
+            this.updateCapSetting(1);
         });
 
         this.offCap = this.add.rectangle(1490,850,200,90,0x000000).setAlpha(0.25)
@@ -484,6 +490,7 @@ class Options_Screen extends TweenScene {
         .on('pointerdown', () => {
             this.onCap.setAlpha(0.25);
             this.offCap.setAlpha(1);
+            this.updateCapSetting(0);
         });
         let i =this.add.text(600,850, "Closed Captions:")
             .setFontSize(100)
@@ -533,7 +540,7 @@ class Options_Screen extends TweenScene {
         this.fade_in(fade_objects,1500,900)
         if (isMusicOn == 1) {
             this.tweens.add({
-                targets: [this.offCap, this.offMusic],
+                targets: [this.offMusic],
                 alpha: 0.25,
                 delay: 1500,
                 duration: 900,
@@ -541,7 +548,24 @@ class Options_Screen extends TweenScene {
             });
         } else {
             this.tweens.add({
-                targets: [this.offCap, this.onMusic],
+                targets: [this.onMusic],
+                alpha: 0.25,
+                delay: 1500,
+                duration: 900,
+                ease: 'Quart'
+            });
+        }
+        if (isCapOn == 1) {
+            this.tweens.add({
+                targets: [this.offCap],
+                alpha: 0.25,
+                delay: 1500,
+                duration: 900,
+                ease: 'Quart'
+            });
+        } else {
+            this.tweens.add({
+                targets: [this.onCap],
                 alpha: 0.25,
                 delay: 1500,
                 duration: 900,

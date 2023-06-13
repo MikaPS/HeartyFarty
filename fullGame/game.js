@@ -259,30 +259,27 @@ class Intro extends TweenScene {
     .on('pointerdown', () => {
           // console.log("clicking on music...", isMusicOn);
           if (isMusicOn == 1) { 
-            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            this.turnOffText();
             bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
-            this.musicText.setText("[Background Music stopped]").setAlpha(1);
-           
+            if (isCapOn == 1) { this.musicText.setText("[Background Music stopped]").setAlpha(1); }
           } else { 
-            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            this.turnOffText();
             bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
-            this.musicText.setText("[Background Music started]").setAlpha(1);
-            
+            if (isCapOn == 1) { this.musicText.setText("[Background Music started]").setAlpha(1); }
           }
     });
     this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
           if (isMusicOn == 1) { 
-            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            this.turnOffText();
             bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
-            this.musicText.setText("[Background Music stopped]").setAlpha(1);
+            if (isCapOn == 1) { this.musicText.setText("[Background Music stopped]").setAlpha(1); }
             
           } else { 
-            this.musicText.setAlpha(0); this.waterText.setAlpha(0);
+            this.turnOffText();
             bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
-            this.musicText.setText("[Background Music started]").setAlpha(1);
-            
+            if (isCapOn == 1) { this.musicText.setText("[Background Music started]").setAlpha(1); }
           }
         });
     // music is turned off
@@ -785,14 +782,12 @@ class Intro extends TweenScene {
     }
 
     // checking collision with button to remove the objects upon collision
-    // if (level == 1) {
       if (this.isButtonOn == true) {
         this.button1.setAlpha(0);
         this.button2.setAlpha(0);
         this.physics.world.removeCollider(this.button1Collision);
         this.physics.world.removeCollider(this.button2Collision);
       }
-    // }
   }
 
 
@@ -859,12 +854,14 @@ class Intro extends TweenScene {
     // Define the x and y positions for the prefabs
     this.waterSound = this.sound.add('waterSound');
     this.waterSound.play();
-    this.musicText.setAlpha(0);
-    this.waterText.setText("[Water sound is played]").setAlpha(1);
-    this.time.addEvent({
-      delay: 1200, 
-      callback: () => { this.waterText.setAlpha(0); }, 
-    });
+    this.turnOffText();
+    if (isCapOn == 1) {
+      this.waterText.setText("[Water sound is played]").setAlpha(1);
+      this.time.addEvent({
+        delay: 1200, 
+        callback: () => { this.waterText.setAlpha(0); }, 
+      });
+    }
     const prefabPositions = [
       { x: this.ball2.x+70, y: this.ball2.y-10 },
       { x: this.ball2.x+110, y: this.ball2.y-30 },
@@ -945,6 +942,11 @@ class Intro extends TweenScene {
       }
     }); 
 
+  }
+
+  turnOffText() {
+    this.waterText.setAlpha(0);
+    this.musicText.setAlpha(0);
   }
 }
 

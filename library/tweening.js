@@ -39,9 +39,9 @@ class TweenScene extends Phaser.Scene {
             onComplete: onCompleteCallback
         });
     }
-    sceneTransition(scene, isMusicOn) {
+    sceneTransition(scene, isMusicOn, isCapOn) {
         this.cameras.main.fade(500, 0,0,0);
-        this.time.delayedCall(500, () => this.scene.start(scene, {isMusicOn}));
+        this.time.delayedCall(500, () => this.scene.start(scene, {isMusicOn, isCapOn}));
     }
 
     fullScreen(button) {
@@ -58,5 +58,10 @@ class TweenScene extends Phaser.Scene {
     updateMusicSetting(value) {
         isMusicOn = value;
         localStorage.setItem('isMusicOn', value);
+    }
+
+    updateCapSetting(value) {
+        isCapOn = value;
+        localStorage.setItem('isCapOn', value);
     }
 }
