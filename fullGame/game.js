@@ -425,11 +425,30 @@ class Intro extends TweenScene {
       });
     }
     if (level == 3) {
+      // i literally hate emitters
+      let emitter_third = this.add.particles(1400, 700, 'waterdrops', {
+        blendMode: 'ADD',
+        lifespan: 2400,
+        quantity: 1,
+        scale: { start: 0.2, end: 0.09 },
+        frequency: 40,
+        alpha: 0.2,
+        emitting: false
+      });
+      emitter_third.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
+
+
+      // delay before the emitter begins
+      this.time.delayedCall(12000, () => {
+        emitter_third.start();
+      }, [], this);
+
       // prefab
       this.water = this.add.image(170,1040,"waterkey").setScale(0.22).setDepth(2)
         .setInteractive()
         .on('pointerdown', () => {
           this.createWater();
+          emitter_third.stop();
         });      
 
       this.dirt = this.physics.add.image(1410, 710, "wall").setScale(0.85,0.25);
