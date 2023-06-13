@@ -1110,19 +1110,19 @@ class Instructions extends Phaser.Scene {
   }
   create(data) {
     isMusicOn = data.isMusicOn;
-    if (bgMusic != undefined) {
+    if (bgMusic != undefined && isMusicOn == 1) {
       bgMusic.stop();   
     }
     if (checkTitle == 1 && isMusicOn == 1) {
       bgMusic = this.sound.add('audio');
       bgMusic.setLoop(true);
       bgMusic.play();
-      checkTitle += 1;
+      checkTitle = 1;
     }
     if (checkTitle == 1 && isMusicOn == 0) {
       bgMusic = this.sound.add('audio');
       bgMusic.setLoop(true);
-      checkTitle += 1;
+      checkTitle = 1;
     }
     // const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     // this.fullScreen(fullScreen);
