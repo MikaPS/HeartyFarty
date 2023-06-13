@@ -572,6 +572,23 @@ class Options_Screen extends TweenScene {
                 ease: 'Quart'
             });
         }
+        if (customMusic == 1) {
+            this.tweens.add({
+                targets: [this.offCusMusic],
+                alpha: 0.25,
+                delay: 1500,
+                duration: 900,
+                ease: 'Quart'
+            });
+        } else {
+            this.tweens.add({
+                targets: [this.onCusMusic],
+                alpha: 0.25,
+                delay: 1500,
+                duration: 900,
+                ease: 'Quart'
+            });
+        }
     }
 
     update(){
