@@ -34,7 +34,7 @@ https://mikaps.github.io/HeartyFarty/fullGame/
 3. Complete closed captioning - every time a new sound is played, captions describing the sound will be displayed at the bottom middle part of the screen. <br><br>
 
 ## Contributor credits
-1. Lynelle Goh - Production Lead, title screen animations and transitions, video tutorial, help particles <br>
+1. Lynelle Goh - Production Lead, animations & transitions, video tutorial, hint particles <br>
 2. Mika Peer Shalem - Technology Lead, level designer+coder, mobile accessiblity, persistent music toggle <br>
 3. Zane Chaplin - Testing Lead, basic mechanic design, music assets <br>
 4. Segolen Plihon - Backup Production/Technology, art assets <br> <br>
