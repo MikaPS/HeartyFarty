@@ -1140,8 +1140,8 @@ class Instructions extends Phaser.Scene {
     linesGroup.add(line4);
 
     // Set initial delay and duration for the animation
-    let delay = 500;
-    const duration = 500; 
+    let delay = 400;
+    const duration = 300; 
 
     // Slide in the lines one at a time
     linesGroup.getChildren().forEach((line) => {

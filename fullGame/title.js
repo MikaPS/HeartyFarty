@@ -97,7 +97,7 @@ class Main_Title extends TweenScene {
                 this.tweens.add({
                   targets: this.orbRight,
                   x: 1750,
-                  duration: 500,
+                  duration: 300,
                   ease: 'Quint',
                   onComplete: () => {
                     this.orbRight.destroy();
