@@ -1,5 +1,5 @@
 var musicList = Array(10).fill(false);
-
+let trueMusicList = [];
 class WaterPrefab extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -102,6 +102,7 @@ class Intro extends TweenScene {
     this.musicText; 
     this.soundText; 
     this.waterText;
+    this.sound1; this.sound2; this.sound3; this.sound4; this.sound5; this.sound6; this.sound7; this.sound8; this.sound9; this.sound10;
   }
 
   preload() {
@@ -148,78 +149,193 @@ class Intro extends TweenScene {
     this.load.audio('melody2', '../assets/music/melody2.m4a');
     this.load.audio('words', '../assets/music/words.m4a');
   }
-  playSound(sounds){
+
+  stopSound(sounds) {
+    this.turnOffText();
     if (sounds[0] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing chords1]").setAlpha(1); }
-      const sound1 = this.sound.add('chords1');
-      sound1.play();
+      if (this.sound1 != undefined) {
+      this.sound1.stop();
+      }
     }
     if (sounds[1] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing chords2]").setAlpha(1); }
-
-      const sound9 = this.sound.add('chords2');
-      sound9.volume -= .3;
-      sound9.play();
+      if (this.sound9 != undefined) {
+      this.sound9.stop(); }
     }
     if (sounds[2] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing chords3]").setAlpha(1); }
-
-      const sound2 = this.sound.add('chords3');
-      sound2.play();
+      if (this.sound2 != undefined) {
+      this.sound2.stop(); }
     }
     if (sounds[3] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing base1]").setAlpha(1); }
-
-      const sound3 = this.sound.add('base1');
-      sound3.play();
+      if (this.sound3 != undefined) {
+      this.sound3.stop(); }
     }
     if (sounds[4] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing base2]").setAlpha(1); }
-
-      const sound4 = this.sound.add('base2');
-      sound4.play();
+      if (this.sound4 != undefined) {
+      this.sound4.stop(); }
     }
     if (sounds[5] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing base3]").setAlpha(1); }
-
-      const sound5 = this.sound.add('base3');
-      sound5.play();
+      if (this.sound5 != undefined) {
+      this.sound5.stop(); }
     }
     if (sounds[6] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing lead]").setAlpha(1); }
-
-      const sound6 = this.sound.add('lead');
-      sound6.volume -= .7;
-      sound6.play();
+      if (this.sound6 != undefined) {
+      this.sound6.stop(); }
     }
     if (sounds[7] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing melody1]").setAlpha(1); }
-
-      const sound7 = this.sound.add('melody1');
-      sound7.play();
+      if (this.sound7 != undefined) {
+      this.sound7.stop();
+      }
     }
     if (sounds[8] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing melody2]").setAlpha(1); }
-
-      const sound8 = this.sound.add('melody2');
-      sound8.play();
+      if (this.sound8 != undefined) {
+      this.sound8.stop();
+      }
     }
     if (sounds[9] == true){
-      this.turnOffText();
-      if (isCapOn == 1) { this.soundText.setText("[Playing words]").setAlpha(1); }
+      if (this.sound10 != undefined) {
+      this.sound10.stop();
+      }
+    }
+  }
 
-      const sound10 = this.sound.add('words');
-      sound10.volume += 2;
-      sound10.play();
+  playSoundCap(i, txt){
+    if (customMusic == true) {
+      this.turnOffText();
+      if (i==0) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "chords1]").setAlpha(1); }
+      } else if (i == 1) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "chords2]").setAlpha(1); }
+      } else if (i == 2) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "chords3]").setAlpha(1); }
+      } else if (i == 3) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "base1]").setAlpha(1); }
+      } else if (i == 4) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "base2]").setAlpha(1); }
+      } else if (i == 5) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "base3]").setAlpha(1); }
+      } else if (i == 6) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "lead]").setAlpha(1); }
+        
+      } else if (i == 7) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "melody1]").setAlpha(1); }
+      } else if (i == 8) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "melody2]").setAlpha(1); }
+
+      } else if (i == 9) {
+          if (isCapOn == 1) { this.soundText.setText("["+ txt+ "words]").setAlpha(1); }
+      }
+  }
+}
+
+  playSound(sounds){
+    if (customMusic == true) {
+      if (sounds[0] == true){
+        this.sound1 = this.sound.add('chords1');
+        if (this.sound1.isPlaying == false) {
+        this.sound1.play();
+        }
+      }
+      if (sounds[1] == true){
+        this.sound9 = this.sound.add('chords2');
+        this.sound9.volume -= .3;
+        if (this.sound9.isPlaying == false) {
+        this.sound9.play();
+        }
+      }
+      if (sounds[2] == true){
+        this.sound2 = this.sound.add('chords3');
+        if (this.sound2.isPlaying == false) {
+        this.sound2.play();
+        }
+      }
+      if (sounds[3] == true){
+        this.sound3 = this.sound.add('base1');
+        if (this.sound3.isPlaying == false) {
+        this.sound3.play();
+        }
+      }
+      if (sounds[4] == true){
+        this.sound4 = this.sound.add('base2');
+        if (this.sound4.isPlaying == false) {
+        this.sound4.play();
+        }
+      }
+      if (sounds[5] == true){
+        this.sound5 = this.sound.add('base3');
+        if (this.sound5.isPlaying == false) {
+        this.sound5.play();
+        }
+      }
+      if (sounds[6] == true){
+        this.sound6 = this.sound.add('lead');
+        this.sound6.volume -= .7;
+        if (this.sound6.isPlaying == false) {
+        this.sound6.play();
+        }
+      }
+      if (sounds[7] == true){
+        this.sound7 = this.sound.add('melody1');
+        if (this.sound7.isPlaying == false) {
+        this.sound7.play();
+        }
+      }
+      if (sounds[8] == true){
+        this.sound8 = this.sound.add('melody2');
+        if (this.sound8.isPlaying == false) {
+        this.sound8.play();
+        }
+      }
+      if (sounds[9] == true){
+        this.sound10 = this.sound.add('words');
+        this.sound10.volume += 2;
+        if (this.sound10.isPlaying == false) {
+        this.sound10.play();
+        }
+      }
+    }
+  }
+
+  customMusicMethods() {
+    if (customMusic){
+      this.addNewSound = this.add.rectangle(1320,870,450,50,0x000000).setAlpha(.5)
+      .setInteractive({useHandCursor: true})  
+      .on('pointerdown', () => {
+        var rand = Math.floor(Math.random() * 10) + 1;
+        let maxSearch =0;
+        while (musicList[rand] == true && maxSearch != 8){
+          maxSearch+=1;
+          rand = Math.floor(Math.random() * 10) + 1;
+        }
+        trueMusicList.push(rand);
+        musicList[rand] = true;
+        this.stopSound(musicList);
+        this.playSound(musicList);
+        this.playSoundCap(rand, "Adding ");
+      });
+      this.newSound = this.add.text(1110, 850, 'Add instrument', { fontSize: '50px', fill: '#ffffff' })
+      this.takeNewSound = this.add.rectangle(1320,960,450,50,0x000000).setAlpha(.5)
+      .setInteractive({useHandCursor: true})  
+      .on('pointerdown', () => {
+        // Gets a random value from the array and deletes it
+        var rand = Phaser.Utils.Array.GetRandom(trueMusicList);
+        var index = trueMusicList.indexOf(rand);
+        if (index !== -1) {
+          trueMusicList.splice(index, 1);
+        }
+        this.turnOffText();
+        this.stopSound(musicList);
+        musicList[rand] = false;
+        this.playSound(musicList);
+        this.playSoundCap(rand, "Taking ");
+      });
+      this.takeSound = this.add.text(1110, 940, 'Take instrument', { fontSize: '50px', fill: '#ffffff' })
+      // this.playNewSound = this.add.rectangle(1350,1070,500,50,0x000000).setAlpha(.5)
+      // .setInteractive({useHandCursor: true})  
+      // .on('pointerdown', () => {
+      //   this.stopSound(musicList);
+      //   this.playSound(musicList);
+      // });
+      // this.soundPlay = this.add.text(1110, 1050, 'Play instruments', { fontSize: '50px', fill: '#ffffff' })
     }
   }
   create(data) {
@@ -283,39 +399,66 @@ class Intro extends TweenScene {
     // Music
     this.musicText = this.add.text(470,1100, "").setFontSize(55).setDepth(2);
     this.waterText = this.add.text(500,1100, "").setFontSize(55).setDepth(2);
-    this.soundText = this.add.text(470,1100, "").setFontSize(55).setDepth(2);
+    this.soundText = this.add.text(550,1100, "").setFontSize(55).setDepth(2);
 
     this.music = this.add.rectangle(1510,80,80,60,0x000000).setAlpha(1)
     .setInteractive({useHandCursor: true})
     .on('pointerdown', () => {
           // console.log("clicking on music...", isMusicOn);
-          if (isMusicOn == 1) { 
-            this.turnOffText();
-            bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
-            if (isCapOn == 1) { this.musicText.setText("[Background Music stopped]").setAlpha(1); }
-          } else { 
-            this.turnOffText();
-            bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
-            if (isCapOn == 1) { this.musicText.setText("[Background Music started]").setAlpha(1); }
+          if (musicType[0] == true) {
+            if (isMusicOn == 1) { 
+              this.turnOffText();
+              bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
+              if (isCapOn == 1) { this.musicText.setText("[Background Music stopped]").setAlpha(1); }
+            } else { 
+              this.turnOffText();
+              bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
+              if (isCapOn == 1) { this.musicText.setText("[Background Music started]").setAlpha(1); }
+            }
+          }
+          if (musicType[1] == true) {
+            if (customMusic) {
+              customMusic = false;
+              this.turnOffText();
+              this.stopSound(musicList);
+            } else {
+              customMusic = true;
+              this.customMusicMethods();
+              this.playSound(musicList);
+      
+            }
           }
     });
     this.musicTxt = this.add.text(1480, 60, "🎵").setFontSize(50).setAlpha(1)
         .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
-          if (isMusicOn == 1) { 
-            this.turnOffText();
-            bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
-            if (isCapOn == 1) { this.musicText.setText("[Background Music stopped]").setAlpha(1); }
-            
-          } else { 
-            this.turnOffText();
-            bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
-            if (isCapOn == 1) { this.musicText.setText("[Background Music started]").setAlpha(1); }
+          if (musicType[0] == true) {
+            if (isMusicOn == 1) { 
+              this.turnOffText();
+              bgMusic.pause(); isMusicOn = 0; this.updateMusicSetting(0); 
+              if (isCapOn == 1) { this.musicText.setText("[Background Music stopped]").setAlpha(1); }
+            } else { 
+              this.turnOffText();
+              bgMusic.play(); isMusicOn = 1; this.updateMusicSetting(1); 
+              if (isCapOn == 1) { this.musicText.setText("[Background Music started]").setAlpha(1); }
+            }
+          }
+          if (musicType[1] == true) {
+            if (customMusic) {
+              customMusic = false;
+              this.turnOffText();
+              this.stopSound(musicList);
+            } else {
+              customMusic = true;
+              this.customMusicMethods();
+              this.playSound(musicList);
+      
+            }
           }
         });
     // music is turned off
     this.noMusic = this.add.rectangle(1510, 80, 60,10, 0xff0000).setAngle(-50).setAlpha(0).setDepth(2);
-
+    this.customMusicMethods();
     // Background
     this.leftBg = this.add.image(375,570, "forest").setScale(1.9).setDepth(-1);
     this.cameras.main.setBackgroundColor('#000000');
@@ -332,39 +475,7 @@ class Intro extends TweenScene {
       .on('pointerdown', () => {
         this.currentSide = 0;
       });
-    if (customMusic){
-      
-      this.addNewSound = this.add.rectangle(1320,870,450,50,0x000000).setAlpha(.5)
-      .setInteractive({useHandCursor: true})  
-      .on('pointerdown', () => {
-        var rand = Math.floor(Math.random() * 10) + 1;
-        let maxSearch =0;
-        while (musicList[rand] == true && maxSearch != 8){
-          maxSearch+=1;
-          rand = Math.floor(Math.random() * 10) + 1;
-        }
-        musicList[rand] = true;
-      });
-      this.newSound = this.add.text(1110, 850, 'Add instrument', { fontSize: '50px', fill: '#ffffff' })
-      this.takeNewSound = this.add.rectangle(1320,960,450,50,0x000000).setAlpha(.5)
-      .setInteractive({useHandCursor: true})  
-      .on('pointerdown', () => {
-        var rand = Math.floor(Math.random() * 10) + 1;
-        let maxSearch =0;
-        while (musicList[rand] == false && maxSearch != 20){
-          maxSearch+=1;
-          rand = Math.floor(Math.random() * 10) + 1;
-        }
-        musicList[rand] = true;
-      });
-      this.takeSound = this.add.text(1110, 940, 'Take instrument', { fontSize: '50px', fill: '#ffffff' })
-      this.playNewSound = this.add.rectangle(1350,1070,500,50,0x000000).setAlpha(.5)
-      .setInteractive({useHandCursor: true})  
-      .on('pointerdown', () => {
-        this.playSound(musicList);
-      });
-      this.soundPlay = this.add.text(1110, 1050, 'Play instruments', { fontSize: '50px', fill: '#ffffff' })
-    }
+   
     // General settings we will need for all levels
     this.ball1 = this.physics.add.sprite(400, 150, 'ball');
     this.ball2 = this.physics.add.sprite(1200, 150, 'ball');
@@ -641,8 +752,6 @@ class Intro extends TweenScene {
           for (let i = 0; i < this.fourButtons.length; i++) {
             if (this.fourButtons[i] == true) {
               this.buttonsOn += 1;
-              
-              console.log(i);
               emitters[i].stop();
             }
           }
@@ -787,9 +896,9 @@ class Intro extends TweenScene {
 
   update() {
     // Music
-    if (isMusicOn == 1) {
+    if (isMusicOn == 1 || customMusic == true) {
       this.noMusic.setAlpha(0);
-    } else if (isMusicOn == 0){
+    } else if (isMusicOn == 0 && customMusic == false){
       this.noMusic.setAlpha(1);
     }
     // Move to new levels
@@ -926,23 +1035,19 @@ class Intro extends TweenScene {
       else if (level == 4) {
         this.button1treeCollision = this.physics.add.collider(this.button1tree, prefab, () => {
           this.button1tree.setTexture("onbutton");
-          console.log("this is button 0");
           this.fourButtons[0] = true;
         });
         this.button2treeCollision = this.physics.add.collider(this.button2tree, prefab, () => {
           this.button2tree.setTexture("onbutton");
           this.fourButtons[1] = true;
-          console.log("this is button 1");
         });
         this.button3Collision = this.physics.add.collider(this.button3, prefab, () => {
           this.button3.setTexture("onbutton");
           this.fourButtons[2] = true;
-          console.log("this is button 2");
         });
         this.button4Collision = this.physics.add.collider(this.button4, prefab, () => {
           this.button4.setTexture("onbutton");
           this.fourButtons[3] = true;
-          console.log("this is button 3");
         });
       } 
     }
@@ -979,6 +1084,7 @@ class Intro extends TweenScene {
     this.waterText.setAlpha(0);
     this.musicText.setAlpha(0);
     this.soundText.setAlpha(0);
+    this.soundText.setText("");
   }
 }
 

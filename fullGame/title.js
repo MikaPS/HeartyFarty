@@ -12,6 +12,7 @@ Prototype demonstrates at least one kind of fancy transition between scenes.
 let isMusicOn; // 1 = true
 let isCapOn; // 1 = true
 let bgMusic;
+let musicType = [false, false];
 var customMusic = false;
 let checkTitle = 0;
 
@@ -37,10 +38,12 @@ class Main_Title extends TweenScene {
         var savedValue = localStorage.getItem('isMusicOn');
         if (savedValue) {
             isMusicOn = savedValue;
+            if (isMusicOn == 1) { musicType[0] = true; }
         }
         var capValue = localStorage.getItem('isCapOn');
         if (capValue) {
             isCapOn = capValue;
+            if (isCapOn) { musicType[1] == true; }
         }
         // console.log("in title screen", isMusicOn);
         // Music
@@ -341,6 +344,8 @@ class Options_Screen extends TweenScene {
                 this.onCusMusic.setAlpha(0.25);
                 this.offCusMusic.setAlpha(1);
                 customMusic = false;
+                musicType[0] = true;
+                musicType[1] = false;
             });
 
         this.offMusic.setInteractive({useHandCursor: true})
@@ -350,6 +355,7 @@ class Options_Screen extends TweenScene {
                 isMusicOn = 0; 
                 this.updateMusicSetting(0);
                 bgMusic.pause();
+                musicType[0] = false;
             });
             
 
@@ -382,6 +388,8 @@ class Options_Screen extends TweenScene {
                 this.offMusic.setAlpha(1);
                 this.updateMusicSetting(0);
                 bgMusic.pause();
+                musicType[1] = true;
+                musicType[0] = false;
             });
         this.onCusMusic.setAlpha(0.25);
         this.offCusMusic.setInteractive({useHandCursor: true})
@@ -389,6 +397,7 @@ class Options_Screen extends TweenScene {
                 this.onCusMusic.setAlpha(0.25);
                 this.offCusMusic.setAlpha(1);
                 customMusic = false;
+                musicType[1] = false;
             });
             
 
