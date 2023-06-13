@@ -5,7 +5,7 @@ class WaterPrefab extends Phaser.GameObjects.Sprite {
   }
 }
 
-let level = 4;
+let level = 1;
 class Victory extends TweenScene {
   constructor() {
     super('victory');
@@ -470,7 +470,18 @@ class Intro extends TweenScene {
         
 
       ];
-      
+
+      // create the emitter to go around the tree
+      let emitter_four = this.add.particles(400, 800, 'waterdrops', {
+        blendMode: 'ADD',
+        lifespan: 2400,
+        quantity: 1,
+        scale: { start: 0.2, end: 0.09 },
+        frequency: 40,
+        alpha: 0.2,
+        emitting: false
+      });
+
       const emitters = [];
       const emitterSettings = {
         blendMode: 'ADD',
@@ -487,8 +498,9 @@ class Intro extends TweenScene {
         emitter1234.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
         emitters.push(emitter1234);
         
-        this.time.delayedCall(1000, () => {
+        this.time.delayedCall(12000, () => {
           emitter1234.start();
+          
         });
       }
       
@@ -520,6 +532,7 @@ class Intro extends TweenScene {
           if (this.buttonsOn == 1) { 
             this.tree.setTexture("smalltree"); 
             this.treeCollision();
+            
 
           }
           if (this.buttonsOn == 2) {
@@ -534,8 +547,11 @@ class Intro extends TweenScene {
             this.tree.setTexture("doortree"); 
             // console.log("here");
             this.treeCollision();
+            emitter_four.start();
           }
         });
+
+        emitter_four.addEmitZone({ type: 'edge', source: shape1, quantity: 64, total: 1 });
       
     }
 
