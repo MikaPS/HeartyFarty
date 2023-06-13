@@ -13,7 +13,7 @@ let isMusicOn; // 1 = true
 let isCapOn; // 1 = true
 let bgMusic;
 let musicType = [false, false];
-var customMusic = false;
+let customMusic = 0;
 let checkTitle = 0;
 
   
@@ -43,7 +43,12 @@ class Main_Title extends TweenScene {
         var capValue = localStorage.getItem('isCapOn');
         if (capValue) {
             isCapOn = capValue;
-            if (isCapOn) { musicType[1] == true; }
+        }
+
+        var customValue = localStorage.getItem('customMusic');
+        if (customValue) {
+            customMusic = customValue;
+            if (customMusic == 1) { musicType[1] = true; }
         }
         // console.log("in title screen", isMusicOn);
         // Music
@@ -343,7 +348,8 @@ class Options_Screen extends TweenScene {
                 bgMusic.play();
                 this.onCusMusic.setAlpha(0.25);
                 this.offCusMusic.setAlpha(1);
-                customMusic = false;
+                customMusic = 0;
+                this.updateCustomSetting(0);
                 musicType[0] = true;
                 musicType[1] = false;
             });
@@ -382,7 +388,8 @@ class Options_Screen extends TweenScene {
             .on('pointerdown', () => {
                 this.offCusMusic.setAlpha(0.25);
                 this.onCusMusic.setAlpha(1);
-                customMusic = true;
+                customMusic = 1;
+                this.updateCustomSetting(1);
                 isMusicOn = 0;
                 this.onMusic.setAlpha(0.25);
                 this.offMusic.setAlpha(1);
@@ -396,7 +403,8 @@ class Options_Screen extends TweenScene {
             .on('pointerdown', () => {
                 this.onCusMusic.setAlpha(0.25);
                 this.offCusMusic.setAlpha(1);
-                customMusic = false;
+                customMusic = 0;
+                this.updateCustomSetting(0);
                 musicType[1] = false;
             });
             
@@ -513,7 +521,7 @@ class Options_Screen extends TweenScene {
                 ease: 'Quart'
             });
         }
-        if (customMusic == true) {
+        if (customMusic == 1) {
             this.tweens.add({
                 targets: [this.offCusMusic],
                 alpha: 0.25,

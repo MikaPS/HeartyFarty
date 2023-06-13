@@ -199,7 +199,7 @@ class Intro extends TweenScene {
   }
 
   playSoundCap(i, txt){
-    if (customMusic == true) {
+    if (customMusic == 1) {
       this.turnOffText();
       if (i==0) {
           if (isCapOn == 1) { this.soundText.setText("["+ txt+ "chords1]").setAlpha(1); }
@@ -228,7 +228,7 @@ class Intro extends TweenScene {
 }
 
   playSound(sounds){
-    if (customMusic == true) {
+    if (customMusic == 1) {
       if (sounds[0] == true){
         this.sound1 = this.sound.add('chords1');
         if (this.sound1.isPlaying == false) {
@@ -296,7 +296,7 @@ class Intro extends TweenScene {
   }
 
   customMusicMethods() {
-    if (customMusic){
+    if (customMusic == 1){
       this.addNewSound = this.add.rectangle(1320,870,450,50,0x000000).setAlpha(.5)
       .setInteractive({useHandCursor: true})  
       .on('pointerdown', () => {
@@ -417,12 +417,14 @@ class Intro extends TweenScene {
             }
           }
           if (musicType[1] == true) {
-            if (customMusic) {
-              customMusic = false;
+            if (customMusic == 1) {
+              customMusic = 0;
+              this.updateCustomSetting(0);
               this.turnOffText();
               this.stopSound(musicList);
             } else {
-              customMusic = true;
+              customMusic = 1;
+              this.updateCustomSetting(1);
               this.customMusicMethods();
               this.playSound(musicList);
       
@@ -444,12 +446,14 @@ class Intro extends TweenScene {
             }
           }
           if (musicType[1] == true) {
-            if (customMusic) {
-              customMusic = false;
+            if (customMusic == 1) {
+              customMusic = 0;
+              this.updateCustomSetting(0);
               this.turnOffText();
               this.stopSound(musicList);
             } else {
-              customMusic = true;
+              customMusic = 1;
+              this.updateCustomSetting(1);
               this.customMusicMethods();
               this.playSound(musicList);
       
@@ -896,9 +900,9 @@ class Intro extends TweenScene {
 
   update() {
     // Music
-    if (isMusicOn == 1 || customMusic == true) {
+    if (isMusicOn == 1 || customMusic == 1) {
       this.noMusic.setAlpha(0);
-    } else if (isMusicOn == 0 && customMusic == false){
+    } else if (isMusicOn == 0 && customMusic == 0){
       this.noMusic.setAlpha(1);
     }
     // Move to new levels

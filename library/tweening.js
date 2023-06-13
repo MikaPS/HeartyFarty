@@ -64,4 +64,9 @@ class TweenScene extends Phaser.Scene {
         isCapOn = value;
         localStorage.setItem('isCapOn', value);
     }
+
+    updateCustomSetting(value) {
+        customMusic = value;
+        localStorage.setItem('customMusic', value);
+    }
 }
