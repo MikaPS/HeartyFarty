@@ -76,8 +76,8 @@ class Losing extends TweenScene {
     const fullScreen = this.add.image(1540, 1140, "fullscreen").setScale(0.1);
     this.fullScreen(fullScreen);
     this.bg = this.add.image(800,100, "forest").setScale(3.6).setDepth(-1);
-    this.add.text(450,400,"YOU LOST!").setFontSize(150);
-    this.add.text(600,600,"Restart?").setFontSize(80)
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY-150,"YOU LOST!").setFontSize(150).setOrigin(0.5,0.5);
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Restart?").setFontSize(80).setOrigin(0.5,0.5)
       .setInteractive()
       .on('pointerdown', () => {
         this.sceneTransition("intro", isMusicOn);
