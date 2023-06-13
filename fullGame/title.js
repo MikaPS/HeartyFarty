@@ -435,6 +435,41 @@ class Options_Screen extends TweenScene {
         let f=this.add.text(1340,450, " / ")
             .setFontSize(100)
             .setOrigin(0.5);
+        //custom music
+        this.onCusMusic = this.add.rectangle(1210,650,200,90,0x000000);
+        
+        this.offCusMusic = this.add.rectangle(1490,650,200,90,0x000000);
+        this.onCusMusic.setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.offCusMusic.setAlpha(0.25);
+                this.onCusMusic.setAlpha(1);
+                customMusic = true;
+                
+            });
+        this.onCusMusic.setAlpha(0.25);
+        this.offCusMusic.setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.onCusMusic.setAlpha(0.25);
+                this.offCusMusic.setAlpha(1);
+                customMusic = false;
+            });
+            
+
+        let m = this.add.text(500,650, "Custom Music:")
+            .setFontSize(100)
+            .setOrigin(0.5);
+
+        let n = this.add.text(1200,650, "On")
+            .setFontSize(100)
+            .setOrigin(0.5);
+        
+        let o = this.add.text(1490,650, "Off")
+            .setFontSize(100)
+            .setOrigin(0.5);
+
+        let p =this.add.text(1340,650, " / ")
+            .setFontSize(100)
+            .setOrigin(0.5);
 
         // Captions
         this.onCap = this.add.rectangle(1210,850,200,90,0x000000)
@@ -478,10 +513,16 @@ class Options_Screen extends TweenScene {
         fade_objects.push(j);
         fade_objects.push(k);
         fade_objects.push(l);
+        fade_objects.push(m);
+        fade_objects.push(n);
+        fade_objects.push(o);
+        fade_objects.push(p);
         fade_objects.push(this.onMusic);
         fade_objects.push(this.onCap);
         fade_objects.push(this.offMusic);
         fade_objects.push(this.offCap);
+        fade_objects.push(this.offCusMusic);
+        fade_objects.push(this.onCusMusic);
 
         // make all the objects have an alpha of 0
         fade_objects.forEach(text => {

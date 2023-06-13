@@ -1,3 +1,5 @@
+var musicList = Array(10).fill(false);
+var customMusic = false;
 class WaterPrefab extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -133,8 +135,63 @@ class Intro extends TweenScene {
     this.load.image('playerFront1', '../assets/player/rfront.png');
     this.load.image('playerFront2', '../assets/player/front.png');
     this.load.image('playerFront3', '../assets/player/lfront.png');
+    // Music for custom music
+    this.load.audio('chords1', '../assets/music/chords1.m4a');
+    this.load.audio('chords2', '../assets/music/chords2.m4a');
+    this.load.audio('chords3', '../assets/music/chords3.m4a');
+    this.load.audio('base1', '../assets/music/base1.m4a');
+    this.load.audio('base2', '../assets/music/base2.m4a');
+    this.load.audio('base3', '../assets/music/base3.m4a');
+    this.load.audio('lead', '../assets/music/lead.m4a');
+    this.load.audio('melody1', '../assets/music/melody1.m4a');
+    this.load.audio('melody2', '../assets/music/melody2.m4a');
+    this.load.audio('words', '../assets/music/words.m4a');
   }
-
+  playSound(sounds){
+    if (sounds[0] == true){
+      const sound1 = this.sound.add('chords1');
+      sound1.play();
+    }
+    if (sounds[1] == true){
+      const sound9 = this.sound.add('chords2');
+      sound9.volume -= .3;
+      sound9.play();
+    }
+    if (sounds[2] == true){
+      const sound2 = this.sound.add('chords3');
+      sound2.play();
+    }
+    if (sounds[3] == true){
+      const sound3 = this.sound.add('base1');
+      sound3.play();
+    }
+    if (sounds[4] == true){
+      const sound4 = this.sound.add('base2');
+      sound4.play();
+    }
+    if (sounds[5] == true){
+      const sound5 = this.sound.add('base3');
+      sound5.play();
+    }
+    if (sounds[6] == true){
+      const sound6 = this.sound.add('lead');
+      sound6.volume -= .7;
+      sound6.play();
+    }
+    if (sounds[7] == true){
+      const sound7 = this.sound.add('melody1');
+      sound7.play();
+    }
+    if (sounds[8] == true){
+      const sound8 = this.sound.add('melody2');
+      sound8.play();
+    }
+    if (sounds[9] == true){
+      const sound10 = this.sound.add('words');
+      sound10.volume += 2;
+      sound10.play();
+    }
+  }
   create(data) {
     // Player animation
     this.anims.create({
@@ -247,7 +304,39 @@ class Intro extends TweenScene {
       .on('pointerdown', () => {
         this.currentSide = 0;
       });
-
+    if (customMusic){
+      
+      this.addNewSound = this.add.rectangle(1320,870,450,50,0x000000).setAlpha(.5)
+      .setInteractive({useHandCursor: true})  
+      .on('pointerdown', () => {
+        var rand = Math.floor(Math.random() * 10) + 1;
+        let maxSearch =0;
+        while (musicList[rand] == true && maxSearch != 8){
+          maxSearch+=1;
+          rand = Math.floor(Math.random() * 10) + 1;
+        }
+        musicList[rand] = true;
+      });
+      this.newSound = this.add.text(1110, 850, 'Add instrument', { fontSize: '50px', fill: '#ffffff' })
+      this.takeNewSound = this.add.rectangle(1320,960,450,50,0x000000).setAlpha(.5)
+      .setInteractive({useHandCursor: true})  
+      .on('pointerdown', () => {
+        var rand = Math.floor(Math.random() * 10) + 1;
+        let maxSearch =0;
+        while (musicList[rand] == false && maxSearch != 20){
+          maxSearch+=1;
+          rand = Math.floor(Math.random() * 10) + 1;
+        }
+        musicList[rand] = true;
+      });
+      this.takeSound = this.add.text(1110, 940, 'Take instrument', { fontSize: '50px', fill: '#ffffff' })
+      this.playNewSound = this.add.rectangle(1350,1070,500,50,0x000000).setAlpha(.5)
+      .setInteractive({useHandCursor: true})  
+      .on('pointerdown', () => {
+        this.playSound(musicList);
+      });
+      this.soundPlay = this.add.text(1110, 1050, 'Play instruments', { fontSize: '50px', fill: '#ffffff' })
+    }
     // General settings we will need for all levels
     this.ball1 = this.physics.add.sprite(400, 150, 'ball');
     this.ball2 = this.physics.add.sprite(1200, 150, 'ball');
