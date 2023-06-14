@@ -1132,14 +1132,16 @@ class Instructions extends Phaser.Scene {
     // Add lines to the group
     const line1 = this.add.text(-900, 300, "Instructions:").setFontSize(60).setAlpha(0);
     const line2 = this.add.text(-800, 450, "Use the arrow keys on the screen to move.").setFontSize(50).setAlpha(0);
-    const line3 = this.add.text(-700, 600, "Clicking on the different halves of the\nscreen changes your movement.").setFontSize(50).setAlpha(0);
-    const line4 = this.add.text(-300, 1100, "Click the screen to continue.").setFontSize(50).setAlpha(0);
+    const line3 = this.add.text(-700, 600, "Clicking on the different halves of the\nscreen changes your timeline.").setFontSize(50).setAlpha(0);
+    const line4 = this.add.text(-600, 750, "Action in your past (right side)\nwill impact your future (left side).").setFontSize(50).setAlpha(0);
+    const line5 = this.add.text(-300, 1100, "Click the screen to continue.").setFontSize(50).setAlpha(0);
 
     // Add lines to the group
     linesGroup.add(line1);
     linesGroup.add(line2);
     linesGroup.add(line3);
     linesGroup.add(line4);
+    linesGroup.add(line5);
 
     // Set initial delay and duration for the animation
     let delay = 400;

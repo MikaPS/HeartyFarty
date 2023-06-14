@@ -457,6 +457,9 @@ class Options_Screen extends TweenScene {
             .setFontSize(100)
             .setOrigin(0.5);
 
+        let q=this.add.text(750,1050, "Custom music will add two buttons.\nOne to add a random instrument and one to\nremove an instrument - so you can make\nyour own soundtrack!")
+            .setFontSize(55)
+            .setOrigin(0.5);
         // push the variables into the array
         // i am so sorry for its ungliness
         fade_objects.push(a);
@@ -473,6 +476,7 @@ class Options_Screen extends TweenScene {
         fade_objects.push(n);
         fade_objects.push(o);
         fade_objects.push(p);
+        fade_objects.push(q);
         fade_objects.push(this.onMusic);
         fade_objects.push(this.onCap);
         fade_objects.push(this.offMusic);
