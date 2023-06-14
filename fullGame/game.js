@@ -28,15 +28,16 @@ class Victory extends TweenScene {
     .setOrigin(0.5, 0.5);
     if (level == 1) {
       this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Next level?").setFontSize(80).setOrigin(0.5, 0.5)
-        .setInteractive()
+        .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
           level = 2;
           this.sceneTransition("intro", isMusicOn);
         });
     }
     if (level == 2) {
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 400, "You got water powers!\nPutting water on trees or buttons\nwill make them activate.").setFontSize(60).setOrigin(0.5,0.5).setAlign('center');
       this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Next level?").setFontSize(80).setOrigin(0.5,0.5)
-        .setInteractive()
+        .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
           level = 3;
           this.sceneTransition("intro", isMusicOn);
@@ -45,7 +46,7 @@ class Victory extends TweenScene {
     if (level == 3) {
       this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 400, "If a tree grows in the past\nwhere you are standing in\nthe future you might end up\nstuck inside for eternity.").setFontSize(60).setOrigin(0.5,0.5).setAlign('center');
       this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Next level?").setFontSize(80).setOrigin(0.5,0.5)
-        .setInteractive()
+        .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
           level = 4;
           this.sceneTransition("intro", isMusicOn);
@@ -53,7 +54,7 @@ class Victory extends TweenScene {
     }
     if (level == 4) {
       this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,"Restart?").setFontSize(80).setOrigin(0.5,0.5)
-        .setInteractive()
+        .setInteractive({useHandCursor: true})
         .on('pointerdown', () => {
           level = 1;
           this.sceneTransition("main_title", isMusicOn);
@@ -236,6 +237,7 @@ class Intro extends TweenScene {
         this.sound1.volume -= .3;
         if (this.sound1.isPlaying == false) {
         this.sound1.play();
+        this.sound1.setLoop(true);
         }
       }
       if (sounds[1] == true){
@@ -243,6 +245,7 @@ class Intro extends TweenScene {
         this.sound9.volume -= .6;
         if (this.sound9.isPlaying == false) {
         this.sound9.play();
+        this.sound9.setLoop(true);
         }
       }
       if (sounds[2] == true){
@@ -250,12 +253,14 @@ class Intro extends TweenScene {
         this.sound2.volume = .4;
         if (this.sound2.isPlaying == false) {
         this.sound2.play();
+        this.sound2.setLoop(true);
         }
       }
       if (sounds[3] == true){
         this.sound3 = this.sound.add('base1');
         if (this.sound3.isPlaying == false) {
         this.sound3.play();
+        this.sound3.setLoop(true);
         }
       }
       if (sounds[4] == true){
@@ -263,6 +268,7 @@ class Intro extends TweenScene {
         this.sound4.volume += .6;
         if (this.sound4.isPlaying == false) {
         this.sound4.play();
+        this.sound4.setLoop(true);
         }
       }
       if (sounds[5] == true){
@@ -270,6 +276,7 @@ class Intro extends TweenScene {
         this.sound5.volume += .6;
         if (this.sound5.isPlaying == false) {
         this.sound5.play();
+        this.sound5.setLoop(true);
         }
       }
       if (sounds[6] == true){
@@ -277,6 +284,7 @@ class Intro extends TweenScene {
         this.sound6.volume -= .5;
         if (this.sound6.isPlaying == false) {
         this.sound6.play();
+        this.sound6.setLoop(true);
         }
       }
       if (sounds[7] == true){
@@ -284,12 +292,14 @@ class Intro extends TweenScene {
         this.sound7.volume += .4;
         if (this.sound7.isPlaying == false) {
         this.sound7.play();
+        this.sound7.setLoop(true);
         }
       }
       if (sounds[8] == true){
         this.sound8 = this.sound.add('melody2');
         if (this.sound8.isPlaying == false) {
         this.sound8.play();
+        this.sound8.setLoop(true);
         }
       }
       if (sounds[9] == true){
@@ -297,6 +307,7 @@ class Intro extends TweenScene {
         this.sound10.volume = 3;
         if (this.sound10.isPlaying == false) {
         this.sound10.play();
+        this.sound10.setLoop(true);
         }
       }
     }
@@ -319,7 +330,7 @@ class Intro extends TweenScene {
         this.playSound(musicList);
         this.playSoundCap(rand, "Adding ");
       });
-      this.newSound = this.add.text(1110, 850, 'Add instrument', { fontSize: '50px', fill: '#ffffff' })
+      this.newSound = this.add.text(1110, 850, '🎵 Add instrument', { fontSize: '50px', fill: '#ffffff' })
       this.takeNewSound = this.add.rectangle(1320,960,450,50,0x000000).setAlpha(.5)
       .setInteractive({useHandCursor: true})  
       .on('pointerdown', () => {
@@ -335,7 +346,7 @@ class Intro extends TweenScene {
         this.playSound(musicList);
         this.playSoundCap(rand, "Taking ");
       });
-      this.takeSound = this.add.text(1110, 940, 'Take instrument', { fontSize: '50px', fill: '#ffffff' })
+      this.takeSound = this.add.text(1110, 940, '🎵 Take instrument', { fontSize: '50px', fill: '#ffffff' })
       // this.playNewSound = this.add.rectangle(1350,1070,500,50,0x000000).setAlpha(.5)
       // .setInteractive({useHandCursor: true})  
       // .on('pointerdown', () => {
