@@ -315,7 +315,7 @@ class Intro extends TweenScene {
 
   customMusicMethods() {
     if (customMusic == 1){
-      this.addNewSound = this.add.rectangle(1320,870,450,50,0x000000).setAlpha(.5)
+      this.addNewSound = this.add.rectangle(1320,970,450,50,0x000000).setAlpha(.5)
       .setInteractive({useHandCursor: true})  
       .on('pointerdown', () => {
         var rand = Math.floor(Math.random() * 10) + 1;
@@ -330,8 +330,8 @@ class Intro extends TweenScene {
         this.playSound(musicList);
         this.playSoundCap(rand, "Adding ");
       });
-      this.newSound = this.add.text(1110, 850, '🎵 Add instrument', { fontSize: '50px', fill: '#ffffff' })
-      this.takeNewSound = this.add.rectangle(1320,960,450,50,0x000000).setAlpha(.5)
+      this.newSound = this.add.text(1100, 950, '🎵 Add instrument', { fontSize: '40px', fill: '#ffffff' })
+      this.takeNewSound = this.add.rectangle(1320,1040,450,50,0x000000).setAlpha(.5)
       .setInteractive({useHandCursor: true})  
       .on('pointerdown', () => {
         // Gets a random value from the array and deletes it
@@ -346,7 +346,7 @@ class Intro extends TweenScene {
         this.playSound(musicList);
         this.playSoundCap(rand, "Taking ");
       });
-      this.takeSound = this.add.text(1110, 940, '🎵 Take instrument', { fontSize: '50px', fill: '#ffffff' })
+      this.takeSound = this.add.text(1100, 1020, '🎵 Take instrument', { fontSize: '40px', fill: '#ffffff' })
       // this.playNewSound = this.add.rectangle(1350,1070,500,50,0x000000).setAlpha(.5)
       // .setInteractive({useHandCursor: true})  
       // .on('pointerdown', () => {
