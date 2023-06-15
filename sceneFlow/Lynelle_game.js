@@ -22,7 +22,7 @@ class Main_Title extends TweenScene {
         this.load.image('leftorb', '../assets/leftorb.png');
         this.load.image('rightorb', '../assets/rightorb.png');
         this.load.image('orb', '../assets/crackedorb.png');
-        this.load.audio('bgMusic', '../assets/music/bgMusic.mp3');
+        this.load.audio('bgMusic', '../assets/music/backgroundmusic.mp3');
     }
 
     create() {
